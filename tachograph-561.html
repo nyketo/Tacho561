@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tacho 561</title>
+<meta name="theme-color" content="#12161d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tacho 561">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%2312161d'/%3E%3Ccircle cx='90' cy='90' r='58' fill='none' stroke='%23f2994a' stroke-width='10'/%3E%3Cpath d='M90 52v40l26 16' fill='none' stroke='%23f2994a' stroke-width='11' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--mono:'JetBrains Mono',monospace;--display:'Oswald',sans-serif;--body:'Inter',sans-serif;}
+html[data-theme="night"]{
+  --bg:#12161d;--bg-grad:#171d27;--bg-panel:#1a2029;--bg-panel-2:#212836;--bg-raised:#252d3b;
+  --border:#2c3444;--border-soft:#232a37;
+  --text:#eef1f6;--text-dim:#93a0b3;--text-faint:#5c6a80;
+  --accent:#f2994a;--accent-ink:#20140a;--accent-dim:#8a5a2c;
+  --ok:#4cb37f;--ok-bg:#173325;--warn:#e0a83e;--warn-bg:#332a12;--bad:#e15b5b;--bad-bg:#3a1a1a;
+  --info:#5b8def;--info-bg:#16233d;
+  --shadow:none;--picker-filter:invert(0.7);
+}
+html[data-theme="day"]{
+  --bg:#f4f5f7;--bg-grad:#ffffff;--bg-panel:#ffffff;--bg-panel-2:#f7f8fa;--bg-raised:#eceef2;
+  --border:#d8dce3;--border-soft:#e6e9ee;
+  --text:#1b2029;--text-dim:#5d6878;--text-faint:#8d97a6;
+  --accent:#c26a19;--accent-ink:#ffffff;--accent-dim:#e0a06a;
+  --ok:#1e7d52;--ok-bg:#e2f3ea;--warn:#9a6c07;--warn-bg:#fbf0d5;--bad:#b52a2a;--bad-bg:#fbe4e4;
+  --info:#2d5fb8;--info-bg:#e5edfb;
+  --shadow:0 1px 3px rgba(20,26,40,.06);--picker-filter:none;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:radial-gradient(ellipse at top,var(--bg-grad) 0%,var(--bg) 55%);color:var(--text);font-family:var(--body);min-height:100vh;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s;}
+.app{max-width:940px;margin:0 auto;padding:20px 16px calc(80px + env(safe-area-inset-bottom));}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{width:44px;height:44px;border-radius:50%;background:conic-gradient(from -90deg,var(--accent) 0deg,var(--accent) 30deg,var(--border-soft) 30deg);display:flex;align-items:center;justify-content:center;flex:none;position:relative;}
+.brand-mark::before{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--bg-panel);}
+.brand-mark svg{position:relative;width:20px;height:20px;z-index:1;}
+.brand h1{font-family:var(--display);font-weight:600;font-size:19px;margin:0;letter-spacing:.3px;}
+.brand p{margin:0;font-size:11.5px;color:var(--text-faint);letter-spacing:.4px;text-transform:uppercase;}
+.ctrls{display:flex;gap:6px;align-items:center;}
+.seg-switch{display:flex;gap:2px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:8px;padding:3px;box-shadow:var(--shadow);}
+.seg-switch button{background:transparent;border:none;color:var(--text-dim);font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 7px;border-radius:6px;cursor:pointer;line-height:1;}
+.seg-switch button.active{background:var(--bg-raised);color:var(--accent);}
+.seg-switch button svg{width:13px;height:13px;display:block;}
+.vehicle-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg-panel);border:1px solid var(--border-soft);border-left:3px solid var(--accent);border-radius:10px;padding:10px 12px;margin-bottom:16px;box-shadow:var(--shadow);}
+.vb-l{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.vb-cap{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-faint);}
+.vb-plate{font-family:var(--mono);font-weight:700;font-size:16px;color:var(--accent);letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vehicle-banner button{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-size:12px;font-weight:600;padding:7px 11px;border-radius:8px;cursor:pointer;white-space:nowrap;font-family:var(--body);}
+.vehicle-banner button:hover{border-color:var(--accent);color:var(--text);}
+.tabs{display:flex;gap:3px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:12px;padding:4px;margin-bottom:18px;box-shadow:var(--shadow);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-btn{flex:1;min-width:74px;padding:10px 6px;border:none;background:transparent;color:var(--text-dim);font-family:var(--body);font-weight:600;font-size:12px;border-radius:9px;cursor:pointer;white-space:nowrap;}
+.tab-btn.active{background:var(--bg-raised);color:var(--text);box-shadow:0 0 0 1px var(--border);}
+.view{display:none;}
+.view.active{display:block;animation:fadeIn .18s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:none;}}
+.card{background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);}
+.card h2{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--text-dim);margin:0 0 12px;}
+.gauge-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;}
+.gauge-box{flex:1;min-width:130px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.gauge-box svg{width:100%;max-width:150px;height:auto;}
+.gauge-label{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;margin-top:4px;}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600;font-family:var(--mono);}
+.pill.ok{background:var(--ok-bg);color:var(--ok);}
+.pill.warn{background:var(--warn-bg);color:var(--warn);}
+.pill.bad{background:var(--bad-bg);color:var(--bad);}
+.pill.info{background:var(--info-bg);color:var(--info);}
+.tokens{display:flex;gap:5px;align-items:center;}
+.tok{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);background:transparent;}
+.tok.used{background:var(--accent);border-color:var(--accent);}
+.tok.free{background:var(--ok-bg);border-color:var(--ok);}
+.allow-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border-soft);}
+.allow-row:last-child{border-bottom:none;}
+.allow-l{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.allow-l b{font-size:13px;font-weight:600;}
+.allow-l span{font-size:11px;color:var(--text-faint);}
+.allow-r{display:flex;align-items:center;gap:8px;flex:none;}
+.strip-wrap{overflow-x:auto;padding-bottom:4px;}
+.strip{display:flex;gap:3px;min-width:min-content;align-items:flex-end;height:86px;padding:6px 2px 0;border-bottom:1px dashed var(--border);}
+.strip-col{width:22px;flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.strip-bar{width:14px;border-radius:3px 3px 0 0;background:var(--ok);}
+.strip-bar.warn{background:var(--warn);}
+.strip-bar.bad{background:var(--bad);}
+.strip-bar.exempt{background:var(--info);}
+.strip-date{font-family:var(--mono);font-size:8.5px;color:var(--text-faint);white-space:nowrap;}
+label{display:block;font-size:12px;color:var(--text-dim);margin-bottom:5px;font-weight:600;}
+input,select,textarea{width:100%;background:var(--bg-panel-2);border:1px solid var(--border);color:var(--text);padding:9px 10px;border-radius:8px;font-family:var(--body);font-size:15px;margin-bottom:12px;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);}
+input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:var(--picker-filter);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field-row3{display:grid;grid-template-columns:2fr 1fr;gap:12px;}
+@media (max-width:480px){.field-row,.field-row3{grid-template-columns:1fr;}}
+.hint{font-size:11px;color:var(--text-faint);margin:-8px 0 12px;line-height:1.45;}
+.calc-out{font-family:var(--mono);font-size:12px;color:var(--accent);margin:-6px 0 12px;font-weight:600;}
+button.primary{width:100%;background:var(--accent);color:var(--accent-ink);border:none;padding:13px;border-radius:9px;font-family:var(--display);font-weight:600;font-size:14.5px;letter-spacing:.3px;cursor:pointer;text-transform:uppercase;}
+button.primary:hover{filter:brightness(1.08);}
+button.secondary{width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-dim);padding:10px;border-radius:9px;font-family:var(--body);font-weight:600;font-size:13px;cursor:pointer;margin-bottom:12px;}
+button.secondary:hover{border-color:var(--accent);color:var(--text);border-style:solid;}
+.segment{background:var(--bg-panel-2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px;}
+.segment-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.segment-head b{font-family:var(--display);font-size:13px;letter-spacing:.4px;color:var(--accent);}
+.seg-remove{background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:15px;padding:2px 6px;}
+.seg-remove:hover{color:var(--bad);}
+.subhead{font-family:var(--display);font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border-soft);}
+.exc-block{background:var(--bg-panel-2);border:1px solid var(--border-soft);border-radius:10px;padding:11px 12px;margin-bottom:10px;}
+.exc-head{display:flex;align-items:flex-start;gap:9px;}
+.exc-head input{width:auto;margin:3px 0 0;flex:none;}
+.exc-head .exc-t{flex:1;min-width:0;}
+.exc-head b{font-size:13px;display:block;}
+.exc-head span{font-size:11px;color:var(--text-faint);display:block;margin-top:2px;line-height:1.4;}
+.exc-body{margin-top:11px;padding-top:11px;border-top:1px dashed var(--border);display:none;}
+.exc-block.on .exc-body{display:block;}
+.exc-block.on{border-color:var(--accent-dim);}
+.result{border:1px solid var(--accent-dim);background:linear-gradient(180deg,rgba(242,153,74,.08),transparent);border-radius:12px;padding:14px;margin-top:14px;}
+.result h3{margin:0 0 10px;font-family:var(--display);font-size:14px;letter-spacing:.3px;color:var(--accent);text-transform:uppercase;}
+.res-line{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border-soft);gap:10px;}
+.res-line:last-child{border-bottom:none;}
+.res-line span:first-child{color:var(--text-dim);}
+.res-line span:last-child{font-family:var(--mono);font-weight:600;text-align:right;}
+.big-stat{display:flex;flex-direction:column;align-items:center;padding:14px 8px;background:var(--bg-panel-2);border:1px solid var(--border-soft);border-radius:12px;}
+.big-stat .v{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--accent);}
+.big-stat .l{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;margin-top:4px;text-align:center;}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+@media (max-width:520px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+.log-entry{border:1px solid var(--border-soft);border-radius:12px;margin-bottom:10px;background:var(--bg-panel-2);overflow:hidden;}
+.log-sum{padding:12px 14px;cursor:pointer;}
+.log-sum:hover{background:var(--bg-raised);}
+.log-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;}
+.log-date{font-family:var(--display);font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:7px;}
+.chev{transition:transform .18s;width:12px;height:12px;color:var(--text-faint);}
+.log-entry.open .chev{transform:rotate(90deg);}
+.log-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.log-stat{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);background:var(--bg-raised);padding:3px 7px;border-radius:6px;}
+.log-stat.plate{color:var(--accent);font-weight:700;}
+.log-stat.exc{color:var(--info);}
+.log-detail{display:none;padding:0 14px 14px;border-top:1px solid var(--border-soft);}
+.log-entry.open .log-detail{display:block;}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;}
+@media (max-width:560px){.det-grid{grid-template-columns:1fr;}}
+.det-sec{margin-top:12px;}
+.det-sec h4{font-family:var(--display);font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin:0 0 6px;}
+.det-line{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;gap:10px;border-bottom:1px solid var(--border-soft);}
+.det-line:last-child{border-bottom:none;}
+.det-line span:first-child{color:var(--text-dim);}
+.det-line span:last-child{font-family:var(--mono);text-align:right;}
+.det-actions{display:flex;gap:8px;margin-top:14px;}
+.det-actions button{flex:1;padding:9px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-family:var(--body);font-size:12.5px;font-weight:600;cursor:pointer;}
+.det-actions button.danger:hover{border-color:var(--bad);color:var(--bad);}
+.det-note{font-size:12px;color:var(--text-dim);background:var(--bg-raised);padding:9px 10px;border-radius:8px;line-height:1.5;margin-top:8px;}
+.viol-item{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--border-soft);}
+.viol-item:last-child{border-bottom:none;}
+.viol-dot{width:8px;height:8px;border-radius:50%;background:var(--bad);flex:none;margin-top:5px;}
+.viol-dot.warn{background:var(--warn);}
+.viol-dot.info{background:var(--info);}
+.viol-body b{font-size:13.5px;}
+.viol-body div{font-size:12px;color:var(--text-dim);margin-top:2px;line-height:1.45;}
+.viol-art{font-family:var(--mono);font-size:10.5px;color:var(--text-faint);margin-top:3px;}
+.empty{text-align:center;color:var(--text-faint);padding:30px 10px;font-size:13.5px;line-height:1.5;}
+.checkbox-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.checkbox-row input{width:auto;margin:0;}
+.checkbox-row label{margin:0;}
+.section-note{font-size:12px;color:var(--text-dim);margin-bottom:12px;line-height:1.5;}
+.disclaimer{font-size:11px;color:var(--text-faint);line-height:1.55;margin-top:22px;padding-top:14px;border-top:1px solid var(--border-soft);}
+.install-steps{font-size:12.5px;color:var(--text-dim);line-height:1.6;}
+.install-steps b{color:var(--text);display:block;margin-top:10px;font-size:13px;}
+#installBtn{display:none;}
+.filterbar{display:flex;gap:8px;margin-bottom:12px;}
+.filterbar input,.filterbar select{margin-bottom:0;}
+.disc-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.disc-wrap svg{width:100%;max-width:280px;height:auto;}
+.disc-legend{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:11.5px;color:var(--text-dim);}
+.disc-legend span{display:inline-flex;align-items:center;gap:5px;}
+.disc-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+.disc-note{font-size:10.5px;color:var(--text-faint);text-align:center;line-height:1.4;}
+.po-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-dim);padding:9px;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;margin-top:10px;}
+.po-btn:hover{border-color:var(--accent);color:var(--text);}
+.printout{display:none;background:#fbfaf3;color:#15150f;font-family:var(--mono);font-size:12px;line-height:1.55;border-radius:4px;padding:16px 14px;margin-top:10px;white-space:pre-wrap;word-break:break-word;box-shadow:0 2px 10px rgba(0,0,0,.25);border-top:6px solid #e8e5d4;border-bottom:6px solid #e8e5d4;}
+.printout.open{display:block;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 6v6l4 2"/></svg></div>
+      <div><h1>Tacho 561</h1><p data-t="subtitle"></p></div>
+    </div>
+    <div class="ctrls">
+      <div class="seg-switch" id="themepick">
+        <button data-theme="day" title="Day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <button data-theme="night" title="Night"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+        <button data-theme="auto" title="Auto">A</button>
+      </div>
+      <div class="seg-switch" id="langpick">
+        <button data-lang="bg">BG</button><button data-lang="en">EN</button><button data-lang="de">DE</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="vehicle-banner">
+    <div class="vb-l"><span class="vb-cap" data-t="vb_cap"></span><span class="vb-plate" id="vbPlate">—</span></div>
+    <button id="changeVehicle" data-t="vb_change"></button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="dash" data-t="tab_dash"></button>
+    <button class="tab-btn" data-tab="add" data-t="tab_add"></button>
+    <button class="tab-btn" data-tab="month" data-t="tab_month"></button>
+    <button class="tab-btn" data-tab="log" data-t="tab_log"></button>
+    <button class="tab-btn" data-tab="viol" data-t="tab_viol"></button>
+    <button class="tab-btn" data-tab="install" data-t="tab_install"></button>
+  </div>
+
+  <div class="view active" id="view-dash">
+    <div class="card"><h2 data-t="dash_current"></h2><div class="gauge-row" id="gaugeRow"></div></div>
+    <div class="card"><h2 data-t="dash_disc"></h2><div class="disc-wrap" id="discCard"></div></div>
+    <div class="card"><h2 data-t="dash_allow"></h2><div id="allowStatus"></div></div>
+    <div class="card"><h2 data-t="dash_rest"></h2><div id="restStatus"></div></div>
+    <div class="card"><h2 data-t="dash_comp"></h2><div id="compStatus"></div></div>
+    <div class="card"><h2 data-t="dash_strip"></h2><div class="strip-wrap"><div class="strip" id="stripChart"></div></div></div>
+  </div>
+
+  <div class="view" id="view-add">
+    <div class="card">
+      <h2 id="formTitle" data-t="add_title"></h2>
+      <div class="section-note" data-t="add_note"></div>
+      <form id="dayForm">
+        <input type="hidden" id="f_editId" value="">
+        <label data-t="l_date"></label>
+        <input type="date" id="f_date" required>
+        <div class="field-row">
+          <div><label data-t="l_start"></label><input type="time" id="f_start" required></div>
+          <div><label data-t="l_end"></label><input type="time" id="f_end" required></div>
+        </div>
+        <div class="calc-out" id="restCalcOut" style="display:none;margin-top:-4px;"></div>
+
+        <div class="subhead" data-t="sh_places"></div>
+        <div class="field-row3">
+          <div><label data-t="l_startPlace"></label><input type="text" id="f_startPlace" placeholder="—"></div>
+          <div><label data-t="l_startCountry"></label><select id="f_startCountry"></select></div>
+        </div>
+        <div class="field-row3">
+          <div><label data-t="l_endPlace"></label><input type="text" id="f_endPlace" placeholder="—"></div>
+          <div><label data-t="l_endCountry"></label><select id="f_endCountry"></select></div>
+        </div>
+        <div class="hint" data-t="places_hint"></div>
+
+        <div class="subhead" data-t="sh_veh"></div>
+        <div id="segments"></div>
+        <button type="button" class="secondary" id="addSeg" data-t="btn_add_vehicle"></button>
+
+        <div class="subhead" data-t="sh_rest"></div>
+        <label data-t="l_resttype"></label>
+        <select id="f_restType">
+          <option value="none" data-t="rt_none"></option>
+          <option value="regular11" data-t="rt_reg11"></option>
+          <option value="reduced9" data-t="rt_red9"></option>
+          <option value="split" data-t="rt_split"></option>
+          <option value="mm9" data-t="rt_mm9"></option>
+          <option value="weekly-regular" data-t="rt_wreg"></option>
+          <option value="weekly-reduced" data-t="rt_wred"></option>
+        </select>
+        <label data-t="l_resthours"></label>
+        <input type="number" id="f_restHours" step="0.1" min="0">
+        <div class="checkbox-row">
+          <input type="checkbox" id="f_applyComp">
+          <label for="f_applyComp" data-t="l_apply_comp"></label>
+        </div>
+        <div id="compApplyWrap" style="display:none;">
+          <label data-t="l_comp_hours"></label>
+          <input type="number" id="f_compHours" step="0.1" min="0">
+        </div>
+
+        <div class="subhead" data-t="sh_exceptions"></div>
+        <div class="section-note" data-t="exc_note"></div>
+        <div id="excWrap"></div>
+
+        <label data-t="l_notes"></label>
+        <textarea id="f_notes" rows="2"></textarea>
+        <button type="submit" class="primary" id="saveBtn" data-t="btn_save"></button>
+        <button type="button" class="secondary" id="cancelEdit" style="display:none;" data-t="btn_cancel"></button>
+      </form>
+      <div class="result" id="resultPanel" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="view" id="view-month">
+    <div class="card">
+      <h2 data-t="month_title"></h2>
+      <label data-t="l_month"></label>
+      <input type="month" id="f_month">
+      <div id="monthOut"></div>
+    </div>
+  </div>
+
+  <div class="view" id="view-log">
+    <div class="card">
+      <h2 data-t="log_title"></h2>
+      <div class="section-note" data-t="log_hint"></div>
+      <div id="logList"></div>
+    </div>
+  </div>
+
+  <div class="view" id="view-viol"><div class="card"><h2 data-t="viol_title"></h2><div id="violList"></div></div></div>
+
+  <div class="view" id="view-install">
+    <div class="card">
+      <h2 data-t="install_title"></h2>
+      <div class="section-note" data-t="install_intro"></div>
+      <button class="primary" id="installBtn" data-t="btn_install"></button>
+      <div class="install-steps" id="installSteps"></div>
+    </div>
+    <div class="card">
+      <h2 data-t="data_title"></h2>
+      <div class="section-note" data-t="data_note"></div>
+      <button type="button" class="secondary" id="exportBtn" data-t="btn_export"></button>
+      <button type="button" class="secondary" id="importBtn" data-t="btn_import"></button>
+      <input type="file" id="importFile" accept="application/json" style="display:none;">
+    </div>
+  </div>
+
+  <div class="disclaimer" data-t="disclaimer"></div>
+</div>
+<script>
+/* ============ i18n ============ */
+const T = {
+bg:{
+ subtitle:'Дневник и контрол по Регламент 561/2006',
+ tab_dash:'Табло', tab_add:'Ден', tab_month:'Месец', tab_log:'Дневник', tab_viol:'Нарушения', tab_install:'Настройки',
+ vb_cap:'Текущо превозно средство', vb_change:'Смени', vb_none:'не е зададено', vb_prompt:'Регистрационен номер на новото превозно средство:',
+ dash_current:'Управление — седмица / двуседмичен период',
+ dash_allow:'Използвани и оставащи допустими отклонения',
+ dash_rest:'Седмичен цикъл и почивки',
+ dash_comp:'Дължими компенсации',
+ dash_strip:'Последни 14 дни — управление',
+ add_title:'Приключване на работен ден', edit_title:'Редакция на работен ден',
+ add_note:'Регистрационният номер се помни автоматично. Попълва се само при смяна на камион.',
+ l_date:'Дата', l_start:'Начало на работния ден', l_end:'Край на работния ден',
+ sh_places:'Място на започване и приключване',
+ l_startPlace:'Място на започване', l_startCountry:'Държава',
+ l_endPlace:'Място на приключване', l_endCountry:'Държава',
+ places_hint:'Задължителен запис по чл. 34 от Регламент 165/2014 — при проверка се сверява с ръчните въвеждания в тахографа.',
+ sh_veh:'Показания от тахографа', sh_rest:'Почивка след края на деня',
+ seg_title:'Превозно средство', seg_plate:'Регистрационен номер',
+ seg_odo_start:'Километраж — начало', seg_odo_end:'Километраж — край',
+ seg_drv_start:'Брояч управление — начало (чч:мм)', seg_drv_end:'Брояч управление — край (чч:мм)',
+ seg_rest_start:'Брояч почивки — начало (чч:мм)', seg_rest_end:'Брояч почивки — край (чч:мм)',
+ seg_hint:'Двоеточието се поставя автоматично — пишеш само цифрите (напр. 145 → 1:45). Ако тахографът не показва кумулативен брояч, остави „начало“ празно и впиши общата сума за деня в „край“.',
+ calc_prefix:'Изчислено:', calc_drv:'управление', calc_rest:'почивки', calc_km:'км',
+ btn_add_vehicle:'+ Добави превозно средство (смяна на камион)',
+ l_resttype:'Вид почивка след деня',
+ rt_none:'Все още няма / продължавам',
+ rt_reg11:'Редовна дневна почивка (≥ 11 ч.)',
+ rt_red9:'Намалена дневна почивка (9–11 ч.)',
+ rt_split:'Разделена дневна почивка (3 ч. + 9 ч.)',
+ rt_mm9:'Почивка при множествен екипаж (≥ 9 ч. в рамките на 30 ч.)',
+ rt_wreg:'Редовна седмична почивка (≥ 45 ч.)',
+ rt_wred:'Намалена седмична почивка (24–45 ч.)',
+ l_resthours:'Продължителност на почивката (часове)',
+ l_apply_comp:'Тази почивка включва компенсация за предходна намалена седмична почивка',
+ l_comp_hours:'Приложени часове компенсация',
+ sh_exceptions:'Изключения и дерогации',
+ exc_note:'Отбележи само това, което реално се отнася за деня. Всяко изключение променя правилата, по които се проверява денят.',
+ exc_ferry_t:'Ферибот или влак — чл. 9(1)',
+ exc_ferry_d:'Почивката е прекъсната от качване/слизане на ферибот или влак.',
+ exc_ferry_kind:'Прекъсната почивка', exc_ferry_kind_daily:'Редовна дневна почивка', exc_ferry_kind_weekly:'Седмична почивка (пътуване ≥ 8 ч.)',
+ exc_ferry_count:'Брой прекъсвания', exc_ferry_mins:'Общо време на прекъсванията (мин.)',
+ exc_ferry_couch:'Наличие на легло или кушетка на разположение',
+ exc_mm_t:'Множествен екипаж — чл. 4(о) и чл. 8(5)',
+ exc_mm_d:'Двама или повече водачи на борда за периода на управление. Дневната почивка става ≥ 9 ч. в рамките на 30 ч.',
+ exc_mm_co:'Втори водач (име или номер на карта)', exc_mm_from:'Съвместно управление от (час)',
+ exc_a12_t:'Извънредни обстоятелства — чл. 12',
+ exc_a12_d:'Отклонение от нормите, за да се достигне подходящо място за спиране или базата/дома за седмична почивка.',
+ exc_a12_type:'Вид отклонение', exc_a12_type_stop:'Достигане на подходящо място за спиране (безопасност)',
+ exc_a12_type_home:'Достигане на базата или дома за седмична почивка',
+ exc_a12_extra:'Превишение на управлението (минути)', exc_a12_reason:'Причина (вписва се ръчно в разпечатката)',
+ exc_a12_break30:'Непосредствено преди това е взета почивка от 30 мин. (позволява до 2 ч.)',
+ exc_a12_noted:'Причината е записана на гърба на разпечатката от тахографа',
+ exc_12d_t:'12-дневно правило — чл. 8(6а)',
+ exc_12d_d:'Еднократен случаен международен превоз на пътници. Седмичната почивка може да се отложи до 12 последователни 24-часови периода.',
+ exc_12d_since:'Начало на превоза (дата)', exc_12d_conf:'Условията по чл. 8(6а) са изпълнени (≥ 24 ч. в друга държава, тахограф, документация)',
+ exc_nat_t:'Национална дерогация — чл. 13 / чл. 14',
+ exc_nat_d:'Освобождаване по националното законодателство на държавата, в която се извършва превозът.',
+ exc_nat_country:'Държава на дерогацията', exc_nat_cat:'Основание', exc_nat_desc:'Описание / номер на разрешението',
+ exc_nat_full:'Денят е изцяло освободен от изискванията на Регламент 561/2006',
+ exc_oos_t:'Извън обхвата на регламента — чл. 3',
+ exc_oos_d:'Превозното средство или превозът не попада в обхвата (напр. до 3,5 т, до 7,5 т в радиус 100 км с материали за собствена дейност, служебно ползване и др.).',
+ exc_oos_reason:'Основание',
+ exc_aetr_t:'AETR — превоз извън ЕС/ЕИП',
+ exc_aetr_d:'Управление на територията на държава извън ЕС, където се прилага Споразумението AETR. Нормите са аналогични, но денят се отчита отделно.',
+ nat_cats:{
+  '':'— избери —',
+  utility:'Комунални услуги (вода, ток, газ, канализация)',
+  agri:'Земеделие, горско стопанство, рибарство (радиус до 100 км)',
+  post:'Универсална пощенска услуга',
+  milk:'Събиране на мляко от стопанства',
+  market:'Пътуващи търговски обекти на местни пазари',
+  circus:'Циркове и панаири',
+  vet:'Ветеринарна дейност',
+  rescue:'Аварийни служби и спасителни операции',
+  medical:'Медицинска техника и оборудване',
+  driving_school:'Учебна дейност и изпити за правоспособност',
+  waste:'Събиране на отпадъци, поддръжка на пътища',
+  animals:'Превоз на живи животни от стопанство до пазар (до 100 км)',
+  museum:'Превозни средства с историческа стойност',
+  other:'Друго основание (уточни по-долу)'
+ },
+ l_notes:'Бележки (незадължително)', btn_save:'Изчисли и запиши деня', btn_update:'Запази промените', btn_cancel:'Отказ от редакция',
+ result_title:'Резултат за',
+ r_workday:'Продължителност на работния ден', r_driving:'Управление този ден',
+ r_breaks:'Почивки по време на деня', r_km:'Изминати километри', r_vehicles:'Превозни средства',
+ r_route:'Маршрут', r_limit:'Приложен дневен лимит',
+ r_rem_week:'Оставащо тази седмица', r_rem_pair:'Оставащо за двуседмичния период',
+ r_ext_left:'Оставащи удължени дни (10 ч.)', r_reduced_left:'Оставащи намалени дневни почивки',
+ r_days_left:'Дни до задължителна седмична почивка', r_next_week:'Разполагаемо за следващата седмица',
+ r_viol:'Нарушения за деня', r_exc:'Приложени изключения',
+ month_title:'Месечна равносметка', l_month:'Месец',
+ m_km:'километри', m_drv:'часа управление', m_rest:'часа почивки',
+ m_days:'работни дни', m_avg:'ср. управление/ден', m_viol:'нарушения',
+ m_empty:'Няма записани дни за избрания месец.',
+ m_weeks:'Седмици в месеца', m_plates:'Използвани превозни средства', m_countries:'Посетени държави', m_exc:'Ползвани изключения',
+ log_title:'Дневник на работните дни', log_hint:'Докосни ден, за да видиш пълната справка за него.',
+ log_empty:'Все още няма записани работни дни.',
+ det_times:'Времена', det_veh:'Превозни средства и броячи', det_rest:'Почивка', det_bal:'Баланс към този ден',
+ det_exc:'Изключения', det_viol:'Нарушения и бележки', det_notes:'Бележки',
+ det_edit:'Редактирай', det_del:'Изтрий', det_confirm:'Да се изтрие ли този ден?',
+ det_noviol:'Няма констатирани нарушения за този ден.',
+ det_start:'Започване', det_end:'Приключване', det_workday:'Работен ден',
+ det_weekdrv:'Управление за седмицата', det_pairdrv:'Управление за двуседмичния период',
+ viol_title:'Констатирани нарушения', viol_empty:'Няма констатирани нарушения.',
+ rest_days:'Изминали 24-часови периода от последната седмична почивка',
+ rest_left:'Оставащи периоди до задължителна седмична почивка',
+ allow_ext_t:'Удължени дни на управление до 10 ч.', allow_ext_d:'Максимум 2 пъти в рамките на календарната седмица — чл. 6(1)',
+ allow_red_t:'Намалени дневни почивки (9–11 ч.)', allow_red_d:'Максимум 3 пъти между две седмични почивки — чл. 8(4)',
+ allow_wred_t:'Намалена седмична почивка в двуседмичния период', allow_wred_d:'Във всеки две последователни седмици поне една почивка трябва да е редовна (45 ч.) — чл. 8(6)',
+ allow_wdead_t:'Краен срок за започване на седмичната почивка', allow_wdead_d:'Не по-късно от края на шестия 24-часов период — чл. 8(6)',
+ allow_12d:'Активно 12-дневно правило — срокът е удължен до 12 периода',
+ used:'използвани', left:'оставащи', of:'от',
+ no_comp:'Няма дължими компенсации в момента.', no_data:'Все още няма записани дни.',
+ ok_status:'ОК', viol_count:'нар.', exempt_badge:'освободен',
+ unit_days:'дни', unit_hours:'ч.', unit_km:'км', unit_min:'мин.', comp_deadline:'краен срок',
+ gauge_week:'Тази седмица', gauge_pair:'Двуседмичен период',
+ rest_labels:{none:'без почивка',regular11:'редовна дневна',reduced9:'намалена дневна',split:'разделена',mm9:'множествен екипаж',
+  'weekly-regular':'редовна седмична','weekly-reduced':'намалена седмична'},
+ v_driving_abs:'Превишено дневно управление: {x} ч. при допустими {lim} ч.',
+ v_driving_ext:'Трето или следващо удължаване над 9 ч. в седмица {wk} — допустими са 2',
+ v_break_missing:'Недостатъчна почивка: при {x} ч. управление се изискват поне 45 мин. (записани {y} мин.)',
+ v_short_rest:'Дневна почивка под 11 ч. — {x} ч.',
+ v_reduced_short:'Намалена дневна почивка под 9 ч. — {x} ч.',
+ v_reduced_too_many:'Четвърта или следваща намалена дневна почивка между две седмични почивки ({x})',
+ v_split_short:'Разделената дневна почивка е под общо 12 ч.',
+ v_mm_short:'Почивката при множествен екипаж е под 9 ч. — {x} ч.',
+ v_wreg_short:'Отбелязана като редовна седмична почивка, но е под 45 ч.',
+ v_wk_under24:'Седмичната почивка е под минимума от 24 ч.',
+ v_week_late:'Седмичната почивка е закъсняла — изминали са {x} периода при допустими {lim}',
+ v_two_reduced:'Две последователни намалени седмични почивки — поне една в двуседмичния период трябва да е ≥ 45 ч.',
+ v_comp_overdue:'Просрочена компенсация от {d} — дължими {x} ч. (краен срок {dl})',
+ v_week_over56:'Превишено седмично управление: {x} ч. при лимит 56 ч. ({wk})',
+ v_pair_over90:'Превишен двуседмичен лимит: {x} ч. при лимит 90 ч.',
+ v_ferry_count:'Прекъсванията на почивката заради ферибот/влак са {x} — допустими са най-много 2',
+ v_ferry_mins:'Общото прекъсване е {x} мин. — допустим е най-много 60 мин.',
+ v_ferry_couch:'Не е отбелязано наличие на легло или кушетка — условие по чл. 9(1)',
+ v_a12_over:'Превишението по чл. 12 е {x} мин. при допустими {lim} мин.',
+ v_a12_note:'Причината по чл. 12 не е записана на разпечатката — изисква се ръчно вписване',
+ v_a12_comp:'Отклонението по чл. 12 за връщане у дома изисква компенсация, взета en bloc преди края на третата следваща седмица',
+ n_exempt:'Денят е освободен от изискванията на 561/2006 — не се отчита в седмичните и двуседмичните лимити',
+ n_ferry_ok:'Прекъсване заради ферибот/влак в допустимите граници — почивката остава редовна',
+ n_mm:'Множествен екипаж: дневната почивка е ≥ 9 ч. в рамките на 30 ч.; първият час присъствието на втория водач не е задължително',
+ n_a12:'Приложен чл. 12 — {x} мин. отклонение. Задължително ръчно вписване на причината върху разпечатката',
+ n_12d:'Активно 12-дневно правило по чл. 8(6а) — след превоза следват две редовни седмични почивки или една редовна и една намалена',
+ n_aetr:'Превозът се отчита по AETR — денят не влиза в лимитите по 561/2006',
+ dash_disc:'Тахо шайба — последен работен ден',
+ det_disc:'Тахо шайба за деня',
+ disc_drv:'управление', disc_brk:'почивки', disc_oth:'друга работа', disc_rest:'почивка',
+ disc_approx:'Разпределението по циферблата е приблизително — по общите времена за деня.',
+ rest_auto:'Дневна почивка след {d}: {x} ч. — ще се впише автоматично към предходния ден',
+ rest_auto_type:'предложен вид',
+ po_show:'Виж като разпечатка от тахограф', po_hide:'Скрий разпечатката',
+ po_head:'КОНТРОЛНА РАЗПЕЧАТКА · 24 ч', po_veh:'Превозно средство', po_odo:'Километраж',
+ po_counters:'Броячи', po_places:'Място', po_sum:'ОБОБЩЕНИЕ ЗА ДЕНЯ', po_rest_after:'Почивка след деня',
+ po_exc:'ИЗКЛЮЧЕНИЯ', po_viol_h:'НАРУШЕНИЯ', po_none:'няма', po_bal:'БАЛАНС',
+ po_foot:'Генерирано от Tacho 561 · неофициален документ',
+ install_title:'Инсталиране на устройство',
+ install_intro:'Приложението работи офлайн и може да се добави като икона на началния екран или в менюто с програми.',
+ btn_install:'Инсталирай приложението',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Отвори страницата в Safari → бутон „Сподели" → „Добавяне към началния екран" → „Добави".',
+ ins_and:'Android (Chrome)', ins_and_s:'Отвори в Chrome → меню ⋮ горе вдясно → „Инсталиране на приложението".',
+ ins_lap:'Лаптоп (Chrome / Edge)', ins_lap_s:'Отвори страницата → иконата за инсталиране в адресната лента → „Инсталиране".',
+ ins_file:'Офлайн файл', ins_file_s:'Свали HTML файла и го отвори с двойно кликване — работи без интернет на всяко устройство.',
+ data_title:'Резервно копие на данните', data_note:'Данните се пазят на устройството. Направи копие преди смяна на телефон или изчистване на браузъра.',
+ btn_export:'Изтегли резервно копие (JSON)', btn_import:'Възстанови от файл',
+ import_ok:'Данните са възстановени успешно.', import_err:'Файлът не може да бъде прочетен.',
+ disclaimer:'Инструментът е помощен и информативен. Обхваща правилата на Регламент (ЕО) 561/2006 заедно с изключенията по чл. 3, 4(о), 8(5), 8(6а), 9(1), 12, 13 и 14, както и превозите по AETR. Националните дерогации по чл. 13 се различават по държави и се променят — приложението предлага рамка за вписването им, но не съдържа изчерпателен списък за всяка държава. Проверявай актуалните национални правила и не разчитай само на този инструмент при проверка. Не представлява правен съвет.'
+},
+en:{
+ subtitle:'Logbook & compliance for Regulation 561/2006',
+ tab_dash:'Dashboard', tab_add:'Day', tab_month:'Month', tab_log:'Logbook', tab_viol:'Violations', tab_install:'Settings',
+ vb_cap:'Current vehicle', vb_change:'Change', vb_none:'not set', vb_prompt:'Number plate of the new vehicle:',
+ dash_current:'Driving — week / two-week period',
+ dash_allow:'Allowances used and remaining',
+ dash_rest:'Weekly cycle and rests',
+ dash_comp:'Compensation owed',
+ dash_strip:'Last 14 days — driving',
+ add_title:'Close a working day', edit_title:'Edit working day',
+ add_note:'The number plate is remembered automatically. You only enter it when you change trucks.',
+ l_date:'Date', l_start:'Start of workday', l_end:'End of workday',
+ sh_places:'Place of start and finish',
+ l_startPlace:'Place of start', l_startCountry:'Country',
+ l_endPlace:'Place of finish', l_endCountry:'Country',
+ places_hint:'Required record under Art. 34 of Regulation 165/2014 — checked against the manual entries on the tachograph during a roadside inspection.',
+ sh_veh:'Tachograph readings', sh_rest:'Rest after end of day',
+ seg_title:'Vehicle', seg_plate:'Number plate',
+ seg_odo_start:'Odometer — start', seg_odo_end:'Odometer — end',
+ seg_drv_start:'Driving counter — start (hh:mm)', seg_drv_end:'Driving counter — end (hh:mm)',
+ seg_rest_start:'Break counter — start (hh:mm)', seg_rest_end:'Break counter — end (hh:mm)',
+ seg_hint:'The colon is inserted automatically — just type the digits (e.g. 145 → 1:45). If your tachograph shows no cumulative counter, leave “start” empty and enter the day total in “end”.',
+ calc_prefix:'Calculated:', calc_drv:'driving', calc_rest:'breaks', calc_km:'km',
+ btn_add_vehicle:'+ Add vehicle (truck change)',
+ l_resttype:'Type of rest after the day',
+ rt_none:'No rest yet / continuing',
+ rt_reg11:'Regular daily rest (≥ 11 h)',
+ rt_red9:'Reduced daily rest (9–11 h)',
+ rt_split:'Split daily rest (3 h + 9 h)',
+ rt_mm9:'Multi-manning rest (≥ 9 h within 30 h)',
+ rt_wreg:'Regular weekly rest (≥ 45 h)',
+ rt_wred:'Reduced weekly rest (24–45 h)',
+ l_resthours:'Rest duration (hours)',
+ l_apply_comp:'This rest includes compensation for an earlier reduced weekly rest',
+ l_comp_hours:'Hours of compensation applied',
+ sh_exceptions:'Exceptions and derogations',
+ exc_note:'Tick only what genuinely applies to the day. Each exception changes the rules the day is checked against.',
+ exc_ferry_t:'Ferry or train — Art. 9(1)',
+ exc_ferry_d:'The rest was interrupted by boarding or leaving a ferry or train.',
+ exc_ferry_kind:'Interrupted rest', exc_ferry_kind_daily:'Regular daily rest', exc_ferry_kind_weekly:'Weekly rest (journey ≥ 8 h)',
+ exc_ferry_count:'Number of interruptions', exc_ferry_mins:'Total interruption time (min)',
+ exc_ferry_couch:'A bunk or couchette was available',
+ exc_mm_t:'Multi-manning — Art. 4(o) and 8(5)',
+ exc_mm_d:'Two or more drivers on board for the driving period. Daily rest becomes ≥ 9 h within 30 h.',
+ exc_mm_co:'Second driver (name or card number)', exc_mm_from:'Joint crewing from (time)',
+ exc_a12_t:'Exceptional circumstances — Art. 12',
+ exc_a12_d:'Departure from the rules in order to reach a suitable stopping place, or the operational centre / home for a weekly rest.',
+ exc_a12_type:'Type of departure', exc_a12_type_stop:'Reaching a suitable stopping place (safety)',
+ exc_a12_type_home:'Reaching the operational centre or home for weekly rest',
+ exc_a12_extra:'Driving time exceeded by (minutes)', exc_a12_reason:'Reason (must be written by hand on the printout)',
+ exc_a12_break30:'A 30-minute break was taken immediately beforehand (allows up to 2 h)',
+ exc_a12_noted:'The reason was recorded on the back of the tachograph printout',
+ exc_12d_t:'12-day rule — Art. 8(6a)',
+ exc_12d_d:'Single occasional international carriage of passengers. The weekly rest may be postponed up to 12 consecutive 24-hour periods.',
+ exc_12d_since:'Start of the service (date)', exc_12d_conf:'The conditions of Art. 8(6a) are met (≥ 24 h in another country, tachograph, documentation)',
+ exc_nat_t:'National derogation — Art. 13 / Art. 14',
+ exc_nat_d:'Exemption under the national law of the country where the transport takes place.',
+ exc_nat_country:'Country of the derogation', exc_nat_cat:'Ground', exc_nat_desc:'Description / authorisation number',
+ exc_nat_full:'The day is fully exempt from Regulation 561/2006',
+ exc_oos_t:'Outside the scope — Art. 3',
+ exc_oos_d:'The vehicle or the transport falls outside the scope (e.g. up to 3.5 t, up to 7.5 t within 100 km carrying own materials, non-commercial use, etc.).',
+ exc_oos_reason:'Ground',
+ exc_aetr_t:'AETR — transport outside the EU/EEA',
+ exc_aetr_d:'Driving in a country outside the EU where the AETR Agreement applies. The rules are equivalent but the day is recorded separately.',
+ nat_cats:{
+  '':'— select —',
+  utility:'Utilities (water, electricity, gas, sewerage)',
+  agri:'Agriculture, forestry, fishing (within 100 km)',
+  post:'Universal postal service',
+  milk:'Milk collection from farms',
+  market:'Mobile shops at local markets',
+  circus:'Circuses and funfairs',
+  vet:'Veterinary activity',
+  rescue:'Emergency services and rescue operations',
+  medical:'Medical equipment and supplies',
+  driving_school:'Driving instruction and tests',
+  waste:'Waste collection, road maintenance',
+  animals:'Live animals from farm to market (within 100 km)',
+  museum:'Vehicles of historical interest',
+  other:'Other ground (specify below)'
+ },
+ l_notes:'Notes (optional)', btn_save:'Calculate & save the day', btn_update:'Save changes', btn_cancel:'Cancel editing',
+ result_title:'Result for',
+ r_workday:'Length of workday', r_driving:'Driving today',
+ r_breaks:'Breaks during the day', r_km:'Distance driven', r_vehicles:'Vehicles',
+ r_route:'Route', r_limit:'Daily limit applied',
+ r_rem_week:'Remaining this week', r_rem_pair:'Remaining two-week period',
+ r_ext_left:'Extended days left (10 h)', r_reduced_left:'Reduced daily rests left',
+ r_days_left:'Periods until mandatory weekly rest', r_next_week:'Available for next week',
+ r_viol:'Violations for the day', r_exc:'Exceptions applied',
+ month_title:'Monthly summary', l_month:'Month',
+ m_km:'kilometres', m_drv:'hours driving', m_rest:'hours of breaks',
+ m_days:'working days', m_avg:'avg driving/day', m_viol:'violations',
+ m_empty:'No days recorded for the selected month.',
+ m_weeks:'Weeks in the month', m_plates:'Vehicles used', m_countries:'Countries visited', m_exc:'Exceptions used',
+ log_title:'Working days log', log_hint:'Tap a day to see the full breakdown for it.',
+ log_empty:'No working days recorded yet.',
+ det_times:'Times', det_veh:'Vehicles and counters', det_rest:'Rest', det_bal:'Balance as of this day',
+ det_exc:'Exceptions', det_viol:'Violations and notes', det_notes:'Notes',
+ det_edit:'Edit', det_del:'Delete', det_confirm:'Delete this day?',
+ det_noviol:'No violations detected for this day.',
+ det_start:'Start', det_end:'Finish', det_workday:'Workday',
+ det_weekdrv:'Driving for the week', det_pairdrv:'Driving for the two-week period',
+ viol_title:'Detected violations', viol_empty:'No violations detected.',
+ rest_days:'24-hour periods since the last weekly rest',
+ rest_left:'Periods remaining before a weekly rest is due',
+ allow_ext_t:'Extended driving days up to 10 h', allow_ext_d:'Maximum twice within the calendar week — Art. 6(1)',
+ allow_red_t:'Reduced daily rests (9–11 h)', allow_red_d:'Maximum three times between two weekly rests — Art. 8(4)',
+ allow_wred_t:'Reduced weekly rest in the two-week period', allow_wred_d:'In any two consecutive weeks at least one rest must be regular (45 h) — Art. 8(6)',
+ allow_wdead_t:'Deadline for starting the weekly rest', allow_wdead_d:'No later than the end of the sixth 24-hour period — Art. 8(6)',
+ allow_12d:'12-day rule active — the deadline is extended to 12 periods',
+ used:'used', left:'left', of:'of',
+ no_comp:'No compensation currently owed.', no_data:'No days recorded yet.',
+ ok_status:'OK', viol_count:'viol.', exempt_badge:'exempt',
+ unit_days:'days', unit_hours:'h', unit_km:'km', unit_min:'min', comp_deadline:'deadline',
+ gauge_week:'This week', gauge_pair:'Two-week period',
+ rest_labels:{none:'no rest',regular11:'regular daily',reduced9:'reduced daily',split:'split',mm9:'multi-manning',
+  'weekly-regular':'regular weekly','weekly-reduced':'reduced weekly'},
+ v_driving_abs:'Daily driving exceeded: {x} h against a permitted {lim} h',
+ v_driving_ext:'Third or further extension beyond 9 h in week {wk} — two are permitted',
+ v_break_missing:'Insufficient break: {x} h of driving requires at least 45 min ({y} min recorded)',
+ v_short_rest:'Daily rest below 11 h — {x} h',
+ v_reduced_short:'Reduced daily rest below 9 h — {x} h',
+ v_reduced_too_many:'Fourth or further reduced daily rest between two weekly rests ({x})',
+ v_split_short:'Split daily rest below 12 h in total',
+ v_mm_short:'Multi-manning rest below 9 h — {x} h',
+ v_wreg_short:'Marked as a regular weekly rest but below 45 h',
+ v_wk_under24:'Weekly rest below the 24 h minimum',
+ v_week_late:'Weekly rest overdue — {x} periods elapsed against a permitted {lim}',
+ v_two_reduced:'Two consecutive reduced weekly rests — at least one in the two-week period must be ≥ 45 h',
+ v_comp_overdue:'Overdue compensation from {d} — {x} h owed (deadline {dl})',
+ v_week_over56:'Weekly driving exceeded: {x} h against a 56 h limit ({wk})',
+ v_pair_over90:'Two-week limit exceeded: {x} h against a 90 h limit',
+ v_ferry_count:'The rest was interrupted {x} times for the ferry/train — at most 2 are permitted',
+ v_ferry_mins:'Total interruption is {x} min — at most 60 min is permitted',
+ v_ferry_couch:'No bunk or couchette recorded as available — a condition of Art. 9(1)',
+ v_a12_over:'The Art. 12 excess is {x} min against a permitted {lim} min',
+ v_a12_note:'The Art. 12 reason is not recorded on the printout — a manual entry is required',
+ v_a12_comp:'An Art. 12 departure for returning home requires compensating rest taken en bloc before the end of the third following week',
+ n_exempt:'The day is exempt from 561/2006 — it does not count towards the weekly and two-week limits',
+ n_ferry_ok:'Ferry/train interruption within the permitted limits — the rest remains a regular one',
+ n_mm:'Multi-manning: daily rest is ≥ 9 h within 30 h; for the first hour the presence of the second driver is optional',
+ n_a12:'Art. 12 applied — {x} min departure. A handwritten record of the reason on the printout is mandatory',
+ n_12d:'12-day rule under Art. 8(6a) active — the service must be followed by two regular weekly rests, or one regular and one reduced',
+ n_aetr:'The transport is recorded under AETR — the day does not count towards the 561/2006 limits',
+ dash_disc:'Tacho disc — last working day',
+ det_disc:'Tacho disc for the day',
+ disc_drv:'driving', disc_brk:'breaks', disc_oth:'other work', disc_rest:'rest',
+ disc_approx:'The distribution around the dial is approximate — based on the day totals.',
+ rest_auto:'Daily rest after {d}: {x} h — will be recorded automatically on the previous day',
+ rest_auto_type:'suggested type',
+ po_show:'View as tachograph printout', po_hide:'Hide printout',
+ po_head:'CONTROL PRINTOUT · 24 h', po_veh:'Vehicle', po_odo:'Odometer',
+ po_counters:'Counters', po_places:'Place', po_sum:'DAY SUMMARY', po_rest_after:'Rest after the day',
+ po_exc:'EXCEPTIONS', po_viol_h:'VIOLATIONS', po_none:'none', po_bal:'BALANCE',
+ po_foot:'Generated by Tacho 561 · unofficial document',
+ install_title:'Install on your device',
+ install_intro:'The app works offline and can be added as an icon on your home screen or app menu.',
+ btn_install:'Install the app',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Open the page in Safari → Share button → "Add to Home Screen" → "Add".',
+ ins_and:'Android (Chrome)', ins_and_s:'Open in Chrome → menu ⋮ top right → "Install app".',
+ ins_lap:'Laptop (Chrome / Edge)', ins_lap_s:'Open the page → install icon in the address bar → "Install".',
+ ins_file:'Offline file', ins_file_s:'Download the HTML file and open it by double-clicking — works without internet on any device.',
+ data_title:'Data backup', data_note:'Data is stored on this device. Make a backup before changing phone or clearing your browser.',
+ btn_export:'Download backup (JSON)', btn_import:'Restore from file',
+ import_ok:'Data restored successfully.', import_err:'The file could not be read.',
+ disclaimer:'This tool is informational. It covers the rules of Regulation (EC) 561/2006 together with the exceptions under Art. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 and 14, as well as transport under AETR. National derogations under Art. 13 differ between countries and change over time — the app provides a framework for recording them but does not hold an exhaustive list for every country. Check the current national rules and do not rely on this tool alone during an inspection. Not legal advice.'
+},
+de:{
+ subtitle:'Fahrtenbuch & Kontrolle nach VO 561/2006',
+ tab_dash:'Übersicht', tab_add:'Tag', tab_month:'Monat', tab_log:'Fahrtenbuch', tab_viol:'Verstöße', tab_install:'Einstellungen',
+ vb_cap:'Aktuelles Fahrzeug', vb_change:'Wechseln', vb_none:'nicht gesetzt', vb_prompt:'Kennzeichen des neuen Fahrzeugs:',
+ dash_current:'Lenkzeit — Woche / Zweiwochenzeitraum',
+ dash_allow:'Genutzte und verbleibende Ausnahmen',
+ dash_rest:'Wochenzyklus und Ruhezeiten',
+ dash_comp:'Fälliger Ausgleich',
+ dash_strip:'Letzte 14 Tage — Lenkzeit',
+ add_title:'Arbeitstag abschließen', edit_title:'Arbeitstag bearbeiten',
+ add_note:'Das Kennzeichen wird automatisch gemerkt. Es wird nur beim Fahrzeugwechsel neu eingegeben.',
+ l_date:'Datum', l_start:'Beginn Arbeitstag', l_end:'Ende Arbeitstag',
+ sh_places:'Ort des Beginns und des Endes',
+ l_startPlace:'Ort des Beginns', l_startCountry:'Land',
+ l_endPlace:'Ort des Endes', l_endCountry:'Land',
+ places_hint:'Pflichtangabe nach Art. 34 VO 165/2014 — wird bei einer Kontrolle mit den manuellen Nachträgen im Fahrtenschreiber abgeglichen.',
+ sh_veh:'Fahrtenschreiber-Stände', sh_rest:'Ruhezeit nach Tagesende',
+ seg_title:'Fahrzeug', seg_plate:'Kennzeichen',
+ seg_odo_start:'Kilometerstand — Beginn', seg_odo_end:'Kilometerstand — Ende',
+ seg_drv_start:'Lenkzeitzähler — Beginn (hh:mm)', seg_drv_end:'Lenkzeitzähler — Ende (hh:mm)',
+ seg_rest_start:'Pausenzähler — Beginn (hh:mm)', seg_rest_end:'Pausenzähler — Ende (hh:mm)',
+ seg_hint:'Der Doppelpunkt wird automatisch gesetzt — nur die Ziffern eingeben (z. B. 145 → 1:45). Zeigt der Fahrtenschreiber keinen kumulativen Zähler, „Beginn“ leer lassen und die Tagessumme unter „Ende“ eintragen.',
+ calc_prefix:'Berechnet:', calc_drv:'Lenkzeit', calc_rest:'Pausen', calc_km:'km',
+ btn_add_vehicle:'+ Fahrzeug hinzufügen (LKW-Wechsel)',
+ l_resttype:'Art der Ruhezeit nach dem Tag',
+ rt_none:'Noch keine / laufend',
+ rt_reg11:'Regelmäßige tägliche Ruhezeit (≥ 11 h)',
+ rt_red9:'Reduzierte tägliche Ruhezeit (9–11 h)',
+ rt_split:'Geteilte tägliche Ruhezeit (3 h + 9 h)',
+ rt_mm9:'Ruhezeit bei Mehrfahrerbesatzung (≥ 9 h innerhalb von 30 h)',
+ rt_wreg:'Regelmäßige Wochenruhezeit (≥ 45 h)',
+ rt_wred:'Reduzierte Wochenruhezeit (24–45 h)',
+ l_resthours:'Dauer der Ruhezeit (Stunden)',
+ l_apply_comp:'Diese Ruhezeit enthält einen Ausgleich für eine frühere reduzierte Wochenruhezeit',
+ l_comp_hours:'Angerechnete Ausgleichsstunden',
+ sh_exceptions:'Ausnahmen und Abweichungen',
+ exc_note:'Nur ankreuzen, was für den Tag tatsächlich zutrifft. Jede Ausnahme ändert die Regeln, nach denen der Tag geprüft wird.',
+ exc_ferry_t:'Fähre oder Zug — Art. 9(1)',
+ exc_ferry_d:'Die Ruhezeit wurde durch das Auf- oder Abfahren einer Fähre bzw. eines Zuges unterbrochen.',
+ exc_ferry_kind:'Unterbrochene Ruhezeit', exc_ferry_kind_daily:'Regelmäßige tägliche Ruhezeit', exc_ferry_kind_weekly:'Wochenruhezeit (Fahrt ≥ 8 h)',
+ exc_ferry_count:'Anzahl der Unterbrechungen', exc_ferry_mins:'Gesamtdauer der Unterbrechungen (min)',
+ exc_ferry_couch:'Eine Koje oder ein Liegeplatz stand zur Verfügung',
+ exc_mm_t:'Mehrfahrerbesatzung — Art. 4(o) und 8(5)',
+ exc_mm_d:'Zwei oder mehr Fahrer an Bord während der Lenkzeit. Die tägliche Ruhezeit beträgt ≥ 9 h innerhalb von 30 h.',
+ exc_mm_co:'Zweiter Fahrer (Name oder Kartennummer)', exc_mm_from:'Gemeinsame Besatzung ab (Uhrzeit)',
+ exc_a12_t:'Außergewöhnliche Umstände — Art. 12',
+ exc_a12_d:'Abweichung von den Vorschriften, um einen geeigneten Halteplatz oder den Betriebssitz bzw. die Wohnung für die Wochenruhezeit zu erreichen.',
+ exc_a12_type:'Art der Abweichung', exc_a12_type_stop:'Erreichen eines geeigneten Halteplatzes (Sicherheit)',
+ exc_a12_type_home:'Erreichen des Betriebssitzes oder der Wohnung für die Wochenruhezeit',
+ exc_a12_extra:'Überschreitung der Lenkzeit (Minuten)', exc_a12_reason:'Grund (handschriftlich auf dem Ausdruck zu vermerken)',
+ exc_a12_break30:'Unmittelbar zuvor wurde eine Pause von 30 min eingelegt (erlaubt bis zu 2 h)',
+ exc_a12_noted:'Der Grund wurde auf der Rückseite des Ausdrucks vermerkt',
+ exc_12d_t:'12-Tage-Regel — Art. 8(6a)',
+ exc_12d_d:'Einzelner Gelegenheitsdienst im grenzüberschreitenden Personenverkehr. Die Wochenruhezeit darf bis zu 12 aufeinanderfolgende 24-Stunden-Zeiträume aufgeschoben werden.',
+ exc_12d_since:'Beginn des Dienstes (Datum)', exc_12d_conf:'Die Voraussetzungen des Art. 8(6a) sind erfüllt (≥ 24 h im Ausland, Fahrtenschreiber, Nachweise)',
+ exc_nat_t:'Nationale Ausnahme — Art. 13 / Art. 14',
+ exc_nat_d:'Befreiung nach nationalem Recht des Landes, in dem die Beförderung stattfindet.',
+ exc_nat_country:'Land der Ausnahme', exc_nat_cat:'Grundlage', exc_nat_desc:'Beschreibung / Genehmigungsnummer',
+ exc_nat_full:'Der Tag ist vollständig von der VO 561/2006 befreit',
+ exc_oos_t:'Außerhalb des Anwendungsbereichs — Art. 3',
+ exc_oos_d:'Das Fahrzeug oder die Beförderung fällt nicht in den Anwendungsbereich (z. B. bis 3,5 t, bis 7,5 t im Umkreis von 100 km mit eigenem Material, nichtgewerbliche Nutzung usw.).',
+ exc_oos_reason:'Grundlage',
+ exc_aetr_t:'AETR — Beförderung außerhalb der EU/des EWR',
+ exc_aetr_d:'Lenken in einem Land außerhalb der EU, in dem das AETR gilt. Die Regeln entsprechen sich, der Tag wird aber gesondert erfasst.',
+ nat_cats:{
+  '':'— auswählen —',
+  utility:'Versorgungsbetriebe (Wasser, Strom, Gas, Abwasser)',
+  agri:'Land-, Forstwirtschaft, Fischerei (Umkreis 100 km)',
+  post:'Universalpostdienst',
+  milk:'Milchabholung von Höfen',
+  market:'Verkaufswagen auf lokalen Märkten',
+  circus:'Zirkusse und Schausteller',
+  vet:'Tierärztliche Tätigkeit',
+  rescue:'Notdienste und Rettungseinsätze',
+  medical:'Medizinische Geräte und Ausrüstung',
+  driving_school:'Fahrschulunterricht und Prüfungen',
+  waste:'Abfallsammlung, Straßenunterhaltung',
+  animals:'Lebende Tiere vom Hof zum Markt (bis 100 km)',
+  museum:'Fahrzeuge von historischem Interesse',
+  other:'Andere Grundlage (unten angeben)'
+ },
+ l_notes:'Notizen (optional)', btn_save:'Berechnen & Tag speichern', btn_update:'Änderungen speichern', btn_cancel:'Bearbeitung abbrechen',
+ result_title:'Ergebnis für',
+ r_workday:'Dauer des Arbeitstages', r_driving:'Lenkzeit heute',
+ r_breaks:'Pausen während des Tages', r_km:'Gefahrene Kilometer', r_vehicles:'Fahrzeuge',
+ r_route:'Strecke', r_limit:'Angewandte Tagesgrenze',
+ r_rem_week:'Verbleibend diese Woche', r_rem_pair:'Verbleibend Zweiwochenzeitraum',
+ r_ext_left:'Verbleibende verlängerte Tage (10 h)', r_reduced_left:'Verbleibende reduzierte Tagesruhezeiten',
+ r_days_left:'Zeiträume bis zur pflichtigen Wochenruhezeit', r_next_week:'Verfügbar für die nächste Woche',
+ r_viol:'Verstöße am Tag', r_exc:'Angewandte Ausnahmen',
+ month_title:'Monatsauswertung', l_month:'Monat',
+ m_km:'Kilometer', m_drv:'Stunden Lenkzeit', m_rest:'Stunden Pausen',
+ m_days:'Arbeitstage', m_avg:'Ø Lenkzeit/Tag', m_viol:'Verstöße',
+ m_empty:'Für den gewählten Monat sind keine Tage erfasst.',
+ m_weeks:'Wochen im Monat', m_plates:'Verwendete Fahrzeuge', m_countries:'Besuchte Länder', m_exc:'Genutzte Ausnahmen',
+ log_title:'Arbeitstage-Fahrtenbuch', log_hint:'Auf einen Tag tippen, um die vollständige Auswertung zu sehen.',
+ log_empty:'Noch keine Arbeitstage erfasst.',
+ det_times:'Zeiten', det_veh:'Fahrzeuge und Zähler', det_rest:'Ruhezeit', det_bal:'Stand zu diesem Tag',
+ det_exc:'Ausnahmen', det_viol:'Verstöße und Hinweise', det_notes:'Notizen',
+ det_edit:'Bearbeiten', det_del:'Löschen', det_confirm:'Diesen Tag löschen?',
+ det_noviol:'Für diesen Tag wurden keine Verstöße festgestellt.',
+ det_start:'Beginn', det_end:'Ende', det_workday:'Arbeitstag',
+ det_weekdrv:'Lenkzeit der Woche', det_pairdrv:'Lenkzeit des Zweiwochenzeitraums',
+ viol_title:'Festgestellte Verstöße', viol_empty:'Keine Verstöße festgestellt.',
+ rest_days:'Vergangene 24-Stunden-Zeiträume seit der letzten Wochenruhezeit',
+ rest_left:'Verbleibende Zeiträume bis zur fälligen Wochenruhezeit',
+ allow_ext_t:'Verlängerte Lenktage bis 10 h', allow_ext_d:'Höchstens zweimal innerhalb der Kalenderwoche — Art. 6(1)',
+ allow_red_t:'Reduzierte Tagesruhezeiten (9–11 h)', allow_red_d:'Höchstens dreimal zwischen zwei Wochenruhezeiten — Art. 8(4)',
+ allow_wred_t:'Reduzierte Wochenruhezeit im Zweiwochenzeitraum', allow_wred_d:'In je zwei aufeinanderfolgenden Wochen muss mindestens eine Ruhezeit regelmäßig sein (45 h) — Art. 8(6)',
+ allow_wdead_t:'Frist für den Beginn der Wochenruhezeit', allow_wdead_d:'Spätestens am Ende des sechsten 24-Stunden-Zeitraums — Art. 8(6)',
+ allow_12d:'12-Tage-Regel aktiv — die Frist verlängert sich auf 12 Zeiträume',
+ used:'genutzt', left:'verbleibend', of:'von',
+ no_comp:'Zurzeit kein Ausgleich fällig.', no_data:'Noch keine Tage erfasst.',
+ ok_status:'OK', viol_count:'V.', exempt_badge:'befreit',
+ unit_days:'Tage', unit_hours:'h', unit_km:'km', unit_min:'min', comp_deadline:'Frist',
+ gauge_week:'Diese Woche', gauge_pair:'Zweiwochenzeitraum',
+ rest_labels:{none:'keine Ruhezeit',regular11:'regelmäßige Tagesruhe',reduced9:'reduzierte Tagesruhe',split:'geteilt',mm9:'Mehrfahrerbesatzung',
+  'weekly-regular':'regelmäßige Wochenruhe','weekly-reduced':'reduzierte Wochenruhe'},
+ v_driving_abs:'Tageslenkzeit überschritten: {x} h bei zulässigen {lim} h',
+ v_driving_ext:'Dritte oder weitere Verlängerung über 9 h in Woche {wk} — zwei sind zulässig',
+ v_break_missing:'Unzureichende Unterbrechung: bei {x} h Lenkzeit sind mindestens 45 min erforderlich ({y} min erfasst)',
+ v_short_rest:'Tägliche Ruhezeit unter 11 h — {x} h',
+ v_reduced_short:'Reduzierte Tagesruhezeit unter 9 h — {x} h',
+ v_reduced_too_many:'Vierte oder weitere reduzierte Tagesruhezeit zwischen zwei Wochenruhezeiten ({x})',
+ v_split_short:'Geteilte Tagesruhezeit unter insgesamt 12 h',
+ v_mm_short:'Ruhezeit bei Mehrfahrerbesatzung unter 9 h — {x} h',
+ v_wreg_short:'Als regelmäßige Wochenruhezeit markiert, aber unter 45 h',
+ v_wk_under24:'Wochenruhezeit unter dem Mindestwert von 24 h',
+ v_week_late:'Wochenruhezeit überfällig — {x} Zeiträume vergangen bei zulässigen {lim}',
+ v_two_reduced:'Zwei aufeinanderfolgende reduzierte Wochenruhezeiten — mindestens eine im Zweiwochenzeitraum muss ≥ 45 h betragen',
+ v_comp_overdue:'Überfälliger Ausgleich vom {d} — {x} h fällig (Frist {dl})',
+ v_week_over56:'Wöchentliche Lenkzeit überschritten: {x} h bei einer Grenze von 56 h ({wk})',
+ v_pair_over90:'Zweiwochen-Grenze überschritten: {x} h bei einer Grenze von 90 h',
+ v_ferry_count:'Die Ruhezeit wurde {x}-mal für Fähre/Zug unterbrochen — höchstens 2 sind zulässig',
+ v_ferry_mins:'Die Gesamtunterbrechung beträgt {x} min — höchstens 60 min sind zulässig',
+ v_ferry_couch:'Keine Koje oder Liegeplatz vermerkt — Voraussetzung nach Art. 9(1)',
+ v_a12_over:'Die Überschreitung nach Art. 12 beträgt {x} min bei zulässigen {lim} min',
+ v_a12_note:'Der Grund nach Art. 12 ist nicht auf dem Ausdruck vermerkt — ein handschriftlicher Eintrag ist erforderlich',
+ v_a12_comp:'Eine Abweichung nach Art. 12 für die Heimfahrt erfordert eine Ausgleichsruhezeit en bloc vor Ablauf der dritten Folgewoche',
+ n_exempt:'Der Tag ist von der VO 561/2006 befreit — er zählt nicht zu den Wochen- und Zweiwochengrenzen',
+ n_ferry_ok:'Unterbrechung durch Fähre/Zug innerhalb der zulässigen Grenzen — die Ruhezeit bleibt regelmäßig',
+ n_mm:'Mehrfahrerbesatzung: tägliche Ruhezeit ≥ 9 h innerhalb von 30 h; in der ersten Stunde ist die Anwesenheit des zweiten Fahrers freigestellt',
+ n_a12:'Art. 12 angewandt — {x} min Abweichung. Ein handschriftlicher Vermerk des Grundes auf dem Ausdruck ist zwingend',
+ n_12d:'12-Tage-Regel nach Art. 8(6a) aktiv — nach dem Dienst folgen zwei regelmäßige Wochenruhezeiten oder eine regelmäßige und eine reduzierte',
+ n_aetr:'Die Beförderung wird nach AETR erfasst — der Tag zählt nicht zu den Grenzen der VO 561/2006',
+ dash_disc:'Tachoscheibe — letzter Arbeitstag',
+ det_disc:'Tachoscheibe des Tages',
+ disc_drv:'Lenkzeit', disc_brk:'Pausen', disc_oth:'andere Arbeit', disc_rest:'Ruhezeit',
+ disc_approx:'Die Verteilung auf dem Zifferblatt ist näherungsweise — anhand der Tagessummen.',
+ rest_auto:'Tägliche Ruhezeit nach dem {d}: {x} h — wird automatisch beim Vortag eingetragen',
+ rest_auto_type:'vorgeschlagene Art',
+ po_show:'Als Fahrtenschreiber-Ausdruck anzeigen', po_hide:'Ausdruck ausblenden',
+ po_head:'KONTROLLAUSDRUCK · 24 h', po_veh:'Fahrzeug', po_odo:'Kilometerstand',
+ po_counters:'Zähler', po_places:'Ort', po_sum:'TAGESÜBERSICHT', po_rest_after:'Ruhezeit nach dem Tag',
+ po_exc:'AUSNAHMEN', po_viol_h:'VERSTÖSSE', po_none:'keine', po_bal:'BILANZ',
+ po_foot:'Erstellt mit Tacho 561 · kein amtliches Dokument',
+ install_title:'Auf dem Gerät installieren',
+ install_intro:'Die App funktioniert offline und kann als Symbol auf dem Startbildschirm oder im Programmmenü abgelegt werden.',
+ btn_install:'App installieren',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Seite in Safari öffnen → Teilen-Symbol → „Zum Home-Bildschirm" → „Hinzufügen".',
+ ins_and:'Android (Chrome)', ins_and_s:'In Chrome öffnen → Menü ⋮ oben rechts → „App installieren".',
+ ins_lap:'Laptop (Chrome / Edge)', ins_lap_s:'Seite öffnen → Installationssymbol in der Adressleiste → „Installieren".',
+ ins_file:'Offline-Datei', ins_file_s:'HTML-Datei herunterladen und per Doppelklick öffnen — funktioniert auf jedem Gerät ohne Internet.',
+ data_title:'Datensicherung', data_note:'Die Daten liegen auf diesem Gerät. Vor einem Handywechsel oder dem Löschen der Browserdaten eine Sicherung anlegen.',
+ btn_export:'Sicherung herunterladen (JSON)', btn_import:'Aus Datei wiederherstellen',
+ import_ok:'Daten erfolgreich wiederhergestellt.', import_err:'Die Datei konnte nicht gelesen werden.',
+ disclaimer:'Dieses Werkzeug ist rein informativ. Es deckt die Regeln der VO (EG) 561/2006 zusammen mit den Ausnahmen nach Art. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 und 14 sowie Beförderungen nach AETR ab. Nationale Ausnahmen nach Art. 13 unterscheiden sich je Land und ändern sich — die App bietet einen Rahmen zu ihrer Erfassung, enthält aber keine vollständige Liste für jedes Land. Prüfe die geltenden nationalen Regeln und verlasse dich bei einer Kontrolle nicht allein auf dieses Werkzeug. Keine Rechtsberatung.'
+}
+};
+
+
+/* ============ Countries ============ */
+const COUNTRIES = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE',
+ 'AL','AD','AM','AZ','BY','BA','GE','IS','KZ','LI','MD','MC','ME','MK','NO','RU','SM','RS','CH','TR','UA','GB','XK','MA','TN'];
+const COUNTRY_NAMES = {
+ AT:'Österreich / Austria',BE:'België / Belgium',BG:'България / Bulgaria',HR:'Hrvatska / Croatia',CY:'Cyprus',CZ:'Česko / Czechia',
+ DK:'Danmark / Denmark',EE:'Eesti / Estonia',FI:'Suomi / Finland',FR:'France',DE:'Deutschland / Germany',GR:'Ελλάδα / Greece',
+ HU:'Magyarország / Hungary',IE:'Ireland',IT:'Italia / Italy',LV:'Latvija / Latvia',LT:'Lietuva / Lithuania',LU:'Luxembourg',
+ MT:'Malta',NL:'Nederland / Netherlands',PL:'Polska / Poland',PT:'Portugal',RO:'România / Romania',SK:'Slovensko / Slovakia',
+ SI:'Slovenija / Slovenia',ES:'España / Spain',SE:'Sverige / Sweden',AL:'Shqipëri / Albania',AD:'Andorra',AM:'Armenia',AZ:'Azerbaijan',
+ BY:'Беларусь / Belarus',BA:'Bosna i Hercegovina',GE:'Georgia',IS:'Ísland / Iceland',KZ:'Kazakhstan',LI:'Liechtenstein',
+ MD:'Moldova',MC:'Monaco',ME:'Crna Gora / Montenegro',MK:'Северна Македонија',NO:'Norge / Norway',RU:'Россия / Russia',
+ SM:'San Marino',RS:'Србија / Serbia',CH:'Schweiz / Switzerland',TR:'Türkiye',UA:'Україна / Ukraine',GB:'United Kingdom',
+ XK:'Kosovo',MA:'Maroc / Morocco',TN:'Tunisie / Tunisia'
+};
+
+/* ============ Language & theme ============ */
+let LANG='bg';
+try{ const s=localStorage.getItem('t561-lang'); if(s&&T[s]) LANG=s; }catch(e){}
+function t(k,p){ let s=T[LANG][k]; if(s===undefined) return k; if(typeof s!=='string') return s;
+  if(p) for(const q in p) s=s.split('{'+q+'}').join(p[q]); return s; }
+
+let THEME='auto';
+try{ const s=localStorage.getItem('t561-theme'); if(s) THEME=s; }catch(e){}
+function resolveTheme(){
+  if(THEME!=='auto') return THEME;
+  const h=new Date().getHours();
+  const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return (h>=20||h<7||dark)?'night':'day';
+}
+function applyTheme(){
+  const eff=resolveTheme();
+  document.documentElement.setAttribute('data-theme',eff);
+  const mt=document.querySelector('meta[name=theme-color]');
+  if(mt) mt.setAttribute('content', eff==='night'?'#12161d':'#f4f5f7');
+  document.querySelectorAll('#themepick button').forEach(b=>b.classList.toggle('active', b.dataset.theme===THEME));
+}
+setInterval(()=>{ if(THEME==='auto') applyTheme(); },60000);
+
+/* ============ Storage ============ */
+const KEY='t561-data-v4';
+let DATA={ entries:[], compensations:[], currentPlate:'', lastCountry:'' };
+const store={
+  async get(k){
+    if(window.storage&&window.storage.get){ try{ const r=await window.storage.get(k,false); return r&&r.value?r.value:null; }catch(e){} }
+    try{ return localStorage.getItem(k); }catch(e){ return null; }
+  },
+  async set(k,v){
+    if(window.storage&&window.storage.set){ try{ await window.storage.set(k,v,false); return; }catch(e){} }
+    try{ localStorage.setItem(k,v); }catch(e){}
+  }
+};
+async function loadData(){
+  const raw=await store.get(KEY);
+  if(raw){ try{ DATA=JSON.parse(raw); }catch(e){} }
+  DATA.entries=DATA.entries||[]; DATA.compensations=DATA.compensations||[];
+  DATA.currentPlate=DATA.currentPlate||''; DATA.lastCountry=DATA.lastCountry||'';
+}
+async function saveData(){ await store.set(KEY, JSON.stringify(DATA)); }
+
+/* ============ Date / time ============ */
+function toDate(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+function isoWeekInfo(ds){
+  const d=toDate(ds), tg=new Date(d.valueOf());
+  tg.setDate(tg.getDate()-((d.getDay()+6)%7)+3);
+  const ft=new Date(tg.getFullYear(),0,4);
+  return { year:tg.getFullYear(), week:1+Math.round((tg-ft)/(7*864e5)) };
+}
+function weekKey(ds){ const w=isoWeekInfo(ds); return w.year+'-W'+String(w.week).padStart(2,'0'); }
+function mondayOf(ds){ const d=toDate(ds); d.setDate(d.getDate()-((d.getDay()+6)%7)); return d; }
+function sundayOf(ds){ const m=mondayOf(ds); const s=new Date(m); s.setDate(s.getDate()+6); return s; }
+function fmt(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function addWeeks(d,n){ const x=new Date(d); x.setDate(x.getDate()+n*7); return x; }
+function hoursBetween(a,b){
+  if(!a||!b) return 0;
+  const [h1,m1]=a.split(':').map(Number),[h2,m2]=b.split(':').map(Number);
+  let d=(h2*60+m2)-(h1*60+m1); if(d<0) d+=1440; return d/60;
+}
+function counterToMin(v){
+  if(v===null||v===undefined||v==='') return null;
+  const s=String(v).trim();
+  if(s.includes(':')){ const p=s.split(':'); return (parseInt(p[0],10)||0)*60+(parseInt(p[1],10)||0); }
+  const f=parseFloat(s); return isNaN(f)?null:Math.round(f*60);
+}
+function maskHM(raw){
+  let d=String(raw==null?'':raw).replace(/[^0-9]/g,'');
+  if(!d) return '';
+  d=d.slice(0,6);
+  if(d.length<=2) return d;
+  return d.slice(0,-2)+':'+d.slice(-2);
+}
+function normalizeHM(v){
+  const m=maskHM(v);
+  if(!m) return '';
+  if(!m.includes(':')) return m+':00';
+  let p=m.split(':'), mm=p[1];
+  if(+mm>59) mm='59';
+  return p[0]+':'+mm.padStart(2,'0');
+}
+function minToHM(m){
+  if(m===null||m===undefined||isNaN(m)) return '—';
+  const sg=m<0?'-':''; m=Math.abs(m);
+  return sg+Math.floor(m/60)+':'+String(Math.round(m%60)).padStart(2,'0');
+}
+
+/* ============ Derived per-segment values ============ */
+function counterPair(startV,endV){
+  let a=counterToMin(startV), b=counterToMin(endV);
+  if(b===null) return null;      // no end value -> nothing to compute
+  if(a===null) a=0;              // empty start means "counted from zero"
+  return Math.max(0,b-a);
+}
+function segDrivingMin(s){ return counterPair(s.drvStart,s.drvEnd); }
+function segRestMin(s){ return counterPair(s.restStart,s.restEnd); }
+function segKm(s){ const a=parseFloat(s.odoStart),b=parseFloat(s.odoEnd); return (isNaN(a)||isNaN(b))?null:Math.max(0,b-a); }
+function dayDrivingHours(e){ return (e.segments||[]).reduce((s,x)=>{const m=segDrivingMin(x); return s+(m===null?0:m/60);},0); }
+function dayBreakMin(e){ return (e.segments||[]).reduce((s,x)=>{const m=segRestMin(x); return s+(m===null?0:m);},0); }
+function dayKm(e){ return (e.segments||[]).reduce((s,x)=>{const k=segKm(x); return s+(k===null?0:k);},0); }
+function isExempt(e){ const x=e.exc||{};
+  return !!(x.oos&&x.oos.on) || !!(x.nat&&x.nat.on&&x.nat.full) || !!(x.aetr&&x.aetr.on); }
+
+/* ============ Compliance engine ============ */
+function computeAll(){
+  const entries=[...DATA.entries].sort((a,b)=>a.date.localeCompare(b.date));
+  const comps=[];
+  let reducedDaily=0, periodsSinceWeekly=0, extByWeek={}, allViol=[], evals={};
+  let weeklyRestHistory=[]; // {date, type, hours}
+  let twelveDayActive=null;
+
+  const weekSums={};
+  entries.forEach(e=>{ if(!isExempt(e)){ const w=weekKey(e.date); weekSums[w]=(weekSums[w]||0)+dayDrivingHours(e); } });
+
+  entries.forEach(e=>{
+    const x=e.exc||{};
+    const V=[], N=[], EXC=[];
+    const wk=weekKey(e.date);
+    extByWeek[wk]=extByWeek[wk]||0;
+    const drv=dayDrivingHours(e), brk=dayBreakMin(e), km=dayKm(e);
+    const exempt=isExempt(e);
+
+    // ---- exemptions that remove the day from 561 ----
+    if(x.oos&&x.oos.on){ EXC.push({k:'oos',label:t('exc_oos_t'),info:x.oos.reason||''}); }
+    if(x.nat&&x.nat.on){
+      const cats=t('nat_cats');
+      EXC.push({k:'nat',label:t('exc_nat_t'),
+        info:[x.nat.country,(cats&&cats[x.nat.cat])||'',x.nat.desc||''].filter(Boolean).join(' · ')});
+    }
+    if(x.aetr&&x.aetr.on){ EXC.push({k:'aetr',label:t('exc_aetr_t'),info:''}); N.push({msg:t('n_aetr'),art:'AETR'}); }
+    if(exempt) N.push({msg:t('n_exempt'),art:'Art. 3 / 13 / 14'});
+
+    // ---- daily driving limit with Art.12 tolerance ----
+    let dailyBase = (extByWeek[wk]<2) ? 10 : 9;
+    let a12extra = 0, a12max = 0;
+    if(x.a12&&x.a12.on){
+      a12max = x.a12.break30 ? 120 : 60;
+      a12extra = Math.min(parseFloat(x.a12.extra)||0, 1000);
+      EXC.push({k:'a12',label:t('exc_a12_t'),info:(x.a12.reason||'')});
+      N.push({msg:t('n_a12',{x:a12extra}),art:'Art. 12'});
+      if(a12extra>a12max) V.push({msg:t('v_a12_over',{x:a12extra,lim:a12max}),art:'Art. 12',sev:'bad'});
+      if(!x.a12.noted) V.push({msg:t('v_a12_note'),art:'Art. 12',sev:'warn'});
+      if(x.a12.type==='home') N.push({msg:t('v_a12_comp'),art:'Art. 12'});
+    }
+    const dailyLimit = dailyBase + Math.min(a12extra,a12max)/60;
+
+    if(!exempt){
+      if(drv>dailyLimit+0.001){
+        V.push({msg:t('v_driving_abs',{x:drv.toFixed(1),lim:dailyLimit.toFixed(1)}),art:'Art. 6(1)',sev:'bad'});
+      }
+      if(drv>9.001 && drv<=10.001){
+        extByWeek[wk]++;
+        if(extByWeek[wk]>2) V.push({msg:t('v_driving_ext',{wk}),art:'Art. 6(1)',sev:'bad'});
+      }
+      // breaks — multi-manning still requires the break, but it may be taken while the co-driver drives
+      if(drv>4.5 && brk<45){
+        V.push({msg:t('v_break_missing',{x:drv.toFixed(1),y:brk}),art:'Art. 7',sev:'bad'});
+      }
+    }
+
+    // ---- multi-manning ----
+    const mm = !!(x.mm&&x.mm.on);
+    if(mm){
+      EXC.push({k:'mm',label:t('exc_mm_t'),info:[x.mm.co||'',x.mm.from||''].filter(Boolean).join(' · ')});
+      N.push({msg:t('n_mm'),art:'Art. 4(o), 8(5)'});
+    }
+
+    // ---- ferry / train ----
+    const ferry = !!(x.ferry&&x.ferry.on);
+    let ferryOk=true;
+    if(ferry){
+      const cnt=parseInt(x.ferry.count)||0, mins=parseInt(x.ferry.mins)||0;
+      EXC.push({k:'ferry',label:t('exc_ferry_t'),
+        info:(x.ferry.kind==='weekly'?t('exc_ferry_kind_weekly'):t('exc_ferry_kind_daily'))+' · '+cnt+'× / '+mins+' '+t('unit_min')});
+      if(cnt>2){ V.push({msg:t('v_ferry_count',{x:cnt}),art:'Art. 9(1)',sev:'bad'}); ferryOk=false; }
+      if(mins>60){ V.push({msg:t('v_ferry_mins',{x:mins}),art:'Art. 9(1)',sev:'bad'}); ferryOk=false; }
+      if(!x.ferry.couch){ V.push({msg:t('v_ferry_couch'),art:'Art. 9(1)',sev:'bad'}); ferryOk=false; }
+      if(ferryOk) N.push({msg:t('n_ferry_ok'),art:'Art. 9(1)'});
+    }
+
+    // ---- 12-day rule ----
+    let weeklyDeadline = 6;
+    if(x.d12&&x.d12.on){
+      EXC.push({k:'d12',label:t('exc_12d_t'),info:x.d12.since||''});
+      if(x.d12.conf){ weeklyDeadline = 12; twelveDayActive = e.date; N.push({msg:t('n_12d'),art:'Art. 8(6a)'}); }
+    }
+
+    // ---- period counter ----
+    if(!exempt) periodsSinceWeekly++;
+
+    // ---- rest evaluation ----
+    const rh = e.restHours||0;
+    switch(e.restType){
+      case 'regular11':
+        if(rh<10.999 && !(ferry&&ferryOk)) V.push({msg:t('v_short_rest',{x:rh}),art:'Art. 8(2)',sev:'bad'});
+        break;
+      case 'reduced9':
+        if(rh<8.999) V.push({msg:t('v_reduced_short',{x:rh}),art:'Art. 8(4)',sev:'bad'});
+        reducedDaily++;
+        if(reducedDaily>3) V.push({msg:t('v_reduced_too_many',{x:reducedDaily}),art:'Art. 8(4)',sev:'bad'});
+        break;
+      case 'split':
+        if(rh<11.999) V.push({msg:t('v_split_short'),art:'Art. 8(3)',sev:'bad'});
+        break;
+      case 'mm9':
+        if(rh<8.999) V.push({msg:t('v_mm_short',{x:rh}),art:'Art. 8(5)',sev:'bad'});
+        break;
+      case 'weekly-regular':
+        if(rh<44.999) V.push({msg:t('v_wreg_short'),art:'Art. 8(6)',sev:'bad'});
+        weeklyRestHistory.push({date:e.date,type:'regular',hours:rh});
+        reducedDaily=0; periodsSinceWeekly=0;
+        break;
+      case 'weekly-reduced':
+        if(rh<23.999) V.push({msg:t('v_wk_under24'),art:'Art. 8(6)',sev:'bad'});
+        if(rh<44.999){
+          comps.push({id:'c'+e.id, sourceDate:e.date, sourceWeek:wk,
+            owedHours:+(45-rh).toFixed(1), appliedHours:0, deadline:fmt(addWeeks(sundayOf(e.date),3))});
+        }
+        weeklyRestHistory.push({date:e.date,type:'reduced',hours:rh});
+        // two consecutive reduced weekly rests
+        if(weeklyRestHistory.length>=2){
+          const prev=weeklyRestHistory[weeklyRestHistory.length-2];
+          if(prev.type==='reduced') V.push({msg:t('v_two_reduced'),art:'Art. 8(6)',sev:'bad'});
+        }
+        reducedDaily=0; periodsSinceWeekly=0;
+        break;
+    }
+
+    if(!exempt && periodsSinceWeekly>weeklyDeadline){
+      V.push({msg:t('v_week_late',{x:periodsSinceWeekly,lim:weeklyDeadline}),art:'Art. 8(6)',sev:'bad'});
+    }
+
+    const pairInfo = pairFor(weekSums, e.date);
+    evals[e.id]={
+      date:e.date, drv, brk, km, exempt, wk,
+      workdayH:hoursBetween(e.start,e.end),
+      dailyLimit, extUsed:extByWeek[wk], reducedUsed:reducedDaily,
+      periodsSinceWeekly, weeklyDeadline,
+      weekDrv:weekSums[wk]||0, pairDrv:pairInfo.pairSum,
+      viol:V, notes:N, exc:EXC
+    };
+    V.forEach(v=>allViol.push({date:e.date,msg:v.msg,art:v.art,sev:v.sev||'bad'}));
+  });
+
+  DATA.compensations=comps;
+  entries.forEach(e=>{
+    if(e.compAppliedHours>0){
+      let rem=e.compAppliedHours;
+      DATA.compensations.filter(c=>c.owedHours-c.appliedHours>0.001 && c.sourceDate<=e.date)
+        .sort((a,b)=>a.deadline.localeCompare(b.deadline))
+        .forEach(c=>{ if(rem<=0) return; const take=Math.min(c.owedHours-c.appliedHours,rem); c.appliedHours+=take; rem-=take; });
+    }
+  });
+  const today=fmt(new Date());
+  DATA.compensations.forEach(c=>{
+    const left=+(c.owedHours-c.appliedHours).toFixed(1);
+    if(left>0.05 && c.deadline<today)
+      allViol.push({date:c.deadline,msg:t('v_comp_overdue',{d:c.sourceDate,x:left,dl:c.deadline}),art:'Art. 8(6)',sev:'bad'});
+  });
+
+  Object.keys(weekSums).forEach(w=>{
+    if(weekSums[w]>56.001) allViol.push({date:w,msg:t('v_week_over56',{x:weekSums[w].toFixed(1),wk:w}),art:'Art. 6(2)',sev:'bad'});
+  });
+  const wl=Object.keys(weekSums).sort();
+  for(let i=1;i<wl.length;i++){
+    const p=weekSums[wl[i]]+weekSums[wl[i-1]];
+    if(p>90.001) allViol.push({date:wl[i],msg:t('v_pair_over90',{x:p.toFixed(1)}),art:'Art. 6(3)',sev:'bad'});
+  }
+
+  // current allowance state (based on the latest entry)
+  const lastRef = entries.length? entries[entries.length-1].date : fmt(new Date());
+  const curWk = weekKey(lastRef);
+  const state={
+    extUsed: extByWeek[curWk]||0,
+    reducedUsed: reducedDaily,
+    periodsSinceWeekly, weeklyDeadline: (twelveDayActive?12:6),
+    twelveDayActive,
+    weeklyRestHistory
+  };
+
+  return { entries, weekSums, evals, violations:allViol, state };
+}
+function pairFor(weekSums, ref){
+  const wk=weekKey(ref), thisSum=weekSums[wk]||0;
+  const pm=mondayOf(ref); pm.setDate(pm.getDate()-7);
+  const prevWk=weekKey(fmt(pm)), prevSum=weekSums[prevWk]||0;
+  return { wk, prevWk, thisSum, prevSum, pairSum:thisSum+prevSum };
+}
+
+/* ============ Auto daily-rest between days ============ */
+function restGapHours(prevDate, prevEnd, date, start){
+  if(!prevDate||!prevEnd||!date||!start) return null;
+  const a=new Date(prevDate+'T'+prevEnd+':00'), b=new Date(date+'T'+start+':00');
+  if(isNaN(a)||isNaN(b)) return null;
+  const h=(b-a)/3600000;
+  return (h>0 && h<24*14)? h : null;
+}
+function prevEntryBefore(date, excludeId){
+  const list=DATA.entries.filter(e=>e.date<date && e.id!==excludeId).sort((a,b)=>a.date.localeCompare(b.date));
+  return list.length? list[list.length-1] : null;
+}
+function classifyRest(h){
+  if(h>=45) return 'weekly-regular';
+  if(h>=24) return 'weekly-reduced';
+  if(h>=11) return 'regular11';
+  if(h>=9) return 'reduced9';
+  return 'none';
+}
+function updateRestCalc(){
+  const out=document.getElementById('restCalcOut'); if(!out) return;
+  const date=document.getElementById('f_date').value;
+  const start=document.getElementById('f_start').value;
+  const editId=document.getElementById('f_editId').value||null;
+  const prev=prevEntryBefore(date, editId);
+  if(!prev||!prev.end){ out.style.display='none'; return; }
+  const gap=restGapHours(prev.date, prev.end, date, start);
+  if(gap===null){ out.style.display='none'; return; }
+  const rl=t('rest_labels'); const type=classifyRest(gap);
+  out.style.display='block';
+  out.textContent=t('rest_auto',{d:prev.date, x:gap.toFixed(1)})+' ('+t('rest_auto_type')+': '+((rl&&rl[type])||type)+')';
+}
+
+/* ============ Tacho disc (24h dial) ============ */
+function timeToAngle(tm){ const [h,m]=tm.split(':').map(Number); return ((h||0)+(m||0)/60)/24*360; }
+function discArc(cx,cy,r,a0,a1,color,w,opacity){
+  let sweep=a1-a0; if(sweep<=0) sweep+=360; if(sweep>=359.9) sweep=359.9;
+  const p0=polar(cx,cy,r,a0), p1=polar(cx,cy,r,a0+sweep);
+  return `<path d="M ${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${r} ${r} 0 ${sweep>180?1:0} 1 ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}" fill="none" stroke="${color}" stroke-width="${w}" ${opacity?`opacity="${opacity}"`:''} stroke-linecap="butt"/>`;
+}
+function discSVG(e,ev){
+  const cx=110,cy=110;
+  let ticks='';
+  for(let h=0;h<24;h++){
+    const maj=h%6===0, a=h/24*360;
+    const p1=polar(cx,cy,maj?88:93,a), p2=polar(cx,cy,100,a);
+    ticks+=`<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="var(--text-faint)" stroke-width="${maj?2:1}"/>`;
+    if(maj){ const pt=polar(cx,cy,78,a);
+      ticks+=`<text x="${pt.x.toFixed(1)}" y="${(pt.y+3.5).toFixed(1)}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="var(--text-dim)">${h}</text>`; }
+  }
+  let acts='';
+  if(e.start&&e.end){
+    const s=timeToAngle(e.start); let en=timeToAngle(e.end); if(en<=s) en+=360;
+    const total=en-s;
+    const workMin=Math.max(1, ev.workdayH*60);
+    const drvMin=Math.min(workMin, ev.drv*60);
+    const brkMin=Math.min(workMin-drvMin, ev.brk||0);
+    const othMin=Math.max(0, workMin-drvMin-brkMin);
+    const dA=total*drvMin/workMin, oA=total*othMin/workMin, bA=total*brkMin/workMin;
+    let a=s;
+    acts+=discArc(cx,cy,56,0,359.9,'var(--border)',14,0.55); // rest ring
+    if(dA>0.5){ acts+=discArc(cx,cy,56,a,a+dA,'var(--accent)',14); a+=dA; }
+    if(oA>0.5){ acts+=discArc(cx,cy,56,a,a+oA,'var(--text-faint)',14); a+=oA; }
+    if(bA>0.5){ acts+=discArc(cx,cy,56,a,a+bA,'var(--ok)',14); }
+    const ps=polar(cx,cy,68,s), pe=polar(cx,cy,68,en);
+    acts+=`<line x1="${cx}" y1="${cy}" x2="${ps.x.toFixed(1)}" y2="${ps.y.toFixed(1)}" stroke="var(--text-dim)" stroke-width="1" opacity="0.5"/>`;
+    acts+=`<line x1="${cx}" y1="${cy}" x2="${pe.x.toFixed(1)}" y2="${pe.y.toFixed(1)}" stroke="var(--text-dim)" stroke-width="1" opacity="0.5"/>`;
+  }
+  return `<svg viewBox="0 0 220 220">
+    <circle cx="${cx}" cy="${cy}" r="103" fill="var(--bg-panel-2)" stroke="var(--border)" stroke-width="2"/>
+    <circle cx="${cx}" cy="${cy}" r="70" fill="none" stroke="var(--border-soft)" stroke-width="1"/>
+    ${ticks}${acts}
+    <circle cx="${cx}" cy="${cy}" r="30" fill="var(--bg-panel)" stroke="var(--border)" stroke-width="1.5"/>
+    <text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="JetBrains Mono" font-size="9.5" fill="var(--text-dim)">${e.date.slice(5)}</text>
+    <text x="${cx}" y="${cy+11}" text-anchor="middle" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="var(--accent)">${ev.drv.toFixed(1)}h</text>
+  </svg>`;
+}
+function discLegend(){
+  return `<div class="disc-legend">
+    <span><i style="background:var(--accent)"></i>${t('disc_drv')}</span>
+    <span><i style="background:var(--text-faint)"></i>${t('disc_oth')}</span>
+    <span><i style="background:var(--ok)"></i>${t('disc_brk')}</span>
+    <span><i style="background:var(--border)"></i>${t('disc_rest')}</span>
+  </div><div class="disc-note">${t('disc_approx')}</div>`;
+}
+
+/* ============ Printout ============ */
+function poLine(ch){ return ch.repeat(30); }
+function poRow(a,b){ a=String(a); b=String(b??''); const w=30-a.length-b.length; return a+' '.repeat(Math.max(1,w))+b; }
+function printoutHTML(e,ev){
+  const rl=t('rest_labels');
+  const L=[];
+  L.push('      ▼ '+t('po_head')+' ▼');
+  L.push(poLine('-'));
+  L.push(poRow(e.date, e.start+'-'+e.end));
+  L.push(poLine('-'));
+  (e.segments||[]).forEach((s,i)=>{
+    L.push(poRow(t('po_veh')+' '+(i+1), s.plate||'—'));
+    if(s.odoStart!=null||s.odoEnd!=null){
+      const k=segKm(s);
+      L.push(poRow(t('po_odo'), (s.odoStart??'—')+'→'+(s.odoEnd??'—')+(k!=null?' ('+k+'km)':'')));
+    }
+    const d=segDrivingMin(s), r=segRestMin(s);
+    if(d!=null||r!=null) L.push(poRow(t('po_counters'),'▶'+minToHM(d)+'  ❚❚'+minToHM(r)));
+    L.push(poLine('-'));
+  });
+  if(e.startPlace||e.startCountry||e.endPlace||e.endCountry){
+    L.push(poRow(t('po_places'),''));
+    L.push(poRow('  '+(e.startCountry||'--'), (e.startPlace||'')+' '+e.start));
+    L.push(poRow('  '+(e.endCountry||'--'), (e.endPlace||'')+' '+e.end));
+    L.push(poLine('-'));
+  }
+  L.push(t('po_sum'));
+  L.push(poRow('▶ '+t('disc_drv'), minToHM(ev.drv*60)));
+  L.push(poRow('❚❚ '+t('disc_brk'), minToHM(ev.brk)));
+  L.push(poRow('⚒ '+t('disc_oth'), minToHM(Math.max(0,ev.workdayH*60-ev.drv*60-ev.brk))));
+  L.push(poRow('Σ', minToHM(ev.workdayH*60)));
+  if(ev.km) L.push(poRow('km', ev.km));
+  L.push(poRow(t('po_rest_after'), ((rl&&rl[e.restType])||'—')+' '+(e.restHours||0)+'h'));
+  L.push(poLine('-'));
+  L.push(t('po_bal'));
+  L.push(poRow('7d', ev.weekDrv.toFixed(1)+'/56h'));
+  L.push(poRow('14d', ev.pairDrv.toFixed(1)+'/90h'));
+  L.push(poRow('10h', ev.extUsed+'/2'));
+  L.push(poRow('9-11h', ev.reducedUsed+'/3'));
+  L.push(poRow('24h→', ev.periodsSinceWeekly+'/'+ev.weeklyDeadline));
+  if(ev.exc.length){
+    L.push(poLine('-'));
+    L.push('⚑ '+t('po_exc'));
+    ev.exc.forEach(x=>L.push(' '+x.label.split('—')[0].trim()));
+  }
+  L.push(poLine('-'));
+  L.push('!  '+t('po_viol_h'));
+  if(ev.viol.length) ev.viol.forEach(v=>{ L.push('!! '+v.msg); L.push('   ['+v.art+']'); });
+  else L.push('   '+t('po_none'));
+  L.push(poLine('='));
+  L.push(t('po_foot'));
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  return esc(L.join('\n'));
+}
+function togglePO(id){
+  const el=document.getElementById('po-'+id);
+  const btn=document.getElementById('pobtn-'+id);
+  if(!el) return;
+  el.classList.toggle('open');
+  if(btn) btn.textContent = el.classList.contains('open')? t('po_hide') : t('po_show');
+}
+window.togglePO=togglePO;
+
+/* ============ Gauge ============ */
+function polar(cx,cy,r,d){ const a=(d-90)*Math.PI/180; return {x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}; }
+function arcPath(cx,cy,r,s,e){ const a=polar(cx,cy,r,e),b=polar(cx,cy,r,s); return `M ${a.x} ${a.y} A ${r} ${r} 0 ${e-s<=180?0:1} 0 ${b.x} ${b.y}`; }
+function gauge(label,val,max,unit){
+  const s=-120,e=120,fill=s+Math.min(val/max,1)*(e-s),r=val/max;
+  const col=r>=1?'var(--bad)':(r>=0.85?'var(--warn)':'var(--ok)');
+  return `<svg viewBox="0 0 150 110">
+   <path d="${arcPath(75,80,60,s,e)}" fill="none" stroke="var(--border)" stroke-width="10" stroke-linecap="round"/>
+   <path d="${arcPath(75,80,60,s,fill)}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round"/>
+   <text x="75" y="72" text-anchor="middle" font-family="JetBrains Mono" font-size="20" font-weight="700" fill="var(--text)">${val.toFixed(1)}</text>
+   <text x="75" y="90" text-anchor="middle" font-family="Inter" font-size="9" fill="var(--text-dim)">/ ${max} ${unit}</text>
+  </svg><div class="gauge-label">${label}</div>`;
+}
+function tokens(used,total){
+  let h='<div class="tokens">';
+  for(let i=0;i<total;i++) h+=`<div class="tok ${i<used?'used':'free'}"></div>`;
+  return h+'</div>';
+}
+
+/* ============ Exceptions form ============ */
+let excState={};
+function blankExc(){
+  return {
+    ferry:{on:false,kind:'daily',count:1,mins:0,couch:false},
+    mm:{on:false,co:'',from:''},
+    a12:{on:false,type:'stop',extra:0,reason:'',break30:false,noted:false},
+    d12:{on:false,since:'',conf:false},
+    nat:{on:false,country:'',cat:'',desc:'',full:true},
+    oos:{on:false,reason:''},
+    aetr:{on:false}
+  };
+}
+function countryOptions(sel){
+  return '<option value=""></option>'+COUNTRIES.map(c=>`<option value="${c}" ${sel===c?'selected':''}>${c} — ${COUNTRY_NAMES[c]||c}</option>`).join('');
+}
+function renderExceptions(){
+  const w=document.getElementById('excWrap'); if(!w) return;
+  const x=excState;
+  const cats=t('nat_cats');
+  const catOpts=Object.keys(cats).map(k=>`<option value="${k}" ${x.nat.cat===k?'selected':''}>${cats[k]}</option>`).join('');
+  w.innerHTML=`
+  <div class="exc-block ${x.ferry.on?'on':''}" data-exc="ferry">
+    <div class="exc-head"><input type="checkbox" data-x="ferry.on" ${x.ferry.on?'checked':''}>
+      <div class="exc-t"><b>${t('exc_ferry_t')}</b><span>${t('exc_ferry_d')}</span></div></div>
+    <div class="exc-body">
+      <label>${t('exc_ferry_kind')}</label>
+      <select data-x="ferry.kind">
+        <option value="daily" ${x.ferry.kind==='daily'?'selected':''}>${t('exc_ferry_kind_daily')}</option>
+        <option value="weekly" ${x.ferry.kind==='weekly'?'selected':''}>${t('exc_ferry_kind_weekly')}</option>
+      </select>
+      <div class="field-row">
+        <div><label>${t('exc_ferry_count')}</label><input type="number" min="0" max="5" data-x="ferry.count" value="${x.ferry.count}"></div>
+        <div><label>${t('exc_ferry_mins')}</label><input type="number" min="0" data-x="ferry.mins" value="${x.ferry.mins}"></div>
+      </div>
+      <div class="checkbox-row"><input type="checkbox" data-x="ferry.couch" ${x.ferry.couch?'checked':''}><label>${t('exc_ferry_couch')}</label></div>
+    </div>
+  </div>
+
+  <div class="exc-block ${x.mm.on?'on':''}" data-exc="mm">
+    <div class="exc-head"><input type="checkbox" data-x="mm.on" ${x.mm.on?'checked':''}>
+      <div class="exc-t"><b>${t('exc_mm_t')}</b><span>${t('exc_mm_d')}</span></div></div>
+    <div class="exc-body">
+      <label>${t('exc_mm_co')}</label><input type="text" data-x="mm.co" value="${x.mm.co||''}">
+      <label>${t('exc_mm_from')}</label><input type="time" data-x="mm.from" value="${x.mm.from||''}">
+    </div>
+  </div>
+
+  <div class="exc-block ${x.a12.on?'on':''}" data-exc="a12">
+    <div class="exc-head"><input type="checkbox" data-x="a12.on" ${x.a12.on?'checked':''}>
+      <div class="exc-t"><b>${t('exc_a12_t')}</b><span>${t('exc_a12_d')}</span></div></div>
+    <div class="exc-body">
+      <label>${t('exc_a12_type')}</label>
+      <select data-x="a12.type">
+        <option value="stop" ${x.a12.type==='stop'?'selected':''}>${t('exc_a12_type_stop')}</option>
+        <option value="home" ${x.a12.type==='home'?'selected':''}>${t('exc_a12_type_home')}</option>
+      </select>
+      <div class="checkbox-row"><input type="checkbox" data-x="a12.break30" ${x.a12.break30?'checked':''}><label>${t('exc_a12_break30')}</label></div>
+      <label>${t('exc_a12_extra')}</label><input type="number" min="0" max="120" data-x="a12.extra" value="${x.a12.extra}">
+      <label>${t('exc_a12_reason')}</label><input type="text" data-x="a12.reason" value="${x.a12.reason||''}">
+      <div class="checkbox-row"><input type="checkbox" data-x="a12.noted" ${x.a12.noted?'checked':''}><label>${t('exc_a12_noted')}</label></div>
+    </div>
+  </div>
+
+  <div class="exc-block ${x.d12.on?'on':''}" data-exc="d12">
+    <div class="exc-head"><input type="checkbox" data-x="d12.on" ${x.d12.on?'checked':''}>
+      <div class="exc-t"><b>${t('exc_12d_t')}</b><span>${t('exc_12d_d')}</span></div></div>
+    <div class="exc-body">
+      <label>${t('exc_12d_since')}</label><input type="date" data-x="d12.since" value="${x.d12.since||''}">
+      <div class="checkbox-row"><input type="checkbox" data-x="d12.conf" ${x.d12.conf?'checked':''}><label>${t('exc_12d_conf')}</label></div>
+    </div>
+  </div>
+
+  <div class="exc-block ${x.nat.on?'on':''}" data-exc="nat">
+    <div class="exc-head"><input type="checkbox" data-x="nat.on" ${x.nat.on?'checked':''}>
+      <div class="exc-t"><b>${t('exc_nat_t')}</b><span>${t('exc_nat_d')}</span></div></div>
+    <div class="exc-body">
+      <label>${t('exc_nat_country')}</label><select data-x="nat.country">${countryOptions(x.nat.country)}</select>
+      <label>${t('exc_nat_cat')}</label><select data-x="nat.cat">${catOpts}</select>
+      <label>${t('exc_nat_desc')}</label><input type="text" data-x="nat.desc" value="${x.nat.desc||''}">
+      <div class="checkbox-row"><input type="checkbox" data-x="nat.full" ${x.nat.full?'checked':''}><label>${t('exc_nat_full')}</label></div>
+    </div>
+  </div>
+
+  <div class="exc-block ${x.oos.on?'on':''}" data-exc="oos">
+    <div class="exc-head"><input type="checkbox" data-x="oos.on" ${x.oos.on?'checked':''}>
+      <div class="exc-t"><b>${t('exc_oos_t')}</b><span>${t('exc_oos_d')}</span></div></div>
+    <div class="exc-body">
+      <label>${t('exc_oos_reason')}</label><input type="text" data-x="oos.reason" value="${x.oos.reason||''}">
+    </div>
+  </div>
+
+  <div class="exc-block ${x.aetr.on?'on':''}" data-exc="aetr">
+    <div class="exc-head"><input type="checkbox" data-x="aetr.on" ${x.aetr.on?'checked':''}>
+      <div class="exc-t"><b>${t('exc_aetr_t')}</b><span>${t('exc_aetr_d')}</span></div></div>
+  </div>`;
+
+  w.querySelectorAll('[data-x]').forEach(el=>{
+    const evt = (el.type==='checkbox'||el.tagName==='SELECT')?'change':'input';
+    el.addEventListener(evt, ev=>{
+      const [grp,fld]=ev.target.dataset.x.split('.');
+      const val = ev.target.type==='checkbox' ? ev.target.checked : ev.target.value;
+      excState[grp][fld]=val;
+      if(fld==='on'){ ev.target.closest('.exc-block').classList.toggle('on', val); }
+    });
+  });
+}
+
+/* ============ Vehicle segments ============ */
+let currentSegments=[];
+function blankSeg(plate){ return {plate:plate||'',odoStart:'',odoEnd:'',drvStart:'',drvEnd:'',restStart:'',restEnd:''}; }
+function segCalcText(s){
+  const d=segDrivingMin(s),r=segRestMin(s),k=segKm(s), p=[];
+  if(d!==null) p.push(`${t('calc_drv')} ${minToHM(d)}`);
+  if(r!==null) p.push(`${t('calc_rest')} ${minToHM(r)}`);
+  if(k!==null) p.push(`${k} ${t('calc_km')}`);
+  return p.length? t('calc_prefix')+' '+p.join(' · ') : '';
+}
+function renderSegments(){
+  const w=document.getElementById('segments'); if(!w) return;
+  w.innerHTML='';
+  currentSegments.forEach((s,i)=>{
+    const d=document.createElement('div'); d.className='segment';
+    d.innerHTML=`
+     <div class="segment-head"><b>${t('seg_title')} ${i+1}</b>
+      ${currentSegments.length>1?`<button type="button" class="seg-remove" data-i="${i}">✕</button>`:''}</div>
+     <label>${t('seg_plate')}</label>
+     <input type="text" data-i="${i}" data-f="plate" value="${s.plate||''}" placeholder="B 1234 XY">
+     <div class="field-row">
+       <div><label>${t('seg_odo_start')}</label><input type="number" inputmode="numeric" data-i="${i}" data-f="odoStart" value="${s.odoStart}"></div>
+       <div><label>${t('seg_odo_end')}</label><input type="number" inputmode="numeric" data-i="${i}" data-f="odoEnd" value="${s.odoEnd}"></div>
+     </div>
+     <div class="field-row">
+       <div><label>${t('seg_drv_start')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="drvStart" value="${s.drvStart}"></div>
+       <div><label>${t('seg_drv_end')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="drvEnd" value="${s.drvEnd}"></div>
+     </div>
+     <div class="field-row">
+       <div><label>${t('seg_rest_start')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="restStart" value="${s.restStart}"></div>
+       <div><label>${t('seg_rest_end')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="restEnd" value="${s.restEnd}"></div>
+     </div>
+     <div class="calc-out" data-calc="${i}">${segCalcText(s)}</div>
+     <div class="hint">${t('seg_hint')}</div>`;
+    w.appendChild(d);
+  });
+  const HMF=['drvStart','drvEnd','restStart','restEnd'];
+  w.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('input',ev=>{
+      const i=+ev.target.dataset.i,f=ev.target.dataset.f;
+      if(HMF.indexOf(f)>=0){
+        const atEnd = ev.target.selectionStart===ev.target.value.length;
+        const masked=maskHM(ev.target.value);
+        if(masked!==ev.target.value){
+          ev.target.value=masked;
+          if(atEnd) ev.target.setSelectionRange(masked.length,masked.length);
+        }
+      }
+      currentSegments[i][f]=ev.target.value;
+      const o=w.querySelector(`[data-calc="${i}"]`); if(o) o.textContent=segCalcText(currentSegments[i]);
+    });
+    inp.addEventListener('blur',ev=>{
+      const i=+ev.target.dataset.i,f=ev.target.dataset.f;
+      if(HMF.indexOf(f)<0) return;
+      const n=normalizeHM(ev.target.value);
+      ev.target.value=n; currentSegments[i][f]=n;
+      const o=w.querySelector(`[data-calc="${i}"]`); if(o) o.textContent=segCalcText(currentSegments[i]);
+    });
+  });
+  w.querySelectorAll('.seg-remove').forEach(b=>{
+    b.addEventListener('click',ev=>{ currentSegments.splice(+ev.currentTarget.dataset.i,1); renderSegments(); });
+  });
+}
+
+/* ============ Render ============ */
+let openDetails={};
+
+function render(){
+  const R=computeAll();
+  const ref=R.entries.length? R.entries[R.entries.length-1].date : fmt(new Date());
+  const p=pairFor(R.weekSums,ref);
+  const S=R.state;
+
+  document.getElementById('gaugeRow').innerHTML=
+    `<div class="gauge-box">${gauge(t('gauge_week'),p.thisSum,56,t('unit_hours'))}</div>
+     <div class="gauge-box">${gauge(t('gauge_pair'),p.pairSum,90,t('unit_hours'))}</div>`;
+
+  // tacho disc for the latest day
+  const lastE=R.entries[R.entries.length-1];
+  const discEl=document.getElementById('discCard');
+  if(discEl) discEl.innerHTML = lastE
+    ? discSVG(lastE,R.evals[lastE.id])+discLegend()
+    : `<div class="section-note">${t('no_data')}</div>`;
+
+  // allowances
+  const extLeft=Math.max(0,2-S.extUsed), redLeft=Math.max(0,3-S.reducedUsed);
+  const wh=S.weeklyRestHistory.slice(-2);
+  const regInPair = wh.some(w=>w.type==='regular');
+  const wredTxt = wh.length===0 ? '—' : (regInPair? t('ok_status') : t('v_two_reduced').slice(0,28)+'…');
+  document.getElementById('allowStatus').innerHTML=`
+   <div class="allow-row">
+     <div class="allow-l"><b>${t('allow_ext_t')}</b><span>${t('allow_ext_d')}</span></div>
+     <div class="allow-r">${tokens(S.extUsed,2)}<span class="pill ${extLeft===0?'warn':'ok'}">${extLeft} ${t('left')}</span></div>
+   </div>
+   <div class="allow-row">
+     <div class="allow-l"><b>${t('allow_red_t')}</b><span>${t('allow_red_d')}</span></div>
+     <div class="allow-r">${tokens(S.reducedUsed,3)}<span class="pill ${redLeft===0?'warn':'ok'}">${redLeft} ${t('left')}</span></div>
+   </div>
+   <div class="allow-row">
+     <div class="allow-l"><b>${t('allow_wred_t')}</b><span>${t('allow_wred_d')}</span></div>
+     <div class="allow-r"><span class="pill ${wh.length&&!regInPair?'bad':'ok'}">${wredTxt}</span></div>
+   </div>
+   <div class="allow-row">
+     <div class="allow-l"><b>${t('allow_wdead_t')}</b><span>${S.weeklyDeadline===12? t('allow_12d') : t('allow_wdead_d')}</span></div>
+     <div class="allow-r"><span class="pill ${S.periodsSinceWeekly>=S.weeklyDeadline?'bad':(S.periodsSinceWeekly>=S.weeklyDeadline-1?'warn':'ok')}">${S.periodsSinceWeekly} / ${S.weeklyDeadline}</span></div>
+   </div>`;
+
+  const daysLeft=Math.max(0,S.weeklyDeadline-S.periodsSinceWeekly);
+  document.getElementById('restStatus').innerHTML=`
+   <div class="res-line"><span>${t('rest_days')}</span><span>${S.periodsSinceWeekly} / ${S.weeklyDeadline}</span></div>
+   <div class="res-line"><span>${t('rest_left')}</span><span class="pill ${daysLeft<=0?'bad':(daysLeft<=1?'warn':'ok')}">${daysLeft} ${t('unit_days')}</span></div>
+   <div class="res-line"><span>${t('allow_ext_t')}</span><span>${S.extUsed} / 2</span></div>
+   <div class="res-line"><span>${t('allow_red_t')}</span><span>${S.reducedUsed} / 3</span></div>`;
+
+  const today=fmt(new Date());
+  const open=DATA.compensations.filter(c=>c.owedHours-c.appliedHours>0.05);
+  document.getElementById('compStatus').innerHTML = open.length===0
+   ? `<div class="section-note">${t('no_comp')}</div>`
+   : open.map(c=>`<div class="res-line"><span>${c.sourceDate} — ${t('comp_deadline')} ${c.deadline}</span>
+      <span class="pill ${c.deadline<today?'bad':'warn'}">${(c.owedHours-c.appliedHours).toFixed(1)} ${t('unit_hours')}</span></div>`).join('');
+
+  const last14=R.entries.slice(-14);
+  document.getElementById('stripChart').innerHTML = last14.length===0
+   ? `<div class="section-note">${t('no_data')}</div>`
+   : last14.map(e=>{
+      const ev=R.evals[e.id];
+      const h=ev.drv, ht=Math.max(4,Math.round(Math.min(h/10,1.2)*70));
+      const c=ev.exempt?'exempt':(h>10?'bad':(h>9?'warn':''));
+      return `<div class="strip-col"><div class="strip-bar ${c}" style="height:${ht}px" title="${e.date}: ${h.toFixed(1)}${t('unit_hours')}"></div>
+        <div class="strip-date">${e.date.slice(5)}</div></div>`;
+     }).join('');
+
+  renderLog(R);
+
+  document.getElementById('violList').innerHTML = R.violations.length===0
+   ? `<div class="empty">${t('viol_empty')}</div>`
+   : [...R.violations].reverse().map(v=>`<div class="viol-item"><div class="viol-dot ${v.sev==='warn'?'warn':''}"></div>
+      <div class="viol-body"><b>${v.date}</b><div>${v.msg}</div><div class="viol-art">${v.art||''}</div></div></div>`).join('');
+
+  document.getElementById('vbPlate').textContent = DATA.currentPlate || t('vb_none');
+  renderMonth(R);
+  return R;
+}
+
+function renderLog(R){
+  const el=document.getElementById('logList');
+  if(R.entries.length===0){ el.innerHTML=`<div class="empty">${t('log_empty')}</div>`; return; }
+  el.innerHTML=[...R.entries].reverse().map(e=>{
+    const ev=R.evals[e.id];
+    const plates=(e.segments||[]).map(s=>s.plate).filter(Boolean);
+    const rl=t('rest_labels'); const restLabel=(rl&&rl[e.restType])||'';
+    const route=[e.startPlace,e.startCountry].filter(Boolean).join(' ')+
+      (e.endPlace||e.endCountry? ' → '+[e.endPlace,e.endCountry].filter(Boolean).join(' '):'');
+    const badge = ev.exempt? `<span class="pill info">${t('exempt_badge')}</span>`
+      : `<span class="pill ${ev.viol.length?'bad':'ok'}">${ev.viol.length? ev.viol.length+' '+t('viol_count') : t('ok_status')}</span>`;
+    return `<div class="log-entry ${openDetails[e.id]?'open':''}" id="le-${e.id}">
+      <div class="log-sum" onclick="toggleDetail('${e.id}')">
+        <div class="log-top">
+          <span class="log-date"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg>${e.date}</span>
+          ${badge}
+        </div>
+        <div class="log-meta">
+          <span class="log-stat">${e.start}–${e.end}</span>
+          <span class="log-stat">▶ ${ev.drv.toFixed(1)}${t('unit_hours')}</span>
+          ${ev.brk?`<span class="log-stat">❚❚ ${minToHM(ev.brk)}</span>`:''}
+          ${ev.km?`<span class="log-stat">${ev.km} ${t('unit_km')}</span>`:''}
+          ${plates.map(x=>`<span class="log-stat plate">${x}</span>`).join('')}
+          ${restLabel?`<span class="log-stat">${restLabel}${e.restHours?' '+e.restHours+t('unit_hours'):''}</span>`:''}
+          ${ev.exc.map(x=>`<span class="log-stat exc">⚑ ${x.label.split('—')[0].trim()}</span>`).join('')}
+        </div>
+        ${route.trim()?`<div class="log-meta"><span class="log-stat">${route}</span></div>`:''}
+      </div>
+      <div class="log-detail">${detailHTML(e,ev,R)}</div>
+    </div>`;
+  }).join('');
+}
+
+function detailHTML(e,ev,R){
+  const segs=(e.segments||[]).map((s,i)=>{
+    const d=segDrivingMin(s),r=segRestMin(s),k=segKm(s);
+    return `<div class="det-line"><span>${t('seg_title')} ${i+1}${s.plate?' · '+s.plate:''}</span><span>${minToHM(d)} ▶ · ${minToHM(r)} ❚❚ · ${k===null?'—':k+t('unit_km')}</span></div>
+     ${(s.odoStart||s.odoEnd)?`<div class="det-line"><span>km</span><span>${s.odoStart||'—'} → ${s.odoEnd||'—'}</span></div>`:''}
+     ${(s.drvStart||s.drvEnd)?`<div class="det-line"><span>${t('calc_drv')}</span><span>${s.drvStart||'—'} → ${s.drvEnd||'—'}</span></div>`:''}
+     ${(s.restStart||s.restEnd)?`<div class="det-line"><span>${t('calc_rest')}</span><span>${s.restStart||'—'} → ${s.restEnd||'—'}</span></div>`:''}`;
+  }).join('');
+  const rl=t('rest_labels');
+  const p=pairFor(R.weekSums,e.date);
+  return `
+  <div class="det-sec"><h4>${t('det_disc')}</h4>
+    <div class="disc-wrap">${discSVG(e,ev)}${discLegend()}</div>
+    <button type="button" class="po-btn" id="pobtn-${e.id}" onclick="togglePO('${e.id}')">${t('po_show')}</button>
+    <div class="printout" id="po-${e.id}">${printoutHTML(e,ev)}</div>
+  </div>
+  <div class="det-grid">
+    <div class="det-sec"><h4>${t('det_times')}</h4>
+      <div class="det-line"><span>${t('det_start')}</span><span>${e.start} ${[e.startPlace,e.startCountry].filter(Boolean).join(', ')}</span></div>
+      <div class="det-line"><span>${t('det_end')}</span><span>${e.end} ${[e.endPlace,e.endCountry].filter(Boolean).join(', ')}</span></div>
+      <div class="det-line"><span>${t('det_workday')}</span><span>${ev.workdayH.toFixed(1)} ${t('unit_hours')}</span></div>
+      <div class="det-line"><span>${t('r_driving')}</span><span>${ev.drv.toFixed(1)} ${t('unit_hours')}</span></div>
+      <div class="det-line"><span>${t('r_breaks')}</span><span>${minToHM(ev.brk)}</span></div>
+      <div class="det-line"><span>${t('r_km')}</span><span>${ev.km} ${t('unit_km')}</span></div>
+      <div class="det-line"><span>${t('r_limit')}</span><span>${ev.dailyLimit.toFixed(1)} ${t('unit_hours')}</span></div>
+    </div>
+    <div class="det-sec"><h4>${t('det_bal')}</h4>
+      <div class="det-line"><span>${t('det_weekdrv')} (${ev.wk})</span><span>${ev.weekDrv.toFixed(1)} / 56</span></div>
+      <div class="det-line"><span>${t('det_pairdrv')}</span><span>${p.pairSum.toFixed(1)} / 90</span></div>
+      <div class="det-line"><span>${t('r_rem_week')}</span><span>${Math.max(0,56-ev.weekDrv).toFixed(1)} ${t('unit_hours')}</span></div>
+      <div class="det-line"><span>${t('r_rem_pair')}</span><span>${Math.max(0,90-p.pairSum).toFixed(1)} ${t('unit_hours')}</span></div>
+      <div class="det-line"><span>${t('allow_ext_t')}</span><span>${ev.extUsed} / 2</span></div>
+      <div class="det-line"><span>${t('allow_red_t')}</span><span>${ev.reducedUsed} / 3</span></div>
+      <div class="det-line"><span>${t('r_days_left')}</span><span>${Math.max(0,ev.weeklyDeadline-ev.periodsSinceWeekly)}</span></div>
+    </div>
+  </div>
+  <div class="det-sec"><h4>${t('det_veh')}</h4>${segs||'<div class="det-line"><span>—</span><span></span></div>'}</div>
+  <div class="det-sec"><h4>${t('det_rest')}</h4>
+    <div class="det-line"><span>${(rl&&rl[e.restType])||e.restType}</span><span>${e.restHours||0} ${t('unit_hours')}</span></div>
+    ${e.compAppliedHours?`<div class="det-line"><span>${t('l_comp_hours')}</span><span>${e.compAppliedHours} ${t('unit_hours')}</span></div>`:''}
+  </div>
+  ${ev.exc.length?`<div class="det-sec"><h4>${t('det_exc')}</h4>
+    ${ev.exc.map(x=>`<div class="det-line"><span>${x.label}</span><span>${x.info||'✓'}</span></div>`).join('')}</div>`:''}
+  <div class="det-sec"><h4>${t('det_viol')}</h4>
+    ${ev.viol.length? ev.viol.map(v=>`<div class="viol-item"><div class="viol-dot ${v.sev==='warn'?'warn':''}"></div>
+      <div class="viol-body"><div>${v.msg}</div><div class="viol-art">${v.art}</div></div></div>`).join('')
+     : `<div class="det-note">${t('det_noviol')}</div>`}
+    ${ev.notes.map(n=>`<div class="det-note">ℹ ${n.msg}<div class="viol-art">${n.art||''}</div></div>`).join('')}
+  </div>
+  ${e.notes?`<div class="det-sec"><h4>${t('det_notes')}</h4><div class="det-note">${e.notes}</div></div>`:''}
+  <div class="det-actions">
+    <button onclick="editEntry('${e.id}')">${t('det_edit')}</button>
+    <button class="danger" onclick="deleteEntry('${e.id}')">${t('det_del')}</button>
+  </div>`;
+}
+
+function toggleDetail(id){
+  openDetails[id]=!openDetails[id];
+  const el=document.getElementById('le-'+id);
+  if(el) el.classList.toggle('open', !!openDetails[id]);
+}
+window.toggleDetail=toggleDetail;
+
+/* ============ Month ============ */
+function renderMonth(R){
+  const el=document.getElementById('monthOut'); if(!el) return;
+  const mv=document.getElementById('f_month').value;
+  if(!mv){ el.innerHTML=''; return; }
+  R=R||computeAll();
+  const days=R.entries.filter(e=>e.date.startsWith(mv));
+  if(days.length===0){ el.innerHTML=`<div class="empty">${t('m_empty')}</div>`; return; }
+  const km=days.reduce((s,e)=>s+dayKm(e),0);
+  const drv=days.reduce((s,e)=>s+dayDrivingHours(e),0);
+  const brk=days.reduce((s,e)=>s+dayBreakMin(e),0);
+  const vio=days.reduce((s,e)=>s+(R.evals[e.id]?R.evals[e.id].viol.length:0),0);
+  const plates=[...new Set(days.flatMap(e=>(e.segments||[]).map(s=>s.plate).filter(Boolean)))];
+  const countries=[...new Set(days.flatMap(e=>[e.startCountry,e.endCountry]).filter(Boolean))];
+  const excs=[...new Set(days.flatMap(e=>(R.evals[e.id]?R.evals[e.id].exc.map(x=>x.label):[])))];
+  const weeks={}; days.forEach(e=>{ const w=weekKey(e.date); weeks[w]=(weeks[w]||0)+dayDrivingHours(e); });
+  el.innerHTML=`
+   <div class="stat-grid">
+     <div class="big-stat"><div class="v">${Math.round(km).toLocaleString()}</div><div class="l">${t('m_km')}</div></div>
+     <div class="big-stat"><div class="v">${drv.toFixed(1)}</div><div class="l">${t('m_drv')}</div></div>
+     <div class="big-stat"><div class="v">${(brk/60).toFixed(1)}</div><div class="l">${t('m_rest')}</div></div>
+     <div class="big-stat"><div class="v">${days.length}</div><div class="l">${t('m_days')}</div></div>
+     <div class="big-stat"><div class="v">${(drv/days.length).toFixed(1)}</div><div class="l">${t('m_avg')}</div></div>
+     <div class="big-stat"><div class="v" style="color:${vio?'var(--bad)':'var(--ok)'}">${vio}</div><div class="l">${t('m_viol')}</div></div>
+   </div>
+   <div class="subhead">${t('m_weeks')}</div>
+   ${Object.keys(weeks).sort().map(w=>`<div class="res-line"><span>${w}</span><span class="${weeks[w]>56?'pill bad':''}">${weeks[w].toFixed(1)} ${t('unit_hours')}</span></div>`).join('')}
+   ${plates.length?`<div class="subhead">${t('m_plates')}</div><div class="log-meta">${plates.map(x=>`<span class="log-stat plate">${x}</span>`).join('')}</div>`:''}
+   ${countries.length?`<div class="subhead">${t('m_countries')}</div><div class="log-meta">${countries.map(x=>`<span class="log-stat">${x}</span>`).join('')}</div>`:''}
+   ${excs.length?`<div class="subhead">${t('m_exc')}</div><div class="log-meta">${excs.map(x=>`<span class="log-stat exc">⚑ ${x}</span>`).join('')}</div>`:''}`;
+}
+
+/* ============ Form actions ============ */
+function fillCountrySelects(){
+  ['f_startCountry','f_endCountry'].forEach(id=>{
+    const s=document.getElementById(id); const cur=s.value;
+    s.innerHTML=countryOptions(cur);
+  });
+}
+function resetForm(){
+  document.getElementById('dayForm').reset();
+  document.getElementById('f_editId').value='';
+  document.getElementById('f_date').value=fmt(new Date());
+  document.getElementById('f_startCountry').value=DATA.lastCountry||'';
+  document.getElementById('f_endCountry').value=DATA.lastCountry||'';
+  currentSegments=[blankSeg(DATA.currentPlate)];
+  excState=blankExc();
+  renderSegments(); renderExceptions();
+  document.getElementById('compApplyWrap').style.display='none';
+  document.getElementById('formTitle').textContent=t('add_title');
+  document.getElementById('saveBtn').textContent=t('btn_save');
+  document.getElementById('cancelEdit').style.display='none';
+  updateRestCalc();
+}
+function editEntry(id){
+  const e=DATA.entries.find(x=>x.id===id); if(!e) return;
+  document.getElementById('f_editId').value=id;
+  document.getElementById('f_date').value=e.date;
+  document.getElementById('f_start').value=e.start;
+  document.getElementById('f_end').value=e.end;
+  document.getElementById('f_startPlace').value=e.startPlace||'';
+  document.getElementById('f_endPlace').value=e.endPlace||'';
+  document.getElementById('f_startCountry').value=e.startCountry||'';
+  document.getElementById('f_endCountry').value=e.endCountry||'';
+  document.getElementById('f_restType').value=e.restType;
+  document.getElementById('f_restHours').value=e.restHours||'';
+  document.getElementById('f_notes').value=e.notes||'';
+  document.getElementById('f_applyComp').checked=!!e.compAppliedHours;
+  document.getElementById('f_compHours').value=e.compAppliedHours||'';
+  document.getElementById('compApplyWrap').style.display=e.compAppliedHours?'block':'none';
+  currentSegments=(e.segments||[]).map(s=>({...s,
+    odoStart:s.odoStart==null?'':s.odoStart, odoEnd:s.odoEnd==null?'':s.odoEnd}));
+  if(!currentSegments.length) currentSegments=[blankSeg('')];
+  const b=blankExc();
+  excState=Object.assign(b, JSON.parse(JSON.stringify(e.exc||{})));
+  Object.keys(b).forEach(k=>{ excState[k]=Object.assign(b[k], (e.exc&&e.exc[k])||{}); });
+  renderSegments(); renderExceptions();
+  document.getElementById('formTitle').textContent=t('edit_title');
+  document.getElementById('saveBtn').textContent=t('btn_update');
+  document.getElementById('cancelEdit').style.display='block';
+  document.querySelector('.tab-btn[data-tab="add"]').click();
+  updateRestCalc();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.editEntry=editEntry;
+
+async function deleteEntry(id){
+  if(!confirm(t('det_confirm'))) return;
+  DATA.entries=DATA.entries.filter(e=>e.id!==id);
+  delete openDetails[id];
+  await saveData(); render();
+}
+window.deleteEntry=deleteEntry;
+
+/* ============ Init & wiring ============ */
+function applyLang(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('[data-t]').forEach(el=>{ el.textContent=t(el.dataset.t); });
+  document.querySelectorAll('#langpick button').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
+  fillCountrySelects();
+  renderSegments(); renderExceptions(); renderInstallSteps();
+  const editing=document.getElementById('f_editId').value;
+  document.getElementById('formTitle').textContent = editing? t('edit_title') : t('add_title');
+  document.getElementById('saveBtn').textContent = editing? t('btn_update') : t('btn_save');
+  render();
+}
+function renderInstallSteps(){
+  const el=document.getElementById('installSteps'); if(!el) return;
+  el.innerHTML=`<b>${t('ins_ios')}</b>${t('ins_ios_s')}<b>${t('ins_and')}</b>${t('ins_and_s')}
+   <b>${t('ins_lap')}</b>${t('ins_lap_s')}<b>${t('ins_file')}</b>${t('ins_file_s')}`;
+}
+
+document.getElementById('changeVehicle').addEventListener('click', async ()=>{
+  const p=prompt(t('vb_prompt'), DATA.currentPlate||'');
+  if(p!==null){
+    DATA.currentPlate=p.trim(); await saveData();
+    if(currentSegments[0]) currentSegments[0].plate=DATA.currentPlate;
+    renderSegments(); document.getElementById('vbPlate').textContent=DATA.currentPlate||t('vb_none');
+  }
+});
+document.getElementById('addSeg').addEventListener('click',()=>{ currentSegments.push(blankSeg('')); renderSegments(); });
+document.getElementById('f_restType').addEventListener('change',ev=>{
+  const m={regular11:11,reduced9:9,split:12,mm9:9,'weekly-regular':45,'weekly-reduced':24};
+  document.getElementById('f_restHours').value=m[ev.target.value]||'';
+});
+document.getElementById('f_applyComp').addEventListener('change',ev=>{
+  document.getElementById('compApplyWrap').style.display=ev.target.checked?'block':'none';
+});
+document.getElementById('f_month').addEventListener('change',()=>renderMonth());
+document.getElementById('f_date').addEventListener('change',updateRestCalc);
+document.getElementById('f_start').addEventListener('input',updateRestCalc);
+document.getElementById('cancelEdit').addEventListener('click',()=>{ resetForm(); document.getElementById('resultPanel').style.display='none'; });
+
+document.getElementById('dayForm').addEventListener('submit', async ev=>{
+  ev.preventDefault();
+  const editId=document.getElementById('f_editId').value;
+  const segs=currentSegments.map(s=>({
+    plate:(s.plate||'').trim(),
+    odoStart:s.odoStart!==''?+s.odoStart:null, odoEnd:s.odoEnd!==''?+s.odoEnd:null,
+    drvStart:s.drvStart||'', drvEnd:s.drvEnd||'', restStart:s.restStart||'', restEnd:s.restEnd||''
+  }));
+  const entry={
+    id: editId||('e'+Date.now()),
+    date:document.getElementById('f_date').value,
+    start:document.getElementById('f_start').value,
+    end:document.getElementById('f_end').value,
+    startPlace:document.getElementById('f_startPlace').value.trim(),
+    startCountry:document.getElementById('f_startCountry').value,
+    endPlace:document.getElementById('f_endPlace').value.trim(),
+    endCountry:document.getElementById('f_endCountry').value,
+    segments:segs,
+    restType:document.getElementById('f_restType').value,
+    restHours:parseFloat(document.getElementById('f_restHours').value)||0,
+    compAppliedHours:document.getElementById('f_applyComp').checked?(parseFloat(document.getElementById('f_compHours').value)||0):0,
+    exc:JSON.parse(JSON.stringify(excState)),
+    notes:document.getElementById('f_notes').value||''
+  };
+  const lastPlate=segs.map(s=>s.plate).filter(Boolean).pop();
+  if(lastPlate) DATA.currentPlate=lastPlate;
+  if(entry.endCountry) DATA.lastCountry=entry.endCountry;
+
+  // auto-record the elapsed daily rest on the previous day
+  const prev=prevEntryBefore(entry.date, entry.id);
+  if(prev && prev.end){
+    const gap=restGapHours(prev.date, prev.end, entry.date, entry.start);
+    if(gap!==null){
+      prev.restHours=+gap.toFixed(1);
+      if(!prev.restType || prev.restType==='none') prev.restType=classifyRest(gap);
+    }
+  }
+
+  if(editId){ DATA.entries=DATA.entries.map(x=>x.id===editId?entry:x); }
+  else DATA.entries.push(entry);
+  await saveData();
+  const R=render();
+  const evv=R.evals[entry.id];
+  const p=pairFor(R.weekSums,entry.date);
+  const route=[entry.startPlace,entry.startCountry].filter(Boolean).join(' ')+' → '+[entry.endPlace,entry.endCountry].filter(Boolean).join(' ');
+
+  const panel=document.getElementById('resultPanel');
+  panel.style.display='block';
+  panel.innerHTML=`
+   <h3>${t('result_title')} ${entry.date}</h3>
+   ${route.trim()!=='→'?`<div class="res-line"><span>${t('r_route')}</span><span>${route}</span></div>`:''}
+   <div class="res-line"><span>${t('r_workday')}</span><span>${evv.workdayH.toFixed(1)} ${t('unit_hours')}</span></div>
+   <div class="res-line"><span>${t('r_driving')}</span><span>${evv.drv.toFixed(1)} ${t('unit_hours')}</span></div>
+   <div class="res-line"><span>${t('r_limit')}</span><span>${evv.dailyLimit.toFixed(1)} ${t('unit_hours')}</span></div>
+   ${evv.brk?`<div class="res-line"><span>${t('r_breaks')}</span><span>${minToHM(evv.brk)}</span></div>`:''}
+   ${evv.km?`<div class="res-line"><span>${t('r_km')}</span><span>${evv.km} ${t('unit_km')}</span></div>`:''}
+   <div class="res-line"><span>${t('r_rem_week')}</span><span>${Math.max(0,56-p.thisSum).toFixed(1)} ${t('unit_hours')}</span></div>
+   <div class="res-line"><span>${t('r_rem_pair')}</span><span>${Math.max(0,90-p.pairSum).toFixed(1)} ${t('unit_hours')}</span></div>
+   <div class="res-line"><span>${t('r_ext_left')}</span><span>${Math.max(0,2-evv.extUsed)} ${t('of')} 2</span></div>
+   <div class="res-line"><span>${t('r_reduced_left')}</span><span>${Math.max(0,3-evv.reducedUsed)} ${t('of')} 3</span></div>
+   <div class="res-line"><span>${t('r_days_left')}</span><span>${Math.max(0,evv.weeklyDeadline-evv.periodsSinceWeekly)} / ${evv.weeklyDeadline}</span></div>
+   <div class="res-line"><span>${t('r_next_week')}</span><span>${Math.max(0,90-p.thisSum).toFixed(1)} ${t('unit_hours')}</span></div>
+   ${evv.exc.length?`<div class="res-line"><span>${t('r_exc')}</span><span>${evv.exc.map(x=>x.label.split('—')[0].trim()).join(', ')}</span></div>`:''}
+   <div class="res-line"><span>${t('r_viol')}</span><span class="pill ${evv.viol.length?'bad':'ok'}">${evv.viol.length||'0'}</span></div>
+   ${evv.viol.map(v=>`<div style="font-size:12.5px;color:var(--bad);margin-top:6px;line-height:1.45;">• ${v.msg} <span style="color:var(--text-faint);font-family:var(--mono);font-size:10.5px;">${v.art}</span></div>`).join('')}
+   ${evv.notes.map(n=>`<div style="font-size:12.5px;color:var(--text-dim);margin-top:6px;line-height:1.45;">ℹ ${n.msg}</div>`).join('')}`;
+  resetForm();
+});
+
+/* ============ Backup ============ */
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  const b=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b);
+  a.download='tacho561-backup-'+fmt(new Date())+'.json'; a.click(); URL.revokeObjectURL(a.href);
+});
+document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change',ev=>{
+  const f=ev.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=async()=>{
+    try{
+      const p=JSON.parse(r.result); if(!p.entries) throw 0;
+      DATA=p; DATA.compensations=DATA.compensations||[]; DATA.currentPlate=DATA.currentPlate||''; DATA.lastCountry=DATA.lastCountry||'';
+      await saveData(); resetForm(); render(); alert(t('import_ok'));
+    }catch(e){ alert(t('import_err')); }
+  };
+  r.readAsText(f);
+});
+
+/* ============ Install ============ */
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e;
+  document.getElementById('installBtn').style.display='block'; });
+document.getElementById('installBtn').addEventListener('click',async()=>{
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null;
+  document.getElementById('installBtn').style.display='none';
+});
+(function injectManifest(){
+  const icon="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%2312161d'/%3E%3Ccircle cx='256' cy='256' r='165' fill='none' stroke='%23f2994a' stroke-width='28'/%3E%3Cpath d='M256 148v114l74 46' fill='none' stroke='%23f2994a' stroke-width='32' stroke-linecap='round'/%3E%3C/svg%3E";
+  const m={name:'Tacho 561',short_name:'Tacho 561',start_url:'.',scope:'.',display:'standalone',
+    background_color:'#12161d',theme_color:'#12161d',orientation:'portrait-primary',
+    icons:[{src:icon,sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
+  try{
+    const b=new Blob([JSON.stringify(m)],{type:'application/manifest+json'});
+    const l=document.createElement('link'); l.rel='manifest'; l.href=URL.createObjectURL(b);
+    document.head.appendChild(l);
+  }catch(e){}
+})();
+
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('view-'+b.dataset.tab).classList.add('active');
+  });
+});
+document.querySelectorAll('#langpick button').forEach(b=>{
+  b.addEventListener('click',()=>{ LANG=b.dataset.lang;
+    try{ localStorage.setItem('t561-lang',LANG); }catch(e){} applyLang(); });
+});
+document.querySelectorAll('#themepick button').forEach(b=>{
+  b.addEventListener('click',()=>{ THEME=b.dataset.theme;
+    try{ localStorage.setItem('t561-theme',THEME); }catch(e){} applyTheme(); });
+});
+
+(async function init(){
+  await loadData();
+  applyTheme();
+  const now=new Date();
+  document.getElementById('f_date').value=fmt(now);
+  document.getElementById('f_month').value=fmt(now).slice(0,7);
+  currentSegments=[blankSeg(DATA.currentPlate)];
+  excState=blankExc();
+  applyLang();
+  document.getElementById('f_startCountry').value=DATA.lastCountry||'';
+  document.getElementById('f_endCountry').value=DATA.lastCountry||'';
+})();
+
+</script>
+</body>
+</html>
