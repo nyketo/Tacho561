@@ -600,6 +600,7 @@ bg:{
  sync_cfg_empty:'Постави конфигурацията от Firebase.', sync_cfg_bad:'Конфигурацията не може да се прочете или свързването се провали.',
  sync_login_err:'Грешка: {msg}', sync_done:'Синхронизирано.',
  sync_not_ready:'Връзката още се подготвя — опитай пак след няколко секунди.',
+ sync_email_only:'В приложение от началния екран iOS не позволява връщане от страницата на Google, затова тук се влиза с имейл и парола (същите, които регистрира веднъж):',
  dash_current:'Управление — седмица / двуседмичен период',
  dash_allow:'Използвани и оставащи допустими отклонения',
  dash_rest:'Седмичен цикъл и почивки',
@@ -820,6 +821,7 @@ en:{
  sync_cfg_empty:'Paste the configuration from Firebase.', sync_cfg_bad:'The configuration could not be read, or the connection failed.',
  sync_login_err:'Error: {msg}', sync_done:'Synced.',
  sync_not_ready:'The connection is still starting up — try again in a few seconds.',
+ sync_email_only:'In a home-screen app iOS cannot return from the Google page, so sign in here with email and password (the ones you register once):',
  dash_current:'Driving — week / two-week period',
  dash_allow:'Allowances used and remaining',
  dash_rest:'Weekly cycle and rests',
@@ -1040,6 +1042,7 @@ de:{
  sync_cfg_empty:'Konfiguration aus Firebase einfügen.', sync_cfg_bad:'Die Konfiguration konnte nicht gelesen werden oder die Verbindung ist fehlgeschlagen.',
  sync_login_err:'Fehler: {msg}', sync_done:'Synchronisiert.',
  sync_not_ready:'Die Verbindung wird noch aufgebaut — versuche es in ein paar Sekunden erneut.',
+ sync_email_only:'In einer Home-Bildschirm-App kann iOS nicht von der Google-Seite zurückkehren, melde dich hier daher mit E-Mail und Passwort an (die du einmal registrierst):',
  dash_current:'Lenkzeit — Woche / Zweiwochenzeitraum',
  dash_allow:'Genutzte und verbleibende Ausnahmen',
  dash_rest:'Wochenzyklus und Ruhezeiten',
@@ -2775,6 +2778,13 @@ function renderSyncUI(){
   } else {
     statusEl.textContent=t('sync_not_logged');
     loginWrap.style.display='block'; loggedWrap.style.display='none';
+    // An installed home-screen app on iOS opens external pages in Safari and never comes back,
+    // so the Google flow can't complete there — offer email sign-in instead.
+    const gBtn=document.getElementById('syncGoogleBtn');
+    const orNote=document.querySelector('[data-t="sync_or"]');
+    const standalone=isStandaloneApp();
+    if(gBtn) gBtn.style.display = standalone ? 'none' : 'block';
+    if(orNote) orNote.textContent = standalone ? t('sync_email_only') : t('sync_or');
   }
 }
 // The Firebase console hands out a JS object literal (unquoted keys, trailing "const x ="),
