@@ -62,7 +62,7 @@ html[data-theme="dusk"]{
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{background:radial-gradient(ellipse at top,var(--bg-grad) 0%,var(--bg) 55%);color:var(--text);font-family:var(--body);min-height:100vh;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s;}
-.app{max-width:940px;margin:0 auto;padding:20px 16px calc(80px + env(safe-area-inset-bottom));}
+.app{max-width:940px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
 .brand{display:flex;align-items:center;gap:12px;}
 .brand-mark{width:44px;height:44px;border-radius:50%;background:conic-gradient(from -90deg,var(--accent) 0deg,var(--accent) 30deg,var(--border-soft) 30deg);display:flex;align-items:center;justify-content:center;flex:none;position:relative;}
@@ -211,11 +211,11 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
 .printout.open{display:block;}
 
 /* ---- nav drawer ---- */
-.menu-btn{background:var(--bg-panel);border:1px solid var(--border-soft);color:var(--text);width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;}
+.menu-btn{background:var(--bg-panel);border:1px solid var(--border-soft);color:var(--text);width:44px;height:44px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;position:relative;z-index:5;}
 .menu-btn svg{width:19px;height:19px;}
 .drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:none;}
 .drawer-overlay.open{display:block;}
-.drawer{position:fixed;top:0;left:0;bottom:0;width:250px;max-width:80vw;background:var(--bg-panel);border-right:1px solid var(--border-soft);z-index:61;transform:translateX(-100%);transition:transform .2s ease;padding:16px 10px;overflow-y:auto;}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:250px;max-width:80vw;background:var(--bg-panel);border-right:1px solid var(--border-soft);z-index:61;transform:translateX(-100%);transition:transform .2s ease;padding:calc(16px + env(safe-area-inset-top)) 10px calc(16px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .drawer.open{transform:translateX(0);}
 .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 14px;border-bottom:1px solid var(--border-soft);margin-bottom:8px;}
 .drawer-head b{font-family:var(--display);font-size:15px;}
@@ -2680,7 +2680,11 @@ function revealBottomBar(){
   bbHideTimer=setTimeout(()=>bb.classList.remove('show'),1600);
 }
 window.addEventListener('scroll', revealBottomBar, {passive:true});
-document.getElementById('menuBtn').addEventListener('click', openDrawer);
+const menuBtnEl=document.getElementById('menuBtn');
+menuBtnEl.addEventListener('click', openDrawer);
+// iOS standalone (home-screen) mode sometimes swallows the synthetic click on chrome-level
+// controls; listening for the touch directly makes the menu respond reliably there too.
+menuBtnEl.addEventListener('touchend', ev=>{ ev.preventDefault(); openDrawer(); }, {passive:false});
 document.getElementById('drawerClose').addEventListener('click', closeDrawer);
 document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
 document.querySelectorAll('#langpick button').forEach(b=>{
