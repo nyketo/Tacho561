@@ -542,6 +542,10 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
           </div>
         </div>
         <div id="syncLoggedWrap" style="display:none;">
+          <div class="hint" data-t="sync_setpw_hint"></div>
+          <label data-t="l_new_password"></label>
+          <input type="password" id="f_syncNewPassword" autocomplete="new-password">
+          <button type="button" class="secondary" id="syncSetPwBtn" data-t="btn_sync_setpw"></button>
           <button type="button" class="secondary" id="syncNowBtn" data-t="btn_sync_now"></button>
           <button type="button" class="secondary" id="syncLogoutBtn" data-t="btn_sync_logout"></button>
         </div>
@@ -601,6 +605,12 @@ bg:{
  sync_login_err:'Грешка: {msg}', sync_done:'Синхронизирано.',
  sync_not_ready:'Връзката още се подготвя — опитай пак след няколко секунди.',
  sync_email_only:'В приложение от началния екран iOS не позволява връщане от страницата на Google, затова тук се влиза с имейл и парола (същите, които регистрира веднъж):',
+ l_new_password:'Нова парола за този акаунт',
+ btn_sync_setpw:'Задай парола за този акаунт',
+ sync_setpw_hint:'Ако си влязъл с Google, задай тук парола на същия акаунт. После от телефона влизаш със същия имейл и тази парола — данните остават едни и същи.',
+ sync_pw_set:'Готово. Вече можеш да влизаш и с {email} и тази парола.',
+ sync_pw_short:'Паролата трябва да е поне 6 знака.',
+ sync_email_taken:'Този имейл вече се използва от друг начин за вход (напр. Google). Влез с Google в браузъра и задай парола на същия акаунт — тогава ще можеш да влизаш и с парола.',
  dash_current:'Управление — седмица / двуседмичен период',
  dash_allow:'Използвани и оставащи допустими отклонения',
  dash_rest:'Седмичен цикъл и почивки',
@@ -822,6 +832,12 @@ en:{
  sync_login_err:'Error: {msg}', sync_done:'Synced.',
  sync_not_ready:'The connection is still starting up — try again in a few seconds.',
  sync_email_only:'In a home-screen app iOS cannot return from the Google page, so sign in here with email and password (the ones you register once):',
+ l_new_password:'New password for this account',
+ btn_sync_setpw:'Set a password for this account',
+ sync_setpw_hint:'If you signed in with Google, set a password on that same account here. Then sign in on your phone with the same email and this password — the data stays the same.',
+ sync_pw_set:'Done. You can now also sign in with {email} and this password.',
+ sync_pw_short:'The password must be at least 6 characters.',
+ sync_email_taken:'That email is already used by another sign-in method (e.g. Google). Sign in with Google in a browser and set a password on that same account — then you can sign in with a password too.',
  dash_current:'Driving — week / two-week period',
  dash_allow:'Allowances used and remaining',
  dash_rest:'Weekly cycle and rests',
@@ -1043,6 +1059,12 @@ de:{
  sync_login_err:'Fehler: {msg}', sync_done:'Synchronisiert.',
  sync_not_ready:'Die Verbindung wird noch aufgebaut — versuche es in ein paar Sekunden erneut.',
  sync_email_only:'In einer Home-Bildschirm-App kann iOS nicht von der Google-Seite zurückkehren, melde dich hier daher mit E-Mail und Passwort an (die du einmal registrierst):',
+ l_new_password:'Neues Passwort für dieses Konto',
+ btn_sync_setpw:'Passwort für dieses Konto festlegen',
+ sync_setpw_hint:'Wenn du dich mit Google angemeldet hast, lege hier ein Passwort für dasselbe Konto fest. Danach meldest du dich auf dem Handy mit derselben E-Mail und diesem Passwort an — die Daten bleiben dieselben.',
+ sync_pw_set:'Fertig. Du kannst dich jetzt auch mit {email} und diesem Passwort anmelden.',
+ sync_pw_short:'Das Passwort muss mindestens 6 Zeichen haben.',
+ sync_email_taken:'Diese E-Mail wird bereits von einer anderen Anmeldemethode verwendet (z. B. Google). Melde dich im Browser mit Google an und lege für dasselbe Konto ein Passwort fest — dann kannst du dich auch mit Passwort anmelden.',
  dash_current:'Lenkzeit — Woche / Zweiwochenzeitraum',
  dash_allow:'Genutzte und verbleibende Ausnahmen',
  dash_rest:'Wochenzyklus und Ruhezeiten',
@@ -2839,11 +2861,34 @@ document.getElementById('syncLoginBtn').addEventListener('click', async ()=>{
   try{ await fbAuth.signInWithEmailAndPassword(email,pw); }
   catch(e){ alert(t('sync_login_err',{msg:e.message||''})); }
 });
+document.getElementById('syncSetPwBtn').addEventListener('click', async ()=>{
+  const pw=document.getElementById('f_syncNewPassword').value;
+  if(!syncUser||!pw){ return; }
+  if(pw.length<6){ alert(t('sync_pw_short')); return; }
+  const cred=window.firebase.auth.EmailAuthProvider.credential(syncUser.email, pw);
+  try{
+    await syncUser.linkWithCredential(cred);
+    document.getElementById('f_syncNewPassword').value='';
+    alert(t('sync_pw_set',{email:syncUser.email}));
+  }catch(e){
+    if(e.code==='auth/provider-already-linked' || e.code==='auth/credential-already-in-use'){
+      // a password already exists on this account — change it instead of linking a second one
+      try{ await syncUser.updatePassword(pw); document.getElementById('f_syncNewPassword').value='';
+        alert(t('sync_pw_set',{email:syncUser.email})); }
+      catch(e2){ alert(t('sync_login_err',{msg:e2.message||''})); }
+    } else {
+      alert(t('sync_login_err',{msg:e.message||''}));
+    }
+  }
+});
 document.getElementById('syncRegisterBtn').addEventListener('click', async ()=>{
   const email=document.getElementById('f_syncEmail').value.trim(), pw=document.getElementById('f_syncPassword').value;
   if(!email||!pw) return;
   try{ await fbAuth.createUserWithEmailAndPassword(email,pw); }
-  catch(e){ alert(t('sync_login_err',{msg:e.message||''})); }
+  catch(e){
+    if(e.code==='auth/email-already-in-use') alert(t('sync_email_taken'));
+    else alert(t('sync_login_err',{msg:e.message||''}));
+  }
 });
 document.getElementById('syncNowBtn').addEventListener('click', async ()=>{ await pushToCloud(); alert(t('sync_done')); });
 document.getElementById('syncLogoutBtn').addEventListener('click', async ()=>{ if(fbAuth) await fbAuth.signOut(); });
