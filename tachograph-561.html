@@ -2756,14 +2756,27 @@ function renderSyncUI(){
     loginWrap.style.display='block'; loggedWrap.style.display='none';
   }
 }
+// The Firebase console hands out a JS object literal (unquoted keys, trailing "const x ="),
+// which is not valid JSON. Pull the fields out by name so the config can be pasted verbatim.
+function parseFirebaseConfig(raw){
+  const txt=String(raw||'').trim();
+  try{ const j=JSON.parse(txt); if(j&&j.apiKey) return j; }catch(e){}
+  const cfg={};
+  const keys=['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId','measurementId','databaseURL'];
+  keys.forEach(k=>{
+    const m=txt.match(new RegExp('["\\\']?'+k+'["\\\']?\\s*:\\s*["\\\']([^"\\\']+)["\\\']'));
+    if(m) cfg[k]=m[1];
+  });
+  return (cfg.apiKey&&cfg.projectId)? cfg : null;
+}
 document.getElementById('syncConnectBtn').addEventListener('click', async ()=>{
   const raw=document.getElementById('f_syncConfig').value.trim();
   if(!raw){ alert(t('sync_cfg_empty')); return; }
-  let cfg;
-  try{ cfg=JSON.parse(raw); }catch(e){ alert(t('sync_cfg_bad')); return; }
+  const cfg=parseFirebaseConfig(raw);
+  if(!cfg){ alert(t('sync_cfg_bad')); return; }
   try{
     await initFirebase(cfg);
-    localStorage.setItem(SYNC_CFG_KEY, raw);
+    localStorage.setItem(SYNC_CFG_KEY, JSON.stringify(cfg));
     renderSyncUI();
   }catch(e){ alert(t('sync_cfg_bad')); }
 });
