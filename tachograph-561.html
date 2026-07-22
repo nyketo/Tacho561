@@ -209,12 +209,122 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
 .po-btn:hover{border-color:var(--accent);color:var(--text);}
 .printout{display:none;background:#fbfaf3;color:#15150f;font-family:var(--mono);font-size:12px;line-height:1.55;border-radius:4px;padding:16px 14px;margin-top:10px;white-space:pre-wrap;word-break:break-word;box-shadow:0 2px 10px rgba(0,0,0,.25);border-top:6px solid #e8e5d4;border-bottom:6px solid #e8e5d4;}
 .printout.open{display:block;}
+
+/* ---- nav drawer ---- */
+.menu-btn{background:var(--bg-panel);border:1px solid var(--border-soft);color:var(--text);width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;}
+.menu-btn svg{width:19px;height:19px;}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:none;}
+.drawer-overlay.open{display:block;}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:250px;max-width:80vw;background:var(--bg-panel);border-right:1px solid var(--border-soft);z-index:61;transform:translateX(-100%);transition:transform .2s ease;padding:16px 10px;overflow-y:auto;}
+.drawer.open{transform:translateX(0);}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 14px;border-bottom:1px solid var(--border-soft);margin-bottom:8px;}
+.drawer-head b{font-family:var(--display);font-size:15px;}
+.drawer-close{background:none;border:none;color:var(--text-faint);font-size:20px;cursor:pointer;line-height:1;padding:2px 6px;}
+.nav-item{display:flex;align-items:center;gap:11px;width:100%;background:transparent;border:none;color:var(--text-dim);font-family:var(--body);font-size:14px;font-weight:600;padding:11px 10px;border-radius:9px;cursor:pointer;text-align:left;}
+.nav-item svg{width:18px;height:18px;flex:none;}
+.nav-item.active{background:var(--bg-raised);color:var(--accent);}
+
+/* ---- vehicles page ---- */
+.veh-card{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:11px;margin-bottom:10px;background:var(--bg-panel-2);}
+.veh-card.active-v{border-color:var(--accent);}
+.veh-l b{font-family:var(--mono);font-size:15px;font-weight:700;letter-spacing:.4px;}
+.veh-l div{font-size:11.5px;color:var(--text-faint);margin-top:2px;}
+.veh-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.veh-r button{background:none;border:none;color:var(--text-faint);font-size:11.5px;cursor:pointer;padding:2px 4px;}
+.veh-r button.danger:hover{color:var(--bad);}
+.veh-r button.mk-active{color:var(--accent);font-weight:700;}
+
+/* ---- next-start card ---- */
+.next-start{display:flex;align-items:center;gap:14px;}
+.next-start .ns-time{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--accent);}
+.next-start .ns-date{font-size:11.5px;color:var(--text-faint);margin-top:2px;}
+.next-start .ns-note{font-size:12px;color:var(--text-dim);margin-top:4px;line-height:1.4;}
+
+/* ---- logbook table view ---- */
+.log-view-toggle{display:flex;gap:6px;margin-bottom:12px;}
+.log-view-toggle button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-size:12.5px;font-weight:600;cursor:pointer;}
+.log-view-toggle button.active{background:var(--bg-raised);color:var(--accent);border-color:var(--accent-dim);}
+.log-table-wrap{overflow-x:auto;}
+table.log-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.log-table th{text-align:left;color:var(--text-faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
+table.log-table td{padding:7px 8px;border-bottom:1px solid var(--border-soft);white-space:nowrap;font-family:var(--mono);}
+table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
+
+/* ---- reports period selector ---- */
+.period-switch{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.period-switch button{flex:1;min-width:70px;padding:9px 6px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-size:12.5px;font-weight:600;cursor:pointer;}
+.period-switch button.active{background:var(--bg-raised);color:var(--accent);border-color:var(--accent-dim);}
+.period-range{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+@media print{
+  body{background:#fff!important;}
+  .topbar,.tabs,.drawer,.drawer-overlay,.menu-btn,.vehicle-banner,.log-view-toggle,.period-switch,.bottombar,button{display:none!important;}
+  .app{max-width:100%;padding:0;}
+  .card{border:1px solid #ccc;box-shadow:none;break-inside:avoid;}
+}
+
+/* ---- bottom quick-nav bar (hidden at rest, reveals while scrolling) ---- */
+.bottombar{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;background:var(--bg-panel);border-top:1px solid var(--border-soft);padding:6px calc(4px + env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom)) calc(4px + env(safe-area-inset-right));box-shadow:0 -2px 10px rgba(0,0,0,.12);transform:translateY(100%);transition:transform .25s ease;}
+.bottombar.show{transform:translateY(0);}
+.bottombar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--text-faint);font-size:9.5px;font-weight:600;padding:5px 2px;cursor:pointer;border-radius:8px;}
+.bottombar button.active{color:var(--accent);}
+.bottombar button svg{width:19px;height:19px;}
+
+/* ---- active-day live timer ---- */
+.timer-hero{text-align:center;padding:8px 0 4px;}
+.timer-hero .th-label{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.6px;}
+.timer-hero .th-time{font-family:var(--mono);font-size:44px;font-weight:700;color:var(--accent);line-height:1.15;}
+.timer-hero .th-empty{font-size:13px;color:var(--text-faint);padding:10px 0;}
+.act-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;background:var(--bg-panel-2);cursor:pointer;}
+.act-btn.running{border-color:var(--ok);background:var(--ok-bg);}
+.act-btn .ab-l{display:flex;align-items:center;gap:10px;}
+.act-btn .ab-ico{width:38px;height:38px;border-radius:10px;background:var(--bg-raised);display:flex;align-items:center;justify-content:center;flex:none;}
+.act-btn .ab-ico svg{width:19px;height:19px;color:var(--text-dim);}
+.act-btn.running .ab-ico svg{color:var(--ok);}
+.act-btn b{font-size:14.5px;}
+.act-btn .ab-r{font-size:12px;font-weight:700;color:var(--text-faint);}
+.act-btn.running .ab-r{color:var(--ok);}
+.act-seg{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-left:3px solid var(--border);border-radius:8px;background:var(--bg-panel-2);margin-bottom:8px;}
+.act-seg.live{border-left-color:var(--ok);}
+.act-seg b{font-size:13px;}
+.act-seg .as-pill{font-size:10px;font-weight:700;color:var(--ok);background:var(--ok-bg);padding:2px 7px;border-radius:8px;margin-left:6px;}
+.act-seg span{font-size:11.5px;color:var(--text-faint);display:block;margin-top:2px;}
+.act-seg button{background:none;border:none;color:var(--text-faint);cursor:pointer;padding:6px;}
+.act-seg button:hover{color:var(--bad);}
+
+.step-head{display:flex;align-items:flex-start;gap:12px;margin:18px 0 12px;}
+.step-head:first-child{margin-top:0;}
+.step-num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;}
+.step-head b{font-family:var(--display);font-size:14px;letter-spacing:.3px;display:block;}
+.step-head .step-sub{font-size:11.5px;color:var(--text-faint);margin-top:2px;line-height:1.4;}
 </style>
 </head>
 <body>
 <div class="app">
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <nav class="drawer" id="navDrawer">
+    <div class="drawer-head"><b data-t="app_name"></b><button class="drawer-close" id="drawerClose">✕</button></div>
+    <button class="nav-item active" data-tab="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><span data-t="tab_dash"></span></button>
+    <button class="nav-item" data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M12 13v5M9.5 15.5h5"/></svg><span data-t="tab_add"></span></button>
+    <button class="nav-item" data-tab="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-t="tab_active"></span></button>
+    <button class="nav-item" data-tab="veh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16V8h11l4 4h3v4h-2M3 16h2M3 16h13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><span data-t="tab_veh"></span></button>
+    <button class="nav-item" data-tab="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 12h8M8 15.5h8M8 8.5h4"/></svg><span data-t="tab_log"></span></button>
+    <button class="nav-item" data-tab="month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M7 14h3M13 14h4M7 17h3"/></svg><span data-t="tab_month"></span></button>
+    <button class="nav-item" data-tab="viol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 16H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".4" fill="currentColor"/></svg><span data-t="tab_viol"></span></button>
+    <button class="nav-item" data-tab="install"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.6-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.9-2.9l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.6V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.6 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.6 1z"/></svg><span data-t="tab_install"></span></button>
+  </nav>
+
+  <div class="bottombar" id="bottomBar">
+    <button data-tab="dash" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><span data-t="tab_dash"></span></button>
+    <button data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M12 13v5M9.5 15.5h5"/></svg><span data-t="tab_add"></span></button>
+    <button data-tab="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-t="tab_active"></span></button>
+    <button data-tab="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 12h8M8 15.5h8M8 8.5h4"/></svg><span data-t="tab_log"></span></button>
+    <button data-tab="veh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16V8h11l4 4h3v4h-2M3 16h2M3 16h13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><span data-t="tab_veh"></span></button>
+  </div>
+
   <div class="topbar">
     <div class="brand">
+      <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
       <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 6v6l4 2"/></svg></div>
       <div><h1>Tacho 561</h1><p data-t="subtitle"></p></div>
     </div>
@@ -238,17 +348,11 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
     <button id="changeVehicle" data-t="vb_change"></button>
   </div>
 
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="dash" data-t="tab_dash"></button>
-    <button class="tab-btn" data-tab="add" data-t="tab_add"></button>
-    <button class="tab-btn" data-tab="month" data-t="tab_month"></button>
-    <button class="tab-btn" data-tab="log" data-t="tab_log"></button>
-    <button class="tab-btn" data-tab="viol" data-t="tab_viol"></button>
-    <button class="tab-btn" data-tab="install" data-t="tab_install"></button>
-  </div>
 
   <div class="view active" id="view-dash">
+    <div class="card"><h2 data-t="dash_next"></h2><div class="next-start" id="nextStartCard"></div></div>
     <div class="card"><h2 data-t="dash_current"></h2><div class="gauge-row" id="gaugeRow"></div></div>
+    <div class="card"><h2 data-t="dash_worktime"></h2><div id="workTimeStatus"></div></div>
     <div class="card"><h2 data-t="dash_disc"></h2><div class="disc-wrap" id="discCard"></div></div>
     <div class="card"><h2 data-t="dash_allow"></h2><div id="allowStatus"></div></div>
     <div class="card"><h2 data-t="dash_rest"></h2><div id="restStatus"></div></div>
@@ -262,6 +366,7 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
       <div class="section-note" data-t="add_note"></div>
       <form id="dayForm">
         <input type="hidden" id="f_editId" value="">
+        <div class="step-head"><span class="step-num">1</span><div><b data-t="step1_title"></b><div class="step-sub" data-t="step1_sub"></div></div></div>
         <label data-t="l_date"></label>
         <input type="date" id="f_date" required>
         <div class="field-row">
@@ -281,7 +386,22 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
         </div>
         <div class="hint" data-t="places_hint"></div>
 
-        <div class="subhead" data-t="sh_veh"></div>
+        <div class="step-head"><span class="step-num">2</span><div><b data-t="step2_title"></b><div class="step-sub" data-t="step2_sub"></div></div></div>
+        <div class="field-row">
+          <div><label data-t="l_reading_source"></label>
+            <select id="f_readingSource">
+              <option value="display" data-t="opt_source_display"></option>
+              <option value="printout" data-t="opt_source_printout"></option>
+              <option value="manual" data-t="opt_source_manual"></option>
+            </select>
+          </div>
+          <div><label data-t="l_card_state"></label>
+            <select id="f_cardState">
+              <option value="inserted" data-t="opt_card_inserted"></option>
+              <option value="withdrawn" data-t="opt_card_withdrawn"></option>
+            </select>
+          </div>
+        </div>
         <div id="segments"></div>
         <button type="button" class="secondary" id="addSeg" data-t="btn_add_vehicle"></button>
 
@@ -320,11 +440,47 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
     </div>
   </div>
 
+  <div class="view" id="view-active">
+    <div class="card">
+      <h2 data-t="active_title"></h2>
+      <div class="section-note" data-t="active_note"></div>
+      <div class="timer-hero" id="timerHero"></div>
+      <div id="actButtons"></div>
+      <button type="button" class="primary" id="finishDayBtn" data-t="btn_finish_day" style="margin-top:6px;"></button>
+    </div>
+    <div class="card">
+      <h2 data-t="active_log_title"></h2>
+      <div id="actSegList"></div>
+    </div>
+  </div>
+
+  <div class="view" id="view-veh">
+    <div class="card">
+      <h2 data-t="veh_title"></h2>
+      <div class="section-note" data-t="veh_note"></div>
+      <div id="vehList"></div>
+      <button type="button" class="secondary" id="addVehBtn" data-t="btn_add_veh"></button>
+    </div>
+  </div>
+
   <div class="view" id="view-month">
     <div class="card">
       <h2 data-t="month_title"></h2>
-      <label data-t="l_month"></label>
-      <input type="month" id="f_month">
+      <div class="period-switch" id="periodSwitch">
+        <button data-period="week" data-t="per_week"></button>
+        <button data-period="pair" data-t="per_pair"></button>
+        <button data-period="month" class="active" data-t="per_month"></button>
+        <button data-period="custom" data-t="per_custom"></button>
+      </div>
+      <div id="periodMonthWrap"><label data-t="l_month"></label><input type="month" id="f_month"></div>
+      <div id="periodCustomWrap" class="period-range" style="display:none;">
+        <div><label data-t="l_from"></label><input type="date" id="f_periodFrom"></div>
+        <div><label data-t="l_to"></label><input type="date" id="f_periodTo"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin:2px 0 14px;">
+        <button type="button" class="secondary" id="csvBtn" data-t="btn_csv" style="margin-bottom:0;"></button>
+        <button type="button" class="secondary" id="printBtn" data-t="btn_print" style="margin-bottom:0;"></button>
+      </div>
       <div id="monthOut"></div>
     </div>
   </div>
@@ -333,6 +489,10 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
     <div class="card">
       <h2 data-t="log_title"></h2>
       <div class="section-note" data-t="log_hint"></div>
+      <div class="log-view-toggle">
+        <button data-logview="cards" class="active" data-t="lv_cards"></button>
+        <button data-logview="table" data-t="lv_table"></button>
+      </div>
       <div id="logList"></div>
     </div>
   </div>
@@ -340,6 +500,11 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
   <div class="view" id="view-viol"><div class="card"><h2 data-t="viol_title"></h2><div id="violList"></div></div></div>
 
   <div class="view" id="view-install">
+    <div class="card">
+      <h2 data-t="driver_title"></h2>
+      <label data-t="l_driver_name"></label>
+      <input type="text" id="f_driverName" placeholder="—">
+    </div>
     <div class="card">
       <h2 data-t="install_title"></h2>
       <div class="section-note" data-t="install_intro"></div>
@@ -353,6 +518,33 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
       <button type="button" class="secondary" id="importBtn" data-t="btn_import"></button>
       <input type="file" id="importFile" accept="application/json" style="display:none;">
     </div>
+    <div class="card">
+      <h2 data-t="sync_title"></h2>
+      <div class="section-note" data-t="sync_note"></div>
+      <div id="syncSetupWrap">
+        <label data-t="sync_config_label"></label>
+        <textarea id="f_syncConfig" rows="4" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","storageBucket":"...","messagingSenderId":"...","appId":"..."}'></textarea>
+        <div class="hint" data-t="sync_config_hint"></div>
+        <button type="button" class="secondary" id="syncConnectBtn" data-t="btn_sync_connect"></button>
+      </div>
+      <div id="syncAuthWrap" style="display:none;">
+        <div id="syncStatusLine" class="section-note"></div>
+        <div id="syncLoginWrap">
+          <label data-t="l_email"></label>
+          <input type="email" id="f_syncEmail" autocomplete="email">
+          <label data-t="l_password"></label>
+          <input type="password" id="f_syncPassword" autocomplete="current-password">
+          <div style="display:flex;gap:8px;">
+            <button type="button" class="secondary" id="syncLoginBtn" data-t="btn_sync_login" style="margin-bottom:0;"></button>
+            <button type="button" class="secondary" id="syncRegisterBtn" data-t="btn_sync_register" style="margin-bottom:0;"></button>
+          </div>
+        </div>
+        <div id="syncLoggedWrap" style="display:none;">
+          <button type="button" class="secondary" id="syncNowBtn" data-t="btn_sync_now"></button>
+          <button type="button" class="secondary" id="syncLogoutBtn" data-t="btn_sync_logout"></button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="disclaimer" data-t="disclaimer"></div>
@@ -361,9 +553,49 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
 /* ============ i18n ============ */
 const T = {
 bg:{
+ app_name:'Tacho 561',
  subtitle:'Дневник и контрол по Регламент 561/2006',
- tab_dash:'Табло', tab_add:'Ден', tab_month:'Месец', tab_log:'Дневник', tab_viol:'Нарушения', tab_install:'Настройки',
- vb_cap:'Текущо превозно средство', vb_change:'Смени', vb_none:'не е зададено', vb_prompt:'Регистрационен номер на новото превозно средство:',
+ tab_dash:'Табло', tab_add:'Нов ден', tab_active:'Активен ден', tab_veh:'Превозни средства', tab_month:'Отчети', tab_log:'Дневник', tab_viol:'Нарушения', tab_install:'Настройки',
+ vb_cap:'Текущо превозно средство', vb_change:'Смени', vb_none:'не е зададено', vb_prompt:'Регистрационен номер:',
+ dash_next:'Най-ранно следващо начало',
+ dash_worktime:'Седмично работно време (Директива 2002/15/ЕО)',
+ ns_exempt:'Денят е освободен от 561/2006 — тази оценка не важи за него.',
+ ns_note_weekly:'Изисква се седмична почивка (мин. {h} ч. намалена — дължи компенсация).',
+ ns_note_reduced:'При намалена дневна почивка (мин. {h} ч.).',
+ ns_note_regular:'Изчерпани са намалените почивки за цикъла — изисква се редовна (мин. {h} ч.).',
+ wt_week:'Тази седмица', wt_avg:'Средно (посл. записани седмици)',
+ wt_hint:'Работно време = управление + друга работа, без почивки и готовност. Твърд лимит от 60 ч./седмица е по чл. 4(б); средното от 48 ч. се смята официално за референтен период от 4 (до 6) месеца — стойността тук е само ориентировъчна.',
+ l_poa:'Готовност (Директива 2002/15/ЕО, чл. 3(б))',
+ poa_hint:'Време, в което не си на работното място, но трябва да си на разположение (напр. изчакване при товарене, ферибот). Не се брои като работно време, но и не замества почивка.',
+ disc_poa:'готовност',
+ po_driver:'Водач', po_worktime:'Работно време (2002/15/ЕО)',
+ v_worktime_over60:'Седмично работно време {x} ч. при твърд лимит 60 ч. (седмица {wk})',
+ veh_title:'Превозни средства', veh_note:'Регистър на камионите — активният се предлага автоматично при нов ден.',
+ btn_add_veh:'+ Добави превозно средство', veh_empty:'Все още няма добавени превозни средства.',
+ veh_active_badge:'активен', veh_make_active:'Направи активен', veh_confirm_del:'Да се изтрие ли това превозно средство от регистъра?',
+ veh_dup:'Вече има превозно средство с този номер.',
+ per_week:'Седмица', per_pair:'Две седмици', per_month:'Месец', per_custom:'Период',
+ l_from:'От', l_to:'До', btn_csv:'Износ CSV', btn_print:'Печат / PDF',
+ lv_cards:'Карти', lv_table:'Таблица', lt_time:'Часове', lt_drv:'Управление', lt_status:'Статус',
+ driver_title:'Данни за водача', l_driver_name:'Име на водача',
+ active_title:'Активен ден с таймер', active_note:'Натисни дейност, за да я стартираш. Изборът на друга автоматично приключва текущата.',
+ active_empty:'Няма стартирана дейност.', act_stop:'Спри', act_now:'СЕГА',
+ active_log_title:'Дейности за деня', active_log_empty:'Все още няма записани дейности.',
+ act_confirm_del:'Да се изтрие ли тази дейност?',
+ active_none_yet:'Стартирай поне една дейност, преди да приключиш деня.',
+ btn_finish_day:'Приключи и запази деня',
+ sync_title:'Синхронизация между устройства',
+ sync_note:'По избор. Изисква безплатен собствен Firebase проект (5-10 мин. за настройка) — данните тогава се пазят криптирано в твоя облак, достъпни от всяко устройство, на което влезеш със същия имейл.',
+ sync_config_label:'Firebase конфигурация (от твоя проект)',
+ sync_config_hint:'Копира се от Firebase Console → Project settings → Your apps → SDK setup and configuration.',
+ btn_sync_connect:'Свържи',
+ l_email:'Имейл', l_password:'Парола',
+ btn_sync_login:'Вход', btn_sync_register:'Регистрация',
+ btn_sync_now:'Синхронизирай сега', btn_sync_logout:'Изход',
+ sync_confirm_pull:'В облака има данни от друго устройство, различни от локалните. Да ги заредя ли тук? (локалните ще бъдат заместени)',
+ sync_logged_as:'Синхронизирано като: {email}', sync_not_logged:'Не си влязъл — данните стоят само на това устройство.',
+ sync_cfg_empty:'Постави конфигурацията от Firebase.', sync_cfg_bad:'Конфигурацията не може да се прочете или свързването се провали.',
+ sync_login_err:'Грешка: {msg}', sync_done:'Синхронизирано.',
  dash_current:'Управление — седмица / двуседмичен период',
  dash_allow:'Използвани и оставащи допустими отклонения',
  dash_rest:'Седмичен цикъл и почивки',
@@ -382,7 +614,14 @@ bg:{
  seg_drv_start:'Брояч управление — начало (чч:мм)', seg_drv_end:'Брояч управление — край (чч:мм)',
  seg_rest_start:'Брояч почивки — начало (чч:мм)', seg_rest_end:'Брояч почивки — край (чч:мм)',
  seg_hint:'Двоеточието се поставя автоматично — пишеш само цифрите (напр. 145 → 1:45). Ако тахографът не показва кумулативен брояч, остави „начало“ празно и впиши общата сума за деня в „край“.',
- calc_prefix:'Изчислено:', calc_drv:'управление', calc_rest:'почивки', calc_km:'км',
+ calc_prefix:'Изчислено:', calc_drv:'управление', calc_other:'друга работа', calc_poa:'готовност', calc_rest:'почивки', calc_km:'км',
+ step1_title:'Край на смяната', step1_sub:'Кога и къде приключва работният ден.',
+ step2_title:'Тахографски запис', step2_sub:'Крайните натрупани стойности от тахографа. Разликата спрямо началото се смята автоматично.',
+ seg_other_start:'Друга работа — начало (чч:мм)', seg_other_end:'Друга работа — край (чч:мм)',
+ seg_poa_start:'Готовност — начало (чч:мм)', seg_poa_end:'Готовност — край (чч:мм)',
+ l_reading_source:'Източник на данните', opt_source_display:'Дисплей', opt_source_printout:'Разпечатка', opt_source_manual:'Ръчен запис',
+ l_card_state:'Състояние на картата', opt_card_inserted:'Картата е поставена', opt_card_withdrawn:'Картата е извадена',
+ po_source:'Източник', po_card:'Карта',
  btn_add_vehicle:'+ Добави превозно средство (смяна на камион)',
  l_resttype:'Вид почивка след деня',
  rt_none:'Все още няма / продължавам',
@@ -532,9 +771,49 @@ bg:{
  disclaimer:'Инструментът е помощен и информативен. Обхваща правилата на Регламент (ЕО) 561/2006 заедно с изключенията по чл. 3, 4(о), 8(5), 8(6а), 9(1), 12, 13 и 14, както и превозите по AETR. Националните дерогации по чл. 13 се различават по държави и се променят — приложението предлага рамка за вписването им, но не съдържа изчерпателен списък за всяка държава. Проверявай актуалните национални правила и не разчитай само на този инструмент при проверка. Не представлява правен съвет.'
 },
 en:{
+ app_name:'Tacho 561',
  subtitle:'Logbook & compliance for Regulation 561/2006',
- tab_dash:'Dashboard', tab_add:'Day', tab_month:'Month', tab_log:'Logbook', tab_viol:'Violations', tab_install:'Settings',
- vb_cap:'Current vehicle', vb_change:'Change', vb_none:'not set', vb_prompt:'Number plate of the new vehicle:',
+ tab_dash:'Dashboard', tab_add:'New day', tab_active:'Active day', tab_veh:'Vehicles', tab_month:'Reports', tab_log:'Logbook', tab_viol:'Violations', tab_install:'Settings',
+ vb_cap:'Current vehicle', vb_change:'Change', vb_none:'not set', vb_prompt:'Number plate:',
+ dash_next:'Next earliest start',
+ dash_worktime:'Weekly working time (Directive 2002/15/EC)',
+ ns_exempt:'The day is exempt from 561/2006 — this estimate does not apply to it.',
+ ns_note_weekly:'A weekly rest is required (min. {h} h reduced — compensation owed).',
+ ns_note_reduced:'Based on a reduced daily rest (min. {h} h).',
+ ns_note_regular:'Reduced rests for this cycle are used up — a regular one is required (min. {h} h).',
+ wt_week:'This week', wt_avg:'Average (recorded weeks)',
+ wt_hint:'Working time = driving + other duties, excluding breaks and availability. The hard 60 h/week cap is Art. 4(b); the 48 h average is officially assessed over a 4 (up to 6) month reference period — the figure here is indicative only.',
+ l_poa:'Availability / POA (Directive 2002/15/EC, Art. 3(b))',
+ poa_hint:'Time when you are not at the workstation but must remain available (e.g. waiting during loading, a ferry crossing). Not counted as working time, but not a rest period either.',
+ disc_poa:'availability',
+ po_driver:'Driver', po_worktime:'Working time (2002/15/EC)',
+ v_worktime_over60:'Weekly working time {x} h against a hard 60 h limit (week {wk})',
+ veh_title:'Vehicles', veh_note:'Vehicle registry — the active one is suggested automatically on a new day.',
+ btn_add_veh:'+ Add vehicle', veh_empty:'No vehicles added yet.',
+ veh_active_badge:'active', veh_make_active:'Make active', veh_confirm_del:'Delete this vehicle from the registry?',
+ veh_dup:'A vehicle with that plate already exists.',
+ per_week:'Week', per_pair:'Two weeks', per_month:'Month', per_custom:'Custom',
+ l_from:'From', l_to:'To', btn_csv:'Export CSV', btn_print:'Print / PDF',
+ lv_cards:'Cards', lv_table:'Table', lt_time:'Times', lt_drv:'Driving', lt_status:'Status',
+ driver_title:'Driver details', l_driver_name:'Driver name',
+ active_title:'Active day timer', active_note:'Tap an activity to start it. Picking another one automatically ends the current one.',
+ active_empty:'No activity running.', act_stop:'Stop', act_now:'NOW',
+ active_log_title:'Activities today', active_log_empty:'No activities recorded yet.',
+ act_confirm_del:'Delete this activity?',
+ active_none_yet:'Start at least one activity before finishing the day.',
+ btn_finish_day:'Finish & save the day',
+ sync_title:'Cross-device sync',
+ sync_note:'Optional. Needs your own free Firebase project (5-10 min. to set up) — data is then kept in your own cloud, reachable from any device you sign into with the same email.',
+ sync_config_label:'Firebase configuration (from your project)',
+ sync_config_hint:'Copy this from Firebase Console → Project settings → Your apps → SDK setup and configuration.',
+ btn_sync_connect:'Connect',
+ l_email:'Email', l_password:'Password',
+ btn_sync_login:'Sign in', btn_sync_register:'Register',
+ btn_sync_now:'Sync now', btn_sync_logout:'Sign out',
+ sync_confirm_pull:'The cloud has data from another device, different from what is stored here. Load it now? (local data will be replaced)',
+ sync_logged_as:'Synced as: {email}', sync_not_logged:'Not signed in — data stays on this device only.',
+ sync_cfg_empty:'Paste the configuration from Firebase.', sync_cfg_bad:'The configuration could not be read, or the connection failed.',
+ sync_login_err:'Error: {msg}', sync_done:'Synced.',
  dash_current:'Driving — week / two-week period',
  dash_allow:'Allowances used and remaining',
  dash_rest:'Weekly cycle and rests',
@@ -553,7 +832,14 @@ en:{
  seg_drv_start:'Driving counter — start (hh:mm)', seg_drv_end:'Driving counter — end (hh:mm)',
  seg_rest_start:'Break counter — start (hh:mm)', seg_rest_end:'Break counter — end (hh:mm)',
  seg_hint:'The colon is inserted automatically — just type the digits (e.g. 145 → 1:45). If your tachograph shows no cumulative counter, leave “start” empty and enter the day total in “end”.',
- calc_prefix:'Calculated:', calc_drv:'driving', calc_rest:'breaks', calc_km:'km',
+ calc_prefix:'Calculated:', calc_drv:'driving', calc_other:'other work', calc_poa:'availability', calc_rest:'breaks', calc_km:'km',
+ step1_title:'End of shift', step1_sub:'When and where the working day ends.',
+ step2_title:'Tachograph record', step2_sub:'The final accumulated tachograph values. The difference from the start is calculated automatically.',
+ seg_other_start:'Other work — start (hh:mm)', seg_other_end:'Other work — end (hh:mm)',
+ seg_poa_start:'Availability — start (hh:mm)', seg_poa_end:'Availability — end (hh:mm)',
+ l_reading_source:'Data source', opt_source_display:'Display', opt_source_printout:'Printout', opt_source_manual:'Manual entry',
+ l_card_state:'Card state', opt_card_inserted:'Card inserted', opt_card_withdrawn:'Card withdrawn',
+ po_source:'Source', po_card:'Card',
  btn_add_vehicle:'+ Add vehicle (truck change)',
  l_resttype:'Type of rest after the day',
  rt_none:'No rest yet / continuing',
@@ -703,9 +989,49 @@ en:{
  disclaimer:'This tool is informational. It covers the rules of Regulation (EC) 561/2006 together with the exceptions under Art. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 and 14, as well as transport under AETR. National derogations under Art. 13 differ between countries and change over time — the app provides a framework for recording them but does not hold an exhaustive list for every country. Check the current national rules and do not rely on this tool alone during an inspection. Not legal advice.'
 },
 de:{
+ app_name:'Tacho 561',
  subtitle:'Fahrtenbuch & Kontrolle nach VO 561/2006',
- tab_dash:'Übersicht', tab_add:'Tag', tab_month:'Monat', tab_log:'Fahrtenbuch', tab_viol:'Verstöße', tab_install:'Einstellungen',
- vb_cap:'Aktuelles Fahrzeug', vb_change:'Wechseln', vb_none:'nicht gesetzt', vb_prompt:'Kennzeichen des neuen Fahrzeugs:',
+ tab_dash:'Übersicht', tab_add:'Neuer Tag', tab_active:'Aktiver Tag', tab_veh:'Fahrzeuge', tab_month:'Berichte', tab_log:'Fahrtenbuch', tab_viol:'Verstöße', tab_install:'Einstellungen',
+ vb_cap:'Aktuelles Fahrzeug', vb_change:'Wechseln', vb_none:'nicht gesetzt', vb_prompt:'Kennzeichen:',
+ dash_next:'Frühestmöglicher nächster Start',
+ dash_worktime:'Wöchentliche Arbeitszeit (Richtlinie 2002/15/EG)',
+ ns_exempt:'Der Tag ist von der VO 561/2006 befreit — diese Schätzung gilt dafür nicht.',
+ ns_note_weekly:'Eine Wochenruhezeit ist erforderlich (mind. {h} h reduziert — Ausgleich fällig).',
+ ns_note_reduced:'Basierend auf einer reduzierten täglichen Ruhezeit (mind. {h} h).',
+ ns_note_regular:'Reduzierte Ruhezeiten für diesen Zyklus sind aufgebraucht — eine regelmäßige ist erforderlich (mind. {h} h).',
+ wt_week:'Diese Woche', wt_avg:'Durchschnitt (erfasste Wochen)',
+ wt_hint:'Arbeitszeit = Lenkzeit + andere Arbeiten, ohne Pausen und Bereitschaft. Die harte Obergrenze von 60 h/Woche ist Art. 4(b); der Durchschnitt von 48 h wird offiziell über einen Bezugszeitraum von 4 (bis 6) Monaten bewertet — der Wert hier ist nur ein Anhaltspunkt.',
+ l_poa:'Bereitschaftszeit (Richtlinie 2002/15/EG, Art. 3(b))',
+ poa_hint:'Zeit, in der du nicht am Arbeitsplatz bist, aber verfügbar sein musst (z. B. Wartezeit beim Beladen, Fährüberfahrt). Zählt nicht als Arbeitszeit, ersetzt aber auch keine Ruhezeit.',
+ disc_poa:'Bereitschaft',
+ po_driver:'Fahrer', po_worktime:'Arbeitszeit (2002/15/EG)',
+ v_worktime_over60:'Wöchentliche Arbeitszeit {x} h bei einer harten Grenze von 60 h (Woche {wk})',
+ veh_title:'Fahrzeuge', veh_note:'Fahrzeugregister — das aktive wird bei einem neuen Tag automatisch vorgeschlagen.',
+ btn_add_veh:'+ Fahrzeug hinzufügen', veh_empty:'Noch keine Fahrzeuge hinzugefügt.',
+ veh_active_badge:'aktiv', veh_make_active:'Aktivieren', veh_confirm_del:'Dieses Fahrzeug aus dem Register löschen?',
+ veh_dup:'Ein Fahrzeug mit diesem Kennzeichen existiert bereits.',
+ per_week:'Woche', per_pair:'Zwei Wochen', per_month:'Monat', per_custom:'Zeitraum',
+ l_from:'Von', l_to:'Bis', btn_csv:'CSV exportieren', btn_print:'Drucken / PDF',
+ lv_cards:'Karten', lv_table:'Tabelle', lt_time:'Zeiten', lt_drv:'Lenkzeit', lt_status:'Status',
+ driver_title:'Fahrerdaten', l_driver_name:'Name des Fahrers',
+ active_title:'Aktiver Tag mit Timer', active_note:'Tippe auf eine Tätigkeit, um sie zu starten. Die Wahl einer anderen beendet automatisch die aktuelle.',
+ active_empty:'Keine Tätigkeit läuft.', act_stop:'Stopp', act_now:'JETZT',
+ active_log_title:'Tätigkeiten heute', active_log_empty:'Noch keine Tätigkeiten erfasst.',
+ act_confirm_del:'Diese Tätigkeit löschen?',
+ active_none_yet:'Starte mindestens eine Tätigkeit, bevor du den Tag abschließt.',
+ btn_finish_day:'Tag abschließen & speichern',
+ sync_title:'Geräteübergreifende Synchronisierung',
+ sync_note:'Optional. Erfordert ein eigenes kostenloses Firebase-Projekt (5-10 Min. Einrichtung) — die Daten liegen dann in deiner eigenen Cloud, erreichbar von jedem Gerät, auf dem du dich mit derselben E-Mail anmeldest.',
+ sync_config_label:'Firebase-Konfiguration (aus deinem Projekt)',
+ sync_config_hint:'Kopiere sie aus der Firebase-Konsole → Projekteinstellungen → Deine Apps → SDK-Einrichtung und -Konfiguration.',
+ btn_sync_connect:'Verbinden',
+ l_email:'E-Mail', l_password:'Passwort',
+ btn_sync_login:'Anmelden', btn_sync_register:'Registrieren',
+ btn_sync_now:'Jetzt synchronisieren', btn_sync_logout:'Abmelden',
+ sync_confirm_pull:'In der Cloud liegen Daten von einem anderen Gerät, die von den lokalen abweichen. Jetzt laden? (lokale Daten werden ersetzt)',
+ sync_logged_as:'Synchronisiert als: {email}', sync_not_logged:'Nicht angemeldet — die Daten bleiben nur auf diesem Gerät.',
+ sync_cfg_empty:'Konfiguration aus Firebase einfügen.', sync_cfg_bad:'Die Konfiguration konnte nicht gelesen werden oder die Verbindung ist fehlgeschlagen.',
+ sync_login_err:'Fehler: {msg}', sync_done:'Synchronisiert.',
  dash_current:'Lenkzeit — Woche / Zweiwochenzeitraum',
  dash_allow:'Genutzte und verbleibende Ausnahmen',
  dash_rest:'Wochenzyklus und Ruhezeiten',
@@ -724,7 +1050,14 @@ de:{
  seg_drv_start:'Lenkzeitzähler — Beginn (hh:mm)', seg_drv_end:'Lenkzeitzähler — Ende (hh:mm)',
  seg_rest_start:'Pausenzähler — Beginn (hh:mm)', seg_rest_end:'Pausenzähler — Ende (hh:mm)',
  seg_hint:'Der Doppelpunkt wird automatisch gesetzt — nur die Ziffern eingeben (z. B. 145 → 1:45). Zeigt der Fahrtenschreiber keinen kumulativen Zähler, „Beginn“ leer lassen und die Tagessumme unter „Ende“ eintragen.',
- calc_prefix:'Berechnet:', calc_drv:'Lenkzeit', calc_rest:'Pausen', calc_km:'km',
+ calc_prefix:'Berechnet:', calc_drv:'Lenkzeit', calc_other:'andere Arbeit', calc_poa:'Bereitschaft', calc_rest:'Pausen', calc_km:'km',
+ step1_title:'Schichtende', step1_sub:'Wann und wo der Arbeitstag endet.',
+ step2_title:'Fahrtenschreiber-Aufzeichnung', step2_sub:'Die abschließenden kumulierten Werte des Fahrtenschreibers. Die Differenz zum Beginn wird automatisch berechnet.',
+ seg_other_start:'Andere Arbeit — Beginn (hh:mm)', seg_other_end:'Andere Arbeit — Ende (hh:mm)',
+ seg_poa_start:'Bereitschaft — Beginn (hh:mm)', seg_poa_end:'Bereitschaft — Ende (hh:mm)',
+ l_reading_source:'Datenquelle', opt_source_display:'Display', opt_source_printout:'Ausdruck', opt_source_manual:'Manueller Eintrag',
+ l_card_state:'Kartenstatus', opt_card_inserted:'Karte gesteckt', opt_card_withdrawn:'Karte entnommen',
+ po_source:'Quelle', po_card:'Karte',
  btn_add_vehicle:'+ Fahrzeug hinzufügen (LKW-Wechsel)',
  l_resttype:'Art der Ruhezeit nach dem Tag',
  rt_none:'Noch keine / laufend',
@@ -917,7 +1250,7 @@ setInterval(()=>{ if(THEME==='auto') applyTheme(); },60000);
 
 /* ============ Storage ============ */
 const KEY='t561-data-v4';
-let DATA={ entries:[], compensations:[], currentPlate:'', lastCountry:'' };
+let DATA={ entries:[], compensations:[], currentPlate:'', lastCountry:'', vehicles:[], driverName:'', activeDay:null };
 const store={
   async get(k){
     if(window.storage&&window.storage.get){ try{ const r=await window.storage.get(k,false); return r&&r.value?r.value:null; }catch(e){} }
@@ -933,8 +1266,26 @@ async function loadData(){
   if(raw){ try{ DATA=JSON.parse(raw); }catch(e){} }
   DATA.entries=DATA.entries||[]; DATA.compensations=DATA.compensations||[];
   DATA.currentPlate=DATA.currentPlate||''; DATA.lastCountry=DATA.lastCountry||'';
+  DATA.vehicles=DATA.vehicles||[]; DATA.driverName=DATA.driverName||'';
+  DATA.activeDay=DATA.activeDay||null;
+  // migrate: seed the registry from the legacy single-plate field, and from any plate
+  // already used in past day entries, so nothing existing gets silently dropped.
+  const known=new Set(DATA.vehicles.map(v=>v.plate));
+  const seed=[];
+  if(DATA.currentPlate && !known.has(DATA.currentPlate)) seed.push(DATA.currentPlate);
+  DATA.entries.forEach(e=>(e.segments||[]).forEach(s=>{ if(s.plate && !known.has(s.plate) && seed.indexOf(s.plate)<0) seed.push(s.plate); }));
+  seed.forEach(p=>DATA.vehicles.push({id:'v'+Date.now()+Math.random().toString(36).slice(2,6),plate:p,note:'',active:false}));
+  if(DATA.vehicles.length && !DATA.vehicles.some(v=>v.active)){
+    const cur=DATA.vehicles.find(v=>v.plate===DATA.currentPlate) || DATA.vehicles[0];
+    cur.active=true;
+  }
 }
-async function saveData(){ await store.set(KEY, JSON.stringify(DATA)); }
+async function saveData(){
+  DATA.updatedAt=Date.now();
+  await store.set(KEY, JSON.stringify(DATA));
+  pushToCloud(); // fire-and-forget; no-op if sync isn't set up or the user isn't signed in
+}
+function activeVehicle(){ return DATA.vehicles.find(v=>v.active) || null; }
 
 /* ============ Date / time ============ */
 function toDate(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
@@ -990,10 +1341,25 @@ function counterPair(startV,endV){
 }
 function segDrivingMin(s){ return counterPair(s.drvStart,s.drvEnd); }
 function segRestMin(s){ return counterPair(s.restStart,s.restEnd); }
+function segOtherMin(s){ return counterPair(s.otherStart,s.otherEnd); }
+function segPoaMin(s){ return counterPair(s.poaStart,s.poaEnd); }
 function segKm(s){ const a=parseFloat(s.odoStart),b=parseFloat(s.odoEnd); return (isNaN(a)||isNaN(b))?null:Math.max(0,b-a); }
 function dayDrivingHours(e){ return (e.segments||[]).reduce((s,x)=>{const m=segDrivingMin(x); return s+(m===null?0:m/60);},0); }
 function dayBreakMin(e){ return (e.segments||[]).reduce((s,x)=>{const m=segRestMin(x); return s+(m===null?0:m);},0); }
 function dayKm(e){ return (e.segments||[]).reduce((s,x)=>{const k=segKm(x); return s+(k===null?0:k);},0); }
+function dayOtherMin(e){ return (e.segments||[]).reduce((s,x)=>{const m=segOtherMin(x); return s+(m===null?0:m);},0); }
+function dayPoaMin(e){
+  const fromSegs=(e.segments||[]).reduce((s,x)=>{const m=segPoaMin(x); return s+(m===null?0:m);},0);
+  if(fromSegs>0) return fromSegs;
+  return (e.poaHours||0)*60; // backward compatibility with entries saved before POA became a tachograph counter
+}
+// "Working time" under Directive 2002/15/EC = time at the workstation (driving + other duties),
+// explicitly excluding breaks and periods of availability (POA/"Готовност"), which the Directive
+// treats as non-working time by default. Driving and other-work are read straight off the
+// tachograph's own accumulators, same as a real DTCO's activity counters.
+function dayWorkTimeHours(e){
+  return dayDrivingHours(e) + dayOtherMin(e)/60;
+}
 function isExempt(e){ const x=e.exc||{};
   return !!(x.oos&&x.oos.on) || !!(x.nat&&x.nat.on&&x.nat.full) || !!(x.aetr&&x.aetr.on); }
 
@@ -1005,8 +1371,9 @@ function computeAll(){
   let weeklyRestHistory=[]; // {date, type, hours}
   let twelveDayActive=null;
 
-  const weekSums={};
-  entries.forEach(e=>{ if(!isExempt(e)){ const w=weekKey(e.date); weekSums[w]=(weekSums[w]||0)+dayDrivingHours(e); } });
+  const weekSums={}, weekWorkSums={};
+  entries.forEach(e=>{ if(!isExempt(e)){ const w=weekKey(e.date); weekSums[w]=(weekSums[w]||0)+dayDrivingHours(e);
+    weekWorkSums[w]=(weekWorkSums[w]||0)+dayWorkTimeHours(e); } });
 
   entries.forEach(e=>{
     const x=e.exc||{};
@@ -1179,6 +1546,21 @@ function computeAll(){
     if(p>90.001) allViol.push({date:wl[i],msg:t('v_pair_over90',{x:p.toFixed(1)}),art:'Art. 6(3)',sev:'bad'});
   }
 
+  // ---- weekly working time, Directive 2002/15/EC Art. 4 (separate from 561/2006 driving limits) ----
+  // Art. 4(b): 60h is a hard cap for any single week. Art. 4(a)'s 48h average applies over a
+  // reference period of 4 (or up to 6, where a collective agreement extends it) months — properly
+  // computing that average needs the whole reference window, so here it's shown as an indicative
+  // average over the recorded weeks only, flagged as a note rather than a citation.
+  const workWeekKeys=Object.keys(weekWorkSums).sort();
+  workWeekKeys.forEach(w=>{
+    if(weekWorkSums[w]>60.001) allViol.push({date:w,msg:t('v_worktime_over60',{x:weekWorkSums[w].toFixed(1),wk:w}),art:'Directive 2002/15/EC, Art. 4(b)',sev:'bad'});
+  });
+  let workTimeAvg=null;
+  if(workWeekKeys.length){
+    const recent=workWeekKeys.slice(-17); // ~4 months
+    workTimeAvg=recent.reduce((s,w)=>s+weekWorkSums[w],0)/recent.length;
+  }
+
   // current allowance state (based on the latest entry)
   const lastRef = entries.length? entries[entries.length-1].date : fmt(new Date());
   const curWk = weekKey(lastRef);
@@ -1187,10 +1569,12 @@ function computeAll(){
     reducedUsed: reducedDaily,
     periodsSinceWeekly, weeklyDeadline: (twelveDayActive?12:6),
     twelveDayActive,
-    weeklyRestHistory
+    weeklyRestHistory,
+    curWeekWorkTime: weekWorkSums[curWk]||0,
+    workTimeAvg
   };
 
-  return { entries, weekSums, evals, violations:allViol, state };
+  return { entries, weekSums, weekWorkSums, evals, violations:allViol, state };
 }
 function pairFor(weekSums, ref){
   const wk=weekKey(ref), thisSum=weekSums[wk]||0;
@@ -1254,14 +1638,19 @@ function discSVG(e,ev){
     const s=timeToAngle(e.start); let en=timeToAngle(e.end); if(en<=s) en+=360;
     const total=en-s;
     const workMin=Math.max(1, ev.workdayH*60);
-    const drvMin=Math.min(workMin, ev.drv*60);
-    const brkMin=Math.min(workMin-drvMin, ev.brk||0);
-    const othMin=Math.max(0, workMin-drvMin-brkMin);
-    const dA=total*drvMin/workMin, oA=total*othMin/workMin, bA=total*brkMin/workMin;
+    const rawDrv=ev.drv*60, rawOth=dayOtherMin(e), rawPoa=dayPoaMin(e), rawBrk=ev.brk||0;
+    const rawTotal=rawDrv+rawOth+rawPoa+rawBrk;
+    // the four tachograph counters are independent readings and may not add up exactly to the
+    // start→end span (rounding, a counter left blank, etc.) — scale them proportionally so the
+    // dial always represents a full day without ever exceeding the drawn arc.
+    const scale = rawTotal>workMin ? workMin/rawTotal : 1;
+    const drvMin=rawDrv*scale, othMin=rawOth*scale, poaMin=rawPoa*scale, brkMin=rawBrk*scale;
+    const dA=total*drvMin/workMin, oA=total*othMin/workMin, bA=total*brkMin/workMin, pA=total*poaMin/workMin;
     let a=s;
     acts+=discArc(cx,cy,56,0,359.9,'var(--border)',14,0.55); // rest ring
     if(dA>0.5){ acts+=discArc(cx,cy,56,a,a+dA,'var(--accent)',14); a+=dA; }
     if(oA>0.5){ acts+=discArc(cx,cy,56,a,a+oA,'var(--text-faint)',14); a+=oA; }
+    if(pA>0.5){ acts+=discArc(cx,cy,56,a,a+pA,'var(--info)',14); a+=pA; }
     if(bA>0.5){ acts+=discArc(cx,cy,56,a,a+bA,'var(--ok)',14); }
     const ps=polar(cx,cy,68,s), pe=polar(cx,cy,68,en);
     acts+=`<line x1="${cx}" y1="${cy}" x2="${ps.x.toFixed(1)}" y2="${ps.y.toFixed(1)}" stroke="var(--text-dim)" stroke-width="1" opacity="0.5"/>`;
@@ -1280,6 +1669,7 @@ function discLegend(){
   return `<div class="disc-legend">
     <span><i style="background:var(--accent)"></i>${t('disc_drv')}</span>
     <span><i style="background:var(--text-faint)"></i>${t('disc_oth')}</span>
+    <span><i style="background:var(--info)"></i>${t('disc_poa')}</span>
     <span><i style="background:var(--ok)"></i>${t('disc_brk')}</span>
     <span><i style="background:var(--border)"></i>${t('disc_rest')}</span>
   </div><div class="disc-note">${t('disc_approx')}</div>`;
@@ -1292,6 +1682,9 @@ function printoutHTML(e,ev){
   const rl=t('rest_labels');
   const L=[];
   L.push('      ▼ '+t('po_head')+' ▼');
+  if(DATA.driverName) L.push(poRow(t('po_driver'), DATA.driverName));
+  if(e.readingSource) L.push(poRow(t('po_source'), t('opt_source_'+e.readingSource)));
+  if(e.cardState) L.push(poRow(t('po_card'), t('opt_card_'+e.cardState)));
   L.push(poLine('-'));
   L.push(poRow(e.date, e.start+'-'+e.end));
   L.push(poLine('-'));
@@ -1301,8 +1694,8 @@ function printoutHTML(e,ev){
       const k=segKm(s);
       L.push(poRow(t('po_odo'), (s.odoStart??'—')+'→'+(s.odoEnd??'—')+(k!=null?' ('+k+'km)':'')));
     }
-    const d=segDrivingMin(s), r=segRestMin(s);
-    if(d!=null||r!=null) L.push(poRow(t('po_counters'),'▶'+minToHM(d)+'  ❚❚'+minToHM(r)));
+    const d=segDrivingMin(s), o=segOtherMin(s), po=segPoaMin(s), r=segRestMin(s);
+    if(d!=null||r!=null||o!=null||po!=null) L.push(poRow(t('po_counters'),'▶'+minToHM(d)+' ⚒'+minToHM(o)+' ◷'+minToHM(po)+' ❚❚'+minToHM(r)));
     L.push(poLine('-'));
   });
   if(e.startPlace||e.startCountry||e.endPlace||e.endCountry){
@@ -1313,9 +1706,11 @@ function printoutHTML(e,ev){
   }
   L.push(t('po_sum'));
   L.push(poRow('▶ '+t('disc_drv'), minToHM(ev.drv*60)));
+  L.push(poRow('⚒ '+t('disc_oth'), minToHM(dayOtherMin(e))));
+  L.push(poRow('◷ '+t('disc_poa'), minToHM(dayPoaMin(e))));
   L.push(poRow('❚❚ '+t('disc_brk'), minToHM(ev.brk)));
-  L.push(poRow('⚒ '+t('disc_oth'), minToHM(Math.max(0,ev.workdayH*60-ev.drv*60-ev.brk))));
   L.push(poRow('Σ', minToHM(ev.workdayH*60)));
+  L.push(poRow(t('po_worktime'), dayWorkTimeHours(e).toFixed(1)+'h'));
   if(ev.km) L.push(poRow('km', ev.km));
   L.push(poRow(t('po_rest_after'), ((rl&&rl[e.restType])||'—')+' '+(e.restHours||0)+'h'));
   L.push(poLine('-'));
@@ -1477,10 +1872,12 @@ function renderExceptions(){
 
 /* ============ Vehicle segments ============ */
 let currentSegments=[];
-function blankSeg(plate){ return {plate:plate||'',odoStart:'',odoEnd:'',drvStart:'',drvEnd:'',restStart:'',restEnd:''}; }
+function blankSeg(plate){ return {plate:plate||'',odoStart:'',odoEnd:'',drvStart:'',drvEnd:'',otherStart:'',otherEnd:'',poaStart:'',poaEnd:'',restStart:'',restEnd:''}; }
 function segCalcText(s){
-  const d=segDrivingMin(s),r=segRestMin(s),k=segKm(s), p=[];
+  const d=segDrivingMin(s),o=segOtherMin(s),po=segPoaMin(s),r=segRestMin(s),k=segKm(s), p=[];
   if(d!==null) p.push(`${t('calc_drv')} ${minToHM(d)}`);
+  if(o!==null) p.push(`${t('calc_other')} ${minToHM(o)}`);
+  if(po!==null) p.push(`${t('calc_poa')} ${minToHM(po)}`);
   if(r!==null) p.push(`${t('calc_rest')} ${minToHM(r)}`);
   if(k!==null) p.push(`${k} ${t('calc_km')}`);
   return p.length? t('calc_prefix')+' '+p.join(' · ') : '';
@@ -1504,6 +1901,14 @@ function renderSegments(){
        <div><label>${t('seg_drv_end')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="drvEnd" value="${s.drvEnd}"></div>
      </div>
      <div class="field-row">
+       <div><label>${t('seg_other_start')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="otherStart" value="${s.otherStart||''}"></div>
+       <div><label>${t('seg_other_end')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="otherEnd" value="${s.otherEnd||''}"></div>
+     </div>
+     <div class="field-row">
+       <div><label>${t('seg_poa_start')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="poaStart" value="${s.poaStart||''}"></div>
+       <div><label>${t('seg_poa_end')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="poaEnd" value="${s.poaEnd||''}"></div>
+     </div>
+     <div class="field-row">
        <div><label>${t('seg_rest_start')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="restStart" value="${s.restStart}"></div>
        <div><label>${t('seg_rest_end')}</label><input type="text" inputmode="numeric" placeholder="0:00" data-i="${i}" data-f="restEnd" value="${s.restEnd}"></div>
      </div>
@@ -1511,7 +1916,7 @@ function renderSegments(){
      <div class="hint">${t('seg_hint')}</div>`;
     w.appendChild(d);
   });
-  const HMF=['drvStart','drvEnd','restStart','restEnd'];
+  const HMF=['drvStart','drvEnd','otherStart','otherEnd','poaStart','poaEnd','restStart','restEnd'];
   w.querySelectorAll('input').forEach(inp=>{
     inp.addEventListener('input',ev=>{
       const i=+ev.target.dataset.i,f=ev.target.dataset.f;
@@ -1554,6 +1959,41 @@ function render(){
 
   // tacho disc for the latest day
   const lastE=R.entries[R.entries.length-1];
+
+  // ---- next earliest legal start (23-hour rest-window heuristic per Art. 8) ----
+  const nsEl=document.getElementById('nextStartCard');
+  if(nsEl){
+    if(!lastE || !lastE.end){
+      nsEl.innerHTML=`<div class="section-note">${t('no_data')}</div>`;
+    } else {
+      const lastEv=R.evals[lastE.id];
+      if(lastEv.exempt){
+        nsEl.innerHTML=`<div class="section-note">${t('ns_exempt')}</div>`;
+      } else {
+        let minH, noteKey;
+        if(lastEv.periodsSinceWeekly>=lastEv.weeklyDeadline){ minH=24; noteKey='ns_note_weekly'; }
+        else if(lastEv.reducedUsed<3){ minH=9; noteKey='ns_note_reduced'; }
+        else { minH=11; noteKey='ns_note_regular'; }
+        const startDt=new Date(lastE.date+'T'+lastE.end+':00');
+        startDt.setMinutes(startDt.getMinutes()+minH*60);
+        const hh=String(startDt.getHours()).padStart(2,'0'), mm=String(startDt.getMinutes()).padStart(2,'0');
+        nsEl.innerHTML=`<div><div class="ns-time">${hh}:${mm}</div><div class="ns-date">${fmt(startDt)}</div></div>
+          <div class="ns-note">${t(noteKey,{h:minH})}</div>`;
+      }
+    }
+  }
+
+  // ---- weekly working time (Directive 2002/15/EC) ----
+  const wtEl=document.getElementById('workTimeStatus');
+  if(wtEl){
+    const cur=S.curWeekWorkTime||0, avg=S.workTimeAvg;
+    const stW = cur>60?'bad':(cur>=54?'warn':'ok');
+    wtEl.innerHTML = `
+     <div class="res-line"><span>${t('wt_week')}</span><span class="pill ${stW}">${cur.toFixed(1)} / 60 ${t('unit_hours')}</span></div>
+     ${avg!==null?`<div class="res-line"><span>${t('wt_avg')}</span><span class="pill ${avg>48?'warn':'ok'}">${avg.toFixed(1)} / 48 ${t('unit_hours')}</span></div>`:''}
+     <div class="hint" style="margin:6px 0 0;">${t('wt_hint')}</div>`;
+  }
+
   const discEl=document.getElementById('discCard');
   if(discEl) discEl.innerHTML = lastE
     ? discSVG(lastE,R.evals[lastE.id])+discLegend()
@@ -1615,13 +2055,15 @@ function render(){
       <div class="viol-body"><b>${v.date}</b><div>${v.msg}</div><div class="viol-art">${v.art||''}</div></div></div>`).join('');
 
   document.getElementById('vbPlate').textContent = DATA.currentPlate || t('vb_none');
-  renderMonth(R);
+  renderPeriodReport(R);
   return R;
 }
 
+let logView='cards';
 function renderLog(R){
   const el=document.getElementById('logList');
   if(R.entries.length===0){ el.innerHTML=`<div class="empty">${t('log_empty')}</div>`; return; }
+  if(logView==='table'){ el.innerHTML=renderLogTable(R); return; }
   el.innerHTML=[...R.entries].reverse().map(e=>{
     const ev=R.evals[e.id];
     const plates=(e.segments||[]).map(s=>s.plate).filter(Boolean);
@@ -1651,13 +2093,39 @@ function renderLog(R){
     </div>`;
   }).join('');
 }
+function renderLogTable(R){
+  const rows=[...R.entries].reverse().map(e=>{
+    const ev=R.evals[e.id];
+    const plates=(e.segments||[]).map(s=>s.plate).filter(Boolean).join(', ');
+    const route=[e.startPlace,e.startCountry].filter(Boolean).join(' ')+
+      (e.endPlace||e.endCountry? ' → '+[e.endPlace,e.endCountry].filter(Boolean).join(' '):'');
+    const badge = ev.exempt? t('exempt_badge') : (ev.viol.length? ev.viol.length+' '+t('viol_count') : t('ok_status'));
+    return `<tr onclick="openLogRow('${e.id}')">
+      <td>${e.date}</td><td>${e.start}–${e.end}</td><td>${plates||'—'}</td>
+      <td>${ev.km||0}</td><td>${ev.drv.toFixed(1)}</td><td>${route||'—'}</td><td>${badge}</td>
+    </tr>`;
+  }).join('');
+  return `<div class="log-table-wrap"><table class="log-table">
+    <thead><tr><th>${t('l_date')}</th><th>${t('lt_time')}</th><th>${t('r_vehicles')}</th><th>${t('unit_km')}</th><th>${t('lt_drv')}</th><th>${t('r_route')}</th><th>${t('lt_status')}</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+}
+function openLogRow(id){
+  logView='cards';
+  document.querySelectorAll('.log-view-toggle button').forEach(b=>b.classList.toggle('active', b.dataset.logview==='cards'));
+  openDetails[id]=true;
+  render();
+  setTimeout(()=>{ const el=document.getElementById('le-'+id); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); },50);
+}
+window.openLogRow=openLogRow;
 
 function detailHTML(e,ev,R){
   const segs=(e.segments||[]).map((s,i)=>{
-    const d=segDrivingMin(s),r=segRestMin(s),k=segKm(s);
+    const d=segDrivingMin(s),o=segOtherMin(s),po=segPoaMin(s),r=segRestMin(s),k=segKm(s);
     return `<div class="det-line"><span>${t('seg_title')} ${i+1}${s.plate?' · '+s.plate:''}</span><span>${minToHM(d)} ▶ · ${minToHM(r)} ❚❚ · ${k===null?'—':k+t('unit_km')}</span></div>
      ${(s.odoStart||s.odoEnd)?`<div class="det-line"><span>km</span><span>${s.odoStart||'—'} → ${s.odoEnd||'—'}</span></div>`:''}
      ${(s.drvStart||s.drvEnd)?`<div class="det-line"><span>${t('calc_drv')}</span><span>${s.drvStart||'—'} → ${s.drvEnd||'—'}</span></div>`:''}
+     ${(s.otherStart||s.otherEnd)?`<div class="det-line"><span>${t('calc_other')}</span><span>${s.otherStart||'—'} → ${s.otherEnd||'—'}</span></div>`:''}
+     ${(s.poaStart||s.poaEnd)?`<div class="det-line"><span>${t('calc_poa')}</span><span>${s.poaStart||'—'} → ${s.poaEnd||'—'}</span></div>`:''}
      ${(s.restStart||s.restEnd)?`<div class="det-line"><span>${t('calc_rest')}</span><span>${s.restStart||'—'} → ${s.restEnd||'—'}</span></div>`:''}`;
   }).join('');
   const rl=t('rest_labels');
@@ -1665,6 +2133,7 @@ function detailHTML(e,ev,R){
   return `
   <div class="det-sec"><h4>${t('det_disc')}</h4>
     <div class="disc-wrap">${discSVG(e,ev)}${discLegend()}</div>
+    ${e.readingSource||e.cardState?`<div class="det-line"><span>${t('po_source')} / ${t('po_card')}</span><span>${e.readingSource?t('opt_source_'+e.readingSource):'—'} · ${e.cardState?t('opt_card_'+e.cardState):'—'}</span></div>`:''}
     <button type="button" class="po-btn" id="pobtn-${e.id}" onclick="togglePO('${e.id}')">${t('po_show')}</button>
     <div class="printout" id="po-${e.id}">${printoutHTML(e,ev)}</div>
   </div>
@@ -1674,6 +2143,8 @@ function detailHTML(e,ev,R){
       <div class="det-line"><span>${t('det_end')}</span><span>${e.end} ${[e.endPlace,e.endCountry].filter(Boolean).join(', ')}</span></div>
       <div class="det-line"><span>${t('det_workday')}</span><span>${ev.workdayH.toFixed(1)} ${t('unit_hours')}</span></div>
       <div class="det-line"><span>${t('r_driving')}</span><span>${ev.drv.toFixed(1)} ${t('unit_hours')}</span></div>
+      <div class="det-line"><span>${t('calc_other')}</span><span>${minToHM(dayOtherMin(e))}</span></div>
+      <div class="det-line"><span>${t('calc_poa')}</span><span>${minToHM(dayPoaMin(e))}</span></div>
       <div class="det-line"><span>${t('r_breaks')}</span><span>${minToHM(ev.brk)}</span></div>
       <div class="det-line"><span>${t('r_km')}</span><span>${ev.km} ${t('unit_km')}</span></div>
       <div class="det-line"><span>${t('r_limit')}</span><span>${ev.dailyLimit.toFixed(1)} ${t('unit_hours')}</span></div>
@@ -1716,12 +2187,32 @@ function toggleDetail(id){
 window.toggleDetail=toggleDetail;
 
 /* ============ Month ============ */
-function renderMonth(R){
+let reportPeriod='month';
+let lastReportDays=[], lastReportRange=null;
+function getPeriodRange(){
+  const today=new Date();
+  if(reportPeriod==='week'){ const mon=mondayOf(fmt(today)); return {from:fmt(mon), to:fmt(sundayOf(fmt(today)))}; }
+  if(reportPeriod==='pair'){ const mon=mondayOf(fmt(today)); const pm=new Date(mon); pm.setDate(pm.getDate()-7); return {from:fmt(pm), to:fmt(sundayOf(fmt(today)))}; }
+  if(reportPeriod==='month'){
+    const mv=document.getElementById('f_month').value; if(!mv) return null;
+    const last=new Date(+mv.slice(0,4), +mv.slice(5,7), 0);
+    return {from:mv+'-01', to:fmt(last)};
+  }
+  if(reportPeriod==='custom'){
+    const from=document.getElementById('f_periodFrom').value, to=document.getElementById('f_periodTo').value;
+    if(!from||!to) return null;
+    return {from,to};
+  }
+  return null;
+}
+function renderPeriodReport(R){
   const el=document.getElementById('monthOut'); if(!el) return;
-  const mv=document.getElementById('f_month').value;
-  if(!mv){ el.innerHTML=''; return; }
   R=R||computeAll();
-  const days=R.entries.filter(e=>e.date.startsWith(mv));
+  const range=getPeriodRange();
+  lastReportRange=range;
+  if(!range){ el.innerHTML=''; lastReportDays=[]; return; }
+  const days=R.entries.filter(e=>e.date>=range.from && e.date<=range.to);
+  lastReportDays=days;
   if(days.length===0){ el.innerHTML=`<div class="empty">${t('m_empty')}</div>`; return; }
   const km=days.reduce((s,e)=>s+dayKm(e),0);
   const drv=days.reduce((s,e)=>s+dayDrivingHours(e),0);
@@ -1746,6 +2237,38 @@ function renderMonth(R){
    ${countries.length?`<div class="subhead">${t('m_countries')}</div><div class="log-meta">${countries.map(x=>`<span class="log-stat">${x}</span>`).join('')}</div>`:''}
    ${excs.length?`<div class="subhead">${t('m_exc')}</div><div class="log-meta">${excs.map(x=>`<span class="log-stat exc">⚑ ${x}</span>`).join('')}</div>`:''}`;
 }
+function csvEscape(v){ v=String(v==null?'':v); return /[",\n;]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
+function exportCSV(){
+  const R=computeAll();
+  const rows=[['date','start','end','plates','km','driving_h','other_min','poa_min','break_min','rest_type','rest_h','violations']];
+  lastReportDays.forEach(e=>{
+    const ev=R.evals[e.id];
+    rows.push([e.date,e.start,e.end,(e.segments||[]).map(s=>s.plate).filter(Boolean).join('/'),
+      dayKm(e), dayDrivingHours(e).toFixed(2), dayOtherMin(e), dayPoaMin(e), dayBreakMin(e), e.restType, e.restHours||0, ev?ev.viol.length:0]);
+  });
+  const csv=rows.map(r=>r.map(csvEscape).join(';')).join('\n');
+  const b=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b);
+  a.download='tacho561-report-'+fmt(new Date())+'.csv'; a.click(); URL.revokeObjectURL(a.href);
+}
+document.getElementById('periodSwitch').querySelectorAll('button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    reportPeriod=b.dataset.period;
+    document.getElementById('periodSwitch').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));
+    document.getElementById('periodMonthWrap').style.display = reportPeriod==='month' ? 'block':'none';
+    document.getElementById('periodCustomWrap').style.display = reportPeriod==='custom' ? 'grid':'none';
+    renderPeriodReport();
+  });
+});
+document.getElementById('f_periodFrom').addEventListener('change',()=>renderPeriodReport());
+document.getElementById('f_periodTo').addEventListener('change',()=>renderPeriodReport());
+document.getElementById('f_driverName').addEventListener('change', async ev=>{
+  DATA.driverName=ev.target.value.trim(); await saveData();
+});
+document.getElementById('csvBtn').addEventListener('click', exportCSV);
+document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+
+
 
 /* ============ Form actions ============ */
 function fillCountrySelects(){
@@ -1781,6 +2304,8 @@ function editEntry(id){
   document.getElementById('f_endCountry').value=e.endCountry||'';
   document.getElementById('f_restType').value=e.restType;
   document.getElementById('f_restHours').value=e.restHours||'';
+  document.getElementById('f_readingSource').value=e.readingSource||'display';
+  document.getElementById('f_cardState').value=e.cardState||'inserted';
   document.getElementById('f_notes').value=e.notes||'';
   document.getElementById('f_applyComp').checked=!!e.compAppliedHours;
   document.getElementById('f_compHours').value=e.compAppliedHours||'';
@@ -1795,7 +2320,7 @@ function editEntry(id){
   document.getElementById('formTitle').textContent=t('edit_title');
   document.getElementById('saveBtn').textContent=t('btn_update');
   document.getElementById('cancelEdit').style.display='block';
-  document.querySelector('.tab-btn[data-tab="add"]').click();
+  document.querySelector('.nav-item[data-tab="add"]').click();
   updateRestCalc();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1827,14 +2352,159 @@ function renderInstallSteps(){
    <b>${t('ins_lap')}</b>${t('ins_lap_s')}<b>${t('ins_file')}</b>${t('ins_file_s')}`;
 }
 
-document.getElementById('changeVehicle').addEventListener('click', async ()=>{
-  const p=prompt(t('vb_prompt'), DATA.currentPlate||'');
-  if(p!==null){
-    DATA.currentPlate=p.trim(); await saveData();
-    if(currentSegments[0]) currentSegments[0].plate=DATA.currentPlate;
-    renderSegments(); document.getElementById('vbPlate').textContent=DATA.currentPlate||t('vb_none');
+/* ============ Active Day live timer ============ */
+const ACT_TYPES=['driving','other','poa','rest'];
+const ACT_ICON={
+  driving:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.5"/>',
+  other:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/>',
+  poa:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  rest:'<path d="M6 4v16M6 12h12a4 4 0 010 8H8"/>'
+};
+function actLabel(type){ return t({driving:'disc_drv',other:'disc_oth',poa:'disc_poa',rest:'disc_brk'}[type]); }
+function getActiveSeg(){
+  if(!DATA.activeDay) return null;
+  return DATA.activeDay.segments.find(s=>!s.end) || null;
+}
+function segMinutes(s){ const end=s.end?new Date(s.end):new Date(); return Math.max(0,(end-new Date(s.start))/60000); }
+async function startActivity(type){
+  if(!DATA.activeDay) DATA.activeDay={date:fmt(new Date()),segments:[]};
+  const cur=getActiveSeg();
+  if(cur){ if(cur.type===type) return; cur.end=new Date().toISOString(); }
+  DATA.activeDay.segments.push({type,start:new Date().toISOString(),end:null});
+  await saveData(); renderActiveDay();
+}
+window.startActivity=startActivity;
+async function stopActivity(){
+  const cur=getActiveSeg(); if(!cur) return;
+  cur.end=new Date().toISOString();
+  await saveData(); renderActiveDay();
+}
+window.stopActivity=stopActivity;
+async function deleteActSeg(idx){
+  if(!DATA.activeDay) return;
+  if(!confirm(t('act_confirm_del'))) return;
+  DATA.activeDay.segments.splice(idx,1);
+  if(DATA.activeDay.segments.length===0) DATA.activeDay=null;
+  await saveData(); renderActiveDay();
+}
+window.deleteActSeg=deleteActSeg;
+function fmtClock(iso){ const d=new Date(iso); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function renderActiveDay(){
+  const hero=document.getElementById('timerHero'); if(!hero) return;
+  const cur=getActiveSeg();
+  if(cur){
+    hero.innerHTML=`<div class="th-label">${actLabel(cur.type)}</div><div class="th-time">${minToHM(segMinutes(cur))}</div>`;
+  } else {
+    hero.innerHTML=`<div class="th-empty">${t('active_empty')}</div>`;
+  }
+  const btnsEl=document.getElementById('actButtons');
+  if(btnsEl){
+    btnsEl.innerHTML=ACT_TYPES.map(ty=>{
+      const running=cur&&cur.type===ty;
+      return `<div class="act-btn ${running?'running':''}" onclick="${running?'stopActivity()':"startActivity('"+ty+"')"}">        <div class="ab-l"><div class="ab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${ACT_ICON[ty]}</svg></div><b>${actLabel(ty)}</b></div>
+        <div class="ab-r">${running? t('act_stop') : '▶'}</div>
+      </div>`;
+    }).join('');
+  }
+  const listEl=document.getElementById('actSegList');
+  if(listEl){
+    const segs=DATA.activeDay? DATA.activeDay.segments : [];
+    listEl.innerHTML = segs.length===0 ? `<div class="empty">${t('active_log_empty')}</div>`
+      : [...segs].map((s,i)=>i).reverse().map(i=>{
+        const s=segs[i]; const live=!s.end;
+        return `<div class="act-seg ${live?'live':''}">
+          <div><b>${actLabel(s.type)}</b>${live?`<span class="as-pill">${t('act_now')}</span>`:''}
+          <span>${fmtClock(s.start)} – ${live?'…':fmtClock(s.end)} · ${minToHM(segMinutes(s))}</span></div>
+          <button onclick="deleteActSeg(${i})"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m2 0-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7"/></svg></button>
+        </div>`;
+      }).join('');
+  }
+}
+setInterval(()=>{ if(getActiveSeg() && document.getElementById('view-active').classList.contains('active')) renderActiveDay(); },15000);
+
+document.getElementById('finishDayBtn').addEventListener('click', async ()=>{
+  if(!DATA.activeDay || DATA.activeDay.segments.length===0){ alert(t('active_none_yet')); return; }
+  const cur=getActiveSeg(); if(cur) cur.end=new Date().toISOString();
+  const segs=DATA.activeDay.segments;
+  const drvMin=segs.filter(s=>s.type==='driving').reduce((s2,s)=>s2+segMinutes(s),0);
+  const othMin=segs.filter(s=>s.type==='other').reduce((s2,s)=>s2+segMinutes(s),0);
+  const poaMin=segs.filter(s=>s.type==='poa').reduce((s2,s)=>s2+segMinutes(s),0);
+  const brkMin=segs.filter(s=>s.type==='rest').reduce((s2,s)=>s2+segMinutes(s),0);
+  const dayDate=DATA.activeDay.date;
+  const startHHMM=fmtClock(segs[0].start), endHHMM=fmtClock(segs[segs.length-1].end||new Date().toISOString());
+
+  resetForm();
+  document.getElementById('f_date').value=dayDate;
+  document.getElementById('f_start').value=startHHMM;
+  document.getElementById('f_end').value=endHHMM;
+  currentSegments[0].drvStart='0:00'; currentSegments[0].drvEnd=minToHM(drvMin);
+  currentSegments[0].otherStart='0:00'; currentSegments[0].otherEnd=minToHM(othMin);
+  currentSegments[0].poaStart='0:00'; currentSegments[0].poaEnd=minToHM(poaMin);
+  currentSegments[0].restStart='0:00'; currentSegments[0].restEnd=minToHM(brkMin);
+  renderSegments(); updateRestCalc();
+
+  DATA.activeDay=null; await saveData();
+  document.querySelector('.nav-item[data-tab="add"]').click();
+});
+
+
+function lastKmForPlate(plate){
+  let last=null;
+  [...DATA.entries].sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{
+    (e.segments||[]).forEach(s=>{ if(s.plate===plate && s.odoEnd!=null && s.odoEnd!=='') last=+s.odoEnd; });
+  });
+  return last;
+}
+function renderVehicles(){
+  const el=document.getElementById('vehList'); if(!el) return;
+  if(!DATA.vehicles.length){ el.innerHTML=`<div class="empty">${t('veh_empty')}</div>`; return; }
+  el.innerHTML = DATA.vehicles.map(v=>{
+    const km=lastKmForPlate(v.plate);
+    return `<div class="veh-card ${v.active?'active-v':''}">
+      <div class="veh-l"><b>${v.plate}</b><div>${km!=null? km.toLocaleString()+' '+t('unit_km') : '—'}</div></div>
+      <div class="veh-r">
+        ${v.active? `<span class="pill ok">${t('veh_active_badge')}</span>` : `<button class="mk-active" onclick="setActiveVehicle('${v.id}')">${t('veh_make_active')}</button>`}
+        <button class="danger" onclick="deleteVehicle('${v.id}')">${t('det_del')}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+async function setActiveVehicle(id){
+  DATA.vehicles.forEach(v=>v.active=(v.id===id));
+  const v=DATA.vehicles.find(x=>x.id===id);
+  DATA.currentPlate=v?v.plate:'';
+  await saveData();
+  document.getElementById('vbPlate').textContent=DATA.currentPlate||t('vb_none');
+  if(currentSegments[0]) currentSegments[0].plate=DATA.currentPlate;
+  renderSegments(); renderVehicles();
+}
+window.setActiveVehicle=setActiveVehicle;
+async function deleteVehicle(id){
+  if(!confirm(t('veh_confirm_del'))) return;
+  DATA.vehicles=DATA.vehicles.filter(v=>v.id!==id);
+  if(DATA.vehicles.length && !DATA.vehicles.some(v=>v.active)) DATA.vehicles[0].active=true;
+  DATA.currentPlate=(DATA.vehicles.find(v=>v.active)||{}).plate||'';
+  await saveData();
+  document.getElementById('vbPlate').textContent=DATA.currentPlate||t('vb_none');
+  renderVehicles();
+}
+window.deleteVehicle=deleteVehicle;
+document.getElementById('addVehBtn').addEventListener('click', async ()=>{
+  const p=prompt(t('vb_prompt'),'');
+  if(p && p.trim()){
+    const plate=p.trim();
+    if(DATA.vehicles.some(v=>v.plate===plate)){ alert(t('veh_dup')); return; }
+    DATA.vehicles.push({id:'v'+Date.now()+Math.random().toString(36).slice(2,6),plate,note:'',active:DATA.vehicles.length===0});
+    if(DATA.vehicles.length===1) DATA.currentPlate=plate;
+    await saveData(); renderVehicles();
+    document.getElementById('vbPlate').textContent=DATA.currentPlate||t('vb_none');
   }
 });
+document.getElementById('changeVehicle').addEventListener('click', ()=>{
+  document.querySelector('.nav-item[data-tab="veh"]').click();
+});
+
+
 document.getElementById('addSeg').addEventListener('click',()=>{ currentSegments.push(blankSeg('')); renderSegments(); });
 document.getElementById('f_restType').addEventListener('change',ev=>{
   const m={regular11:11,reduced9:9,split:12,mm9:9,'weekly-regular':45,'weekly-reduced':24};
@@ -1843,7 +2513,14 @@ document.getElementById('f_restType').addEventListener('change',ev=>{
 document.getElementById('f_applyComp').addEventListener('change',ev=>{
   document.getElementById('compApplyWrap').style.display=ev.target.checked?'block':'none';
 });
-document.getElementById('f_month').addEventListener('change',()=>renderMonth());
+document.getElementById('f_month').addEventListener('change',()=>renderPeriodReport());
+document.querySelectorAll('.log-view-toggle button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    logView=b.dataset.logview;
+    document.querySelectorAll('.log-view-toggle button').forEach(x=>x.classList.toggle('active', x===b));
+    renderLog(computeAll());
+  });
+});
 document.getElementById('f_date').addEventListener('change',updateRestCalc);
 document.getElementById('f_start').addEventListener('input',updateRestCalc);
 document.getElementById('cancelEdit').addEventListener('click',()=>{ resetForm(); document.getElementById('resultPanel').style.display='none'; });
@@ -1854,7 +2531,10 @@ document.getElementById('dayForm').addEventListener('submit', async ev=>{
   const segs=currentSegments.map(s=>({
     plate:(s.plate||'').trim(),
     odoStart:s.odoStart!==''?+s.odoStart:null, odoEnd:s.odoEnd!==''?+s.odoEnd:null,
-    drvStart:s.drvStart||'', drvEnd:s.drvEnd||'', restStart:s.restStart||'', restEnd:s.restEnd||''
+    drvStart:s.drvStart||'', drvEnd:s.drvEnd||'',
+    otherStart:s.otherStart||'', otherEnd:s.otherEnd||'',
+    poaStart:s.poaStart||'', poaEnd:s.poaEnd||'',
+    restStart:s.restStart||'', restEnd:s.restEnd||''
   }));
   const entry={
     id: editId||('e'+Date.now()),
@@ -1868,6 +2548,8 @@ document.getElementById('dayForm').addEventListener('submit', async ev=>{
     segments:segs,
     restType:document.getElementById('f_restType').value,
     restHours:parseFloat(document.getElementById('f_restHours').value)||0,
+    readingSource:document.getElementById('f_readingSource').value,
+    cardState:document.getElementById('f_cardState').value,
     compAppliedHours:document.getElementById('f_applyComp').checked?(parseFloat(document.getElementById('f_compHours').value)||0):0,
     exc:JSON.parse(JSON.stringify(excState)),
     notes:document.getElementById('f_notes').value||''
@@ -1963,14 +2645,39 @@ document.getElementById('installBtn').addEventListener('click',async()=>{
   }catch(e){}
 })();
 
-document.querySelectorAll('.tab-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    document.getElementById('view-'+b.dataset.tab).classList.add('active');
-  });
+function switchTab(tabName){
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active', x.dataset.tab===tabName));
+  document.querySelectorAll('.bottombar button').forEach(x=>x.classList.toggle('active', x.dataset.tab===tabName));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  document.getElementById('view-'+tabName).classList.add('active');
+  closeDrawer();
+  if(tabName==='veh') renderVehicles();
+  if(tabName==='month') renderPeriodReport();
+  if(tabName==='active') renderActiveDay();
+  window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
+}
+document.querySelectorAll('.nav-item').forEach(b=>{
+  b.addEventListener('click',()=>switchTab(b.dataset.tab));
 });
+document.querySelectorAll('.bottombar button').forEach(b=>{
+  b.addEventListener('click',()=>switchTab(b.dataset.tab));
+});
+function openDrawer(){ document.getElementById('navDrawer').classList.add('open'); document.getElementById('drawerOverlay').classList.add('open'); document.getElementById('bottomBar').classList.remove('show'); }
+function closeDrawer(){ document.getElementById('navDrawer').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('open'); }
+// bottom bar stays hidden at rest and slides up while the page is scrolled, so it
+// doesn't compete for space with the drawer but is still one thumb-reach away.
+let bbHideTimer=null;
+function revealBottomBar(){
+  if(document.getElementById('navDrawer').classList.contains('open')) return;
+  const bb=document.getElementById('bottomBar');
+  bb.classList.add('show');
+  clearTimeout(bbHideTimer);
+  bbHideTimer=setTimeout(()=>bb.classList.remove('show'),1600);
+}
+window.addEventListener('scroll', revealBottomBar, {passive:true});
+document.getElementById('menuBtn').addEventListener('click', openDrawer);
+document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
 document.querySelectorAll('#langpick button').forEach(b=>{
   b.addEventListener('click',()=>{ LANG=b.dataset.lang;
     try{ localStorage.setItem('t561-lang',LANG); }catch(e){} applyLang(); });
@@ -1980,17 +2687,113 @@ document.querySelectorAll('#themepick button').forEach(b=>{
     try{ localStorage.setItem('t561-theme',THEME); }catch(e){} applyTheme(); });
 });
 
+/* ============ Cross-device sync (Firebase, opt-in, user's own free project) ============ */
+let fbApp=null, fbAuth=null, fbDb=null, syncUser=null;
+const SYNC_CFG_KEY='t561-sync-config';
+function loadFirebaseSDK(){
+  if(window.firebase) return Promise.resolve();
+  const urls=[
+    'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js',
+    'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js',
+    'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js'
+  ];
+  return urls.reduce((p,src)=>p.then(()=>new Promise((res,rej)=>{
+    const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=()=>rej(new Error('sdk-load-failed'));
+    document.head.appendChild(s);
+  })), Promise.resolve());
+}
+async function initFirebase(cfg){
+  await loadFirebaseSDK();
+  if(!fbApp) fbApp=window.firebase.initializeApp(cfg);
+  fbAuth=window.firebase.auth();
+  fbDb=window.firebase.firestore();
+  try{ await fbAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL); }catch(e){}
+  fbAuth.onAuthStateChanged(u=>{ syncUser=u; renderSyncUI(); if(u) pullOrPushOnLogin(); });
+}
+async function pushToCloud(){
+  if(!syncUser||!fbDb) return;
+  try{ await fbDb.collection('t561users').doc(syncUser.uid).set({payload:JSON.stringify(DATA),updatedAt:DATA.updatedAt||Date.now()}); }
+  catch(e){ /* offline or blocked — local data is unaffected, will retry on next save */ }
+}
+async function pullOrPushOnLogin(){
+  if(!fbDb||!syncUser) return;
+  try{
+    const doc=await fbDb.collection('t561users').doc(syncUser.uid).get();
+    if(!doc.exists){ await pushToCloud(); return; }
+    const cloud=doc.data(); const cloudTime=cloud.updatedAt||0, localTime=DATA.updatedAt||0;
+    if(cloudTime>localTime){
+      const hasLocal=DATA.entries&&DATA.entries.length>0;
+      if(!hasLocal || confirm(t('sync_confirm_pull'))){
+        const cloudData=JSON.parse(cloud.payload);
+        DATA=cloudData; DATA.entries=DATA.entries||[]; DATA.compensations=DATA.compensations||[];
+        DATA.vehicles=DATA.vehicles||[]; DATA.driverName=DATA.driverName||''; DATA.activeDay=DATA.activeDay||null;
+        await store.set(KEY, JSON.stringify(DATA));
+        resetForm(); render();
+      }
+    } else if(localTime>cloudTime){ await pushToCloud(); }
+  }catch(e){ /* stays fully usable offline/locally regardless */ }
+}
+function renderSyncUI(){
+  const setupWrap=document.getElementById('syncSetupWrap'), authWrap=document.getElementById('syncAuthWrap');
+  const loginWrap=document.getElementById('syncLoginWrap'), loggedWrap=document.getElementById('syncLoggedWrap');
+  const statusEl=document.getElementById('syncStatusLine');
+  if(!setupWrap) return;
+  const hasCfg=!!(localStorage.getItem(SYNC_CFG_KEY));
+  setupWrap.style.display = hasCfg ? 'none':'block';
+  authWrap.style.display = hasCfg ? 'block':'none';
+  if(!hasCfg) return;
+  if(syncUser){
+    statusEl.textContent=t('sync_logged_as',{email:syncUser.email});
+    loginWrap.style.display='none'; loggedWrap.style.display='block';
+  } else {
+    statusEl.textContent=t('sync_not_logged');
+    loginWrap.style.display='block'; loggedWrap.style.display='none';
+  }
+}
+document.getElementById('syncConnectBtn').addEventListener('click', async ()=>{
+  const raw=document.getElementById('f_syncConfig').value.trim();
+  if(!raw){ alert(t('sync_cfg_empty')); return; }
+  let cfg;
+  try{ cfg=JSON.parse(raw); }catch(e){ alert(t('sync_cfg_bad')); return; }
+  try{
+    await initFirebase(cfg);
+    localStorage.setItem(SYNC_CFG_KEY, raw);
+    renderSyncUI();
+  }catch(e){ alert(t('sync_cfg_bad')); }
+});
+document.getElementById('syncLoginBtn').addEventListener('click', async ()=>{
+  const email=document.getElementById('f_syncEmail').value.trim(), pw=document.getElementById('f_syncPassword').value;
+  if(!email||!pw) return;
+  try{ await fbAuth.signInWithEmailAndPassword(email,pw); }
+  catch(e){ alert(t('sync_login_err',{msg:e.message||''})); }
+});
+document.getElementById('syncRegisterBtn').addEventListener('click', async ()=>{
+  const email=document.getElementById('f_syncEmail').value.trim(), pw=document.getElementById('f_syncPassword').value;
+  if(!email||!pw) return;
+  try{ await fbAuth.createUserWithEmailAndPassword(email,pw); }
+  catch(e){ alert(t('sync_login_err',{msg:e.message||''})); }
+});
+document.getElementById('syncNowBtn').addEventListener('click', async ()=>{ await pushToCloud(); alert(t('sync_done')); });
+document.getElementById('syncLogoutBtn').addEventListener('click', async ()=>{ if(fbAuth) await fbAuth.signOut(); });
+
 (async function init(){
   await loadData();
   applyTheme();
   const now=new Date();
   document.getElementById('f_date').value=fmt(now);
   document.getElementById('f_month').value=fmt(now).slice(0,7);
+  const weekAgo=new Date(now); weekAgo.setDate(weekAgo.getDate()-7);
+  document.getElementById('f_periodFrom').value=fmt(weekAgo);
+  document.getElementById('f_periodTo').value=fmt(now);
+  document.getElementById('f_driverName').value=DATA.driverName||'';
   currentSegments=[blankSeg(DATA.currentPlate)];
   excState=blankExc();
   applyLang();
   document.getElementById('f_startCountry').value=DATA.lastCountry||'';
   document.getElementById('f_endCountry').value=DATA.lastCountry||'';
+  renderSyncUI();
+  const savedCfg=localStorage.getItem(SYNC_CFG_KEY);
+  if(savedCfg){ try{ await initFirebase(JSON.parse(savedCfg)); }catch(e){} }
 })();
 
 </script>
