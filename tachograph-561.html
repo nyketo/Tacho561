@@ -530,6 +530,8 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
       <div id="syncAuthWrap" style="display:none;">
         <div id="syncStatusLine" class="section-note"></div>
         <div id="syncLoginWrap">
+          <button type="button" class="secondary" id="syncGoogleBtn" data-t="btn_sync_google"></button>
+          <div class="hint" data-t="sync_or"></div>
           <label data-t="l_email"></label>
           <input type="email" id="f_syncEmail" autocomplete="email">
           <label data-t="l_password"></label>
@@ -590,6 +592,7 @@ bg:{
  sync_config_hint:'Копира се от Firebase Console → Project settings → Your apps → SDK setup and configuration.',
  btn_sync_connect:'Свържи',
  l_email:'Имейл', l_password:'Парола',
+ btn_sync_google:'Вход с Google', sync_or:'или с имейл и парола:',
  btn_sync_login:'Вход', btn_sync_register:'Регистрация',
  btn_sync_now:'Синхронизирай сега', btn_sync_logout:'Изход',
  sync_confirm_pull:'В облака има данни от друго устройство, различни от локалните. Да ги заредя ли тук? (локалните ще бъдат заместени)',
@@ -808,6 +811,7 @@ en:{
  sync_config_hint:'Copy this from Firebase Console → Project settings → Your apps → SDK setup and configuration.',
  btn_sync_connect:'Connect',
  l_email:'Email', l_password:'Password',
+ btn_sync_google:'Sign in with Google', sync_or:'or with email and password:',
  btn_sync_login:'Sign in', btn_sync_register:'Register',
  btn_sync_now:'Sync now', btn_sync_logout:'Sign out',
  sync_confirm_pull:'The cloud has data from another device, different from what is stored here. Load it now? (local data will be replaced)',
@@ -1026,6 +1030,7 @@ de:{
  sync_config_hint:'Kopiere sie aus der Firebase-Konsole → Projekteinstellungen → Deine Apps → SDK-Einrichtung und -Konfiguration.',
  btn_sync_connect:'Verbinden',
  l_email:'E-Mail', l_password:'Passwort',
+ btn_sync_google:'Mit Google anmelden', sync_or:'oder mit E-Mail und Passwort:',
  btn_sync_login:'Anmelden', btn_sync_register:'Registrieren',
  btn_sync_now:'Jetzt synchronisieren', btn_sync_logout:'Abmelden',
  sync_confirm_pull:'In der Cloud liegen Daten von einem anderen Gerät, die von den lokalen abweichen. Jetzt laden? (lokale Daten werden ersetzt)',
@@ -2708,6 +2713,7 @@ async function initFirebase(cfg){
   fbAuth=window.firebase.auth();
   fbDb=window.firebase.firestore();
   try{ await fbAuth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL); }catch(e){}
+  try{ await fbAuth.getRedirectResult(); }catch(e){ if(e&&e.code&&e.code!=='auth/no-auth-event') alert(t('sync_login_err',{msg:e.message||''})); }
   fbAuth.onAuthStateChanged(u=>{ syncUser=u; renderSyncUI(); if(u) pullOrPushOnLogin(); });
 }
 async function pushToCloud(){
@@ -2760,6 +2766,23 @@ document.getElementById('syncConnectBtn').addEventListener('click', async ()=>{
     localStorage.setItem(SYNC_CFG_KEY, raw);
     renderSyncUI();
   }catch(e){ alert(t('sync_cfg_bad')); }
+});
+document.getElementById('syncGoogleBtn').addEventListener('click', async ()=>{
+  if(!fbAuth) return;
+  const provider=new window.firebase.auth.GoogleAuthProvider();
+  try{
+    await fbAuth.signInWithPopup(provider);
+  }catch(e){
+    // installed PWAs and mobile Safari frequently block popups — fall back to a full redirect,
+    // whose result is picked up by getRedirectResult on the next page load.
+    const popupIssue=['auth/popup-blocked','auth/popup-closed-by-user','auth/operation-not-supported-in-this-environment','auth/cancelled-popup-request'];
+    if(popupIssue.indexOf(e.code)>=0){
+      try{ await fbAuth.signInWithRedirect(provider); }
+      catch(e2){ alert(t('sync_login_err',{msg:e2.message||''})); }
+    } else {
+      alert(t('sync_login_err',{msg:e.message||''}));
+    }
+  }
 });
 document.getElementById('syncLoginBtn').addEventListener('click', async ()=>{
   const email=document.getElementById('f_syncEmail').value.trim(), pw=document.getElementById('f_syncPassword').value;
