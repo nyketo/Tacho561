@@ -263,6 +263,28 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
   .card{border:1px solid #ccc;box-shadow:none;break-inside:avoid;}
 }
 
+/* ---- single-day printable report (also used for "save as PDF") ---- */
+#printDay{display:none;background:#fff;color:#111;font-family:var(--body);}
+@media print{
+  body.printing-day .app{display:none!important;}
+  body.printing-day #printDay{display:block!important;}
+}
+#printDay .pd-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #111;padding-bottom:8px;margin-bottom:14px;}
+#printDay .pd-title{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:.5px;}
+#printDay .pd-sub{font-size:11px;color:#555;margin-top:2px;}
+#printDay .pd-date{font-family:var(--mono);font-size:17px;font-weight:700;text-align:right;}
+#printDay h4{font-family:var(--display);font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#111;margin:16px 0 6px;border-bottom:1px solid #bbb;padding-bottom:3px;}
+#printDay .pd-row{display:flex;justify-content:space-between;font-size:12.5px;padding:3.5px 0;border-bottom:1px dotted #ddd;gap:12px;}
+#printDay .pd-row span:last-child{font-family:var(--mono);text-align:right;}
+#printDay .pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;}
+#printDay .pd-viol{font-size:12px;padding:5px 0;border-bottom:1px dotted #ddd;line-height:1.45;}
+#printDay .pd-viol b{color:#a11;}
+#printDay .pd-art{font-family:var(--mono);font-size:10px;color:#666;}
+#printDay .pd-ok{font-size:12.5px;padding:6px 0;}
+#printDay .pd-foot{margin-top:20px;padding-top:8px;border-top:1px solid #bbb;font-size:10px;color:#666;line-height:1.5;}
+#printDay .pd-sign{margin-top:26px;display:flex;gap:40px;font-size:11px;color:#444;}
+#printDay .pd-sign div{flex:1;border-top:1px solid #999;padding-top:4px;}
+
 /* ---- bottom quick-nav bar (hidden at rest, reveals while scrolling) ---- */
 .bottombar{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;background:var(--bg-panel);border-top:1px solid var(--border-soft);padding:6px calc(4px + env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom)) calc(4px + env(safe-area-inset-right));box-shadow:0 -2px 10px rgba(0,0,0,.12);transform:translateY(100%);transition:transform .25s ease;}
 .bottombar.show{transform:translateY(0);}
@@ -300,6 +322,7 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
 </style>
 </head>
 <body>
+<div id="printDay"></div>
 <div class="app">
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <nav class="drawer" id="navDrawer">
@@ -637,6 +660,11 @@ bg:{
  l_reading_source:'Източник на данните', opt_source_display:'Дисплей', opt_source_printout:'Разпечатка', opt_source_manual:'Ръчен запис',
  l_card_state:'Състояние на картата', opt_card_inserted:'Картата е поставена', opt_card_withdrawn:'Картата е извадена',
  po_source:'Източник', po_card:'Карта',
+ btn_day_pdf:'PDF / Печат',
+ pd_subtitle:'Справка за работен ден · Регламент (ЕО) 561/2006',
+ pd_sign_driver:'Подпис на водача', pd_sign_control:'Подпис на проверяващия',
+ pd_generated:'Генерирано на {d}',
+ pd_disclaimer:'Помощен документ. Не замества разпечатката от тахографа и не представлява официален документ при проверка.',
  btn_add_vehicle:'+ Добави превозно средство (смяна на камион)',
  l_resttype:'Вид почивка след деня',
  rt_none:'Все още няма / продължавам',
@@ -736,8 +764,10 @@ bg:{
  v_driving_ext:'Трето или следващо удължаване над 9 ч. в седмица {wk} — допустими са 2',
  v_break_missing:'Недостатъчна почивка: при {x} ч. управление се изискват поне 45 мин. (записани {y} мин.)',
  v_short_rest:'Дневна почивка под 11 ч. — {x} ч.',
- v_workday_over15:'Работен ден от {x} ч. — дори намалена почивка от 9 ч. вече не се побира в 24-часовия период след предходната почивка.',
- v_workday_over13_reg:'Работен ден от {x} ч. с последваща редовна почивка (≥ 11 ч.) — не се побира в 24-часовия период. При над 13 ч. работен ден се изисква намалена почивка (9–11 ч.).',
+ v_shift_over15:'Превишен работен ден: {x} ч. Максимумът е 15 ч. — дори намалената почивка от 9 ч. вече не се побира в 24-часовия период след предходната почивка.',
+ v_shift_over13_reg:'Работен ден {x} ч. с редовна почивка (≥ 11 ч.) — максимумът в този случай е 13 ч. Над 13 ч. се изисква намалена почивка (9–11 ч.), която се брои към трите допустими между две седмични почивки.',
+ n_shift_15:'Работен ден {x} ч. — допустимо е до 15 ч., но само с намалена дневна почивка. Това е {n}-та от общо 3 намалени почивки между две седмични почивки.',
+ v_worktime_break:'Недостатъчна почивка спрямо работното време: при {x} ч. работа се изискват поне {req} мин. (записани {y} мин.)',
  v_reduced_short:'Намалена дневна почивка под 9 ч. — {x} ч.',
  v_reduced_too_many:'Четвърта или следваща намалена дневна почивка между две седмични почивки ({x})',
  v_split_short:'Разделената дневна почивка е под общо 12 ч.',
@@ -864,6 +894,11 @@ en:{
  l_reading_source:'Data source', opt_source_display:'Display', opt_source_printout:'Printout', opt_source_manual:'Manual entry',
  l_card_state:'Card state', opt_card_inserted:'Card inserted', opt_card_withdrawn:'Card withdrawn',
  po_source:'Source', po_card:'Card',
+ btn_day_pdf:'PDF / Print',
+ pd_subtitle:'Working day report · Regulation (EC) 561/2006',
+ pd_sign_driver:'Driver signature', pd_sign_control:'Inspector signature',
+ pd_generated:'Generated on {d}',
+ pd_disclaimer:'Supporting document. It does not replace the tachograph printout and is not an official document during an inspection.',
  btn_add_vehicle:'+ Add vehicle (truck change)',
  l_resttype:'Type of rest after the day',
  rt_none:'No rest yet / continuing',
@@ -963,8 +998,10 @@ en:{
  v_driving_ext:'Third or further extension beyond 9 h in week {wk} — two are permitted',
  v_break_missing:'Insufficient break: {x} h of driving requires at least 45 min ({y} min recorded)',
  v_short_rest:'Daily rest below 11 h — {x} h',
- v_workday_over15:'Working day of {x} h — even a reduced 9 h rest no longer fits inside the 24 h period after the previous rest.',
- v_workday_over13_reg:'Working day of {x} h followed by a regular rest (≥ 11 h) — it no longer fits inside the 24 h period. Past 13 h, a reduced rest (9–11 h) is required instead.',
+ v_shift_over15:'Working day exceeded: {x} h. The maximum is 15 h — even a reduced 9 h rest no longer fits inside the 24 h period after the previous rest.',
+ v_shift_over13_reg:'Working day of {x} h with a regular rest (≥ 11 h) — the maximum in that case is 13 h. Past 13 h a reduced rest (9–11 h) is required, and it counts against the three allowed between two weekly rests.',
+ n_shift_15:'Working day {x} h — up to 15 h is allowed, but only with a reduced daily rest. This is reduced rest no. {n} of the 3 allowed between two weekly rests.',
+ v_worktime_break:'Insufficient break for the working time: {x} h of work requires at least {req} min ({y} min recorded)',
  v_reduced_short:'Reduced daily rest below 9 h — {x} h',
  v_reduced_too_many:'Fourth or further reduced daily rest between two weekly rests ({x})',
  v_split_short:'Split daily rest below 12 h in total',
@@ -1091,6 +1128,11 @@ de:{
  l_reading_source:'Datenquelle', opt_source_display:'Display', opt_source_printout:'Ausdruck', opt_source_manual:'Manueller Eintrag',
  l_card_state:'Kartenstatus', opt_card_inserted:'Karte gesteckt', opt_card_withdrawn:'Karte entnommen',
  po_source:'Quelle', po_card:'Karte',
+ btn_day_pdf:'PDF / Drucken',
+ pd_subtitle:'Arbeitstagbericht · VO (EG) 561/2006',
+ pd_sign_driver:'Unterschrift des Fahrers', pd_sign_control:'Unterschrift des Prüfers',
+ pd_generated:'Erstellt am {d}',
+ pd_disclaimer:'Hilfsdokument. Es ersetzt nicht den Fahrtenschreiber-Ausdruck und ist bei einer Kontrolle kein amtliches Dokument.',
  btn_add_vehicle:'+ Fahrzeug hinzufügen (LKW-Wechsel)',
  l_resttype:'Art der Ruhezeit nach dem Tag',
  rt_none:'Noch keine / laufend',
@@ -1190,8 +1232,10 @@ de:{
  v_driving_ext:'Dritte oder weitere Verlängerung über 9 h in Woche {wk} — zwei sind zulässig',
  v_break_missing:'Unzureichende Unterbrechung: bei {x} h Lenkzeit sind mindestens 45 min erforderlich ({y} min erfasst)',
  v_short_rest:'Tägliche Ruhezeit unter 11 h — {x} h',
- v_workday_over15:'Arbeitstag von {x} h — selbst eine reduzierte Ruhezeit von 9 h passt nicht mehr in die 24-Stunden-Periode nach der letzten Ruhezeit.',
- v_workday_over13_reg:'Arbeitstag von {x} h mit anschließender regelmäßiger Ruhezeit (≥ 11 h) — passt nicht mehr in die 24-Stunden-Periode. Ab 13 h Arbeitstag ist stattdessen eine reduzierte Ruhezeit (9–11 h) erforderlich.',
+ v_shift_over15:'Arbeitstag überschritten: {x} h. Das Maximum sind 15 h — selbst eine reduzierte Ruhezeit von 9 h passt nicht mehr in die 24-Stunden-Periode nach der letzten Ruhezeit.',
+ v_shift_over13_reg:'Arbeitstag von {x} h mit regelmäßiger Ruhezeit (≥ 11 h) — das Maximum beträgt dann 13 h. Ab 13 h ist eine reduzierte Ruhezeit (9–11 h) erforderlich, die auf die drei zwischen zwei Wochenruhezeiten zulässigen angerechnet wird.',
+ n_shift_15:'Arbeitstag {x} h — bis zu 15 h sind zulässig, aber nur mit reduzierter täglicher Ruhezeit. Dies ist die {n}. von 3 zulässigen reduzierten Ruhezeiten zwischen zwei Wochenruhezeiten.',
+ v_worktime_break:'Unzureichende Pause für die Arbeitszeit: bei {x} h Arbeit sind mindestens {req} min erforderlich ({y} min erfasst)',
  v_reduced_short:'Reduzierte Tagesruhezeit unter 9 h — {x} h',
  v_reduced_too_many:'Vierte oder weitere reduzierte Tagesruhezeit zwischen zwei Wochenruhezeiten ({x})',
  v_split_short:'Geteilte Tagesruhezeit unter insgesamt 12 h',
@@ -1523,18 +1567,28 @@ function computeAll(){
         break;
     }
 
-    // ---- workday length vs. the 24h rest window (Art. 8(2)) ----
-    // A new daily rest must start within 24h of the end of the previous one. If the working
-    // day is long enough that not even the shortest allowed rest (9h, reduced) still fits
-    // inside that 24h window, the day is a violation regardless of what rest follows.
-    // If a full 24h window is left but the driver then only takes a *reduced* rest, that's
-    // fine — reduced daily rest is designed for exactly this. It only breaks down once the
-    // declared rest is meant to be a full regular one (≥11h) and the maths no longer fit.
+    // ---- shift spread vs. the 24h rest window (Art. 8(2), read together with 8(4)) ----
+    // 561/2006 sets no standalone "maximum working day". The limit follows from the rest rules:
+    // a new daily rest must start within 24h of the previous one ending, so
+    //   regular daily rest (11h) -> shift spread at most 13h
+    //   reduced daily rest  (9h) -> shift spread at most 15h, and only 3 reduced rests are
+    //                               allowed between two weekly rests (Art. 8(4))
     if(!exempt){
       if(workdayH>15.001){
-        V.push({msg:t('v_workday_over15',{x:workdayH.toFixed(1)}),art:'Art. 8(2)',sev:'bad'});
-      }else if(workdayH>13.001 && (e.restType==='regular11'||e.restType==='split')){
-        V.push({msg:t('v_workday_over13_reg',{x:workdayH.toFixed(1)}),art:'Art. 8(2)',sev:'bad'});
+        V.push({msg:t('v_shift_over15',{x:workdayH.toFixed(1)}),art:'Art. 8(2)',sev:'bad'});
+      }else if(workdayH>13.001){
+        if(e.restType==='regular11'||e.restType==='split'){
+          V.push({msg:t('v_shift_over13_reg',{x:workdayH.toFixed(1)}),art:'Art. 8(2)',sev:'bad'});
+        }else{
+          N.push({msg:t('n_shift_15',{x:workdayH.toFixed(1),n:reducedDaily}),art:'Art. 8(2), 8(4)'});
+        }
+      }
+      // Directive 2002/15/EC Art. 5: breaks are owed on working time as well, independently of
+      // the Art. 7 driving break. 6-9h of work -> 30 min, over 9h -> 45 min.
+      const wt=dayWorkTimeHours(e), brkMin=brk;
+      const wtReq = wt>9.001 ? 45 : (wt>6.001 ? 30 : 0);
+      if(wtReq>0 && brkMin<wtReq){
+        V.push({msg:t('v_worktime_break',{x:wt.toFixed(1),req:wtReq,y:brkMin}),art:'Directive 2002/15/EC, Art. 5',sev:'bad'});
       }
     }
 
@@ -2151,6 +2205,81 @@ function openLogRow(id){
 }
 window.openLogRow=openLogRow;
 
+/* ============ Single-day printable report / PDF ============ */
+function printDayReport(id){
+  const R=computeAll();
+  const e=R.entries.find(x=>x.id===id); if(!e) return;
+  const ev=R.evals[e.id];
+  const p=pairFor(R.weekSums,e.date);
+  const rl=t('rest_labels');
+  const row=(a,b)=>`<div class="pd-row"><span>${a}</span><span>${b}</span></div>`;
+  const route=[e.startPlace,e.startCountry].filter(Boolean).join(' ')+
+    (e.endPlace||e.endCountry? ' → '+[e.endPlace,e.endCountry].filter(Boolean).join(' '):'');
+
+  const segRows=(e.segments||[]).map((s,i)=>{
+    const d=segDrivingMin(s),o=segOtherMin(s),po=segPoaMin(s),r=segRestMin(s),k=segKm(s);
+    return `<h4>${t('seg_title')} ${i+1}${s.plate?' · '+s.plate:''}</h4>`+
+      ((s.odoStart||s.odoEnd)? row(t('po_odo'), (s.odoStart??'—')+' → '+(s.odoEnd??'—')+(k!=null?'  ('+k+' '+t('unit_km')+')':'')):'')+
+      row('▶ '+t('calc_drv'), minToHM(d))+
+      row('⚒ '+t('calc_other'), minToHM(o))+
+      row('◷ '+t('calc_poa'), minToHM(po))+
+      row('❚❚ '+t('calc_rest'), minToHM(r));
+  }).join('');
+
+  document.getElementById('printDay').innerHTML=`
+    <div class="pd-head">
+      <div><div class="pd-title">Tacho 561</div><div class="pd-sub">${t('pd_subtitle')}</div></div>
+      <div><div class="pd-date">${e.date}</div><div class="pd-sub">${DATA.driverName||''}</div></div>
+    </div>
+    <div class="pd-grid">
+      <div>
+        <h4>${t('det_times')}</h4>
+        ${row(t('det_start'), e.start+' '+[e.startPlace,e.startCountry].filter(Boolean).join(', '))}
+        ${row(t('det_end'), e.end+' '+[e.endPlace,e.endCountry].filter(Boolean).join(', '))}
+        ${row(t('det_workday'), ev.workdayH.toFixed(1)+' '+t('unit_hours'))}
+        ${row(t('r_driving'), ev.drv.toFixed(1)+' '+t('unit_hours'))}
+        ${row(t('calc_other'), minToHM(dayOtherMin(e)))}
+        ${row(t('calc_poa'), minToHM(dayPoaMin(e)))}
+        ${row(t('r_breaks'), minToHM(ev.brk))}
+        ${row(t('po_worktime'), dayWorkTimeHours(e).toFixed(1)+' '+t('unit_hours'))}
+        ${row(t('r_km'), ev.km+' '+t('unit_km'))}
+        ${row(t('r_limit'), ev.dailyLimit.toFixed(1)+' '+t('unit_hours'))}
+      </div>
+      <div>
+        <h4>${t('det_bal')}</h4>
+        ${row(t('det_weekdrv')+' ('+ev.wk+')', ev.weekDrv.toFixed(1)+' / 56')}
+        ${row(t('det_pairdrv'), p.pairSum.toFixed(1)+' / 90')}
+        ${row(t('allow_ext_t'), ev.extUsed+' / 2')}
+        ${row(t('allow_red_t'), ev.reducedUsed+' / 3')}
+        ${row(t('r_days_left'), Math.max(0,ev.weeklyDeadline-ev.periodsSinceWeekly)+' / '+ev.weeklyDeadline)}
+        <h4>${t('det_rest')}</h4>
+        ${row((rl&&rl[e.restType])||e.restType||'—', (e.restHours||0)+' '+t('unit_hours'))}
+        ${e.compAppliedHours? row(t('l_comp_hours'), e.compAppliedHours+' '+t('unit_hours')):''}
+        ${(e.readingSource||e.cardState)? row(t('po_source')+' / '+t('po_card'), (e.readingSource?t('opt_source_'+e.readingSource):'—')+' · '+(e.cardState?t('opt_card_'+e.cardState):'—')):''}
+      </div>
+    </div>
+    ${route.trim()? `<h4>${t('r_route')}</h4>${row('', route)}`:''}
+    ${segRows}
+    ${ev.exc.length? `<h4>${t('det_exc')}</h4>`+ev.exc.map(x=>row(x.label, x.info||'✓')).join(''):''}
+    <h4>${t('det_viol')}</h4>
+    ${ev.viol.length
+      ? ev.viol.map(v=>`<div class="pd-viol"><b>!</b> ${v.msg}<div class="pd-art">${v.art||''}</div></div>`).join('')
+      : `<div class="pd-ok">${t('det_noviol')}</div>`}
+    ${ev.notes.map(n=>`<div class="pd-viol">ℹ ${n.msg}<div class="pd-art">${n.art||''}</div></div>`).join('')}
+    ${e.notes? `<h4>${t('det_notes')}</h4><div class="pd-ok">${e.notes}</div>`:''}
+    <div class="pd-sign">
+      <div>${t('pd_sign_driver')}</div>
+      <div>${t('pd_sign_control')}</div>
+    </div>
+    <div class="pd-foot">${t('pd_generated',{d:fmt(new Date())})} · ${t('po_foot')}<br>${t('pd_disclaimer')}</div>`;
+
+  document.body.classList.add('printing-day');
+  const cleanup=()=>{ document.body.classList.remove('printing-day'); window.removeEventListener('afterprint',cleanup); };
+  window.addEventListener('afterprint',cleanup);
+  setTimeout(()=>{ window.print(); setTimeout(cleanup,1500); },60);
+}
+window.printDayReport=printDayReport;
+
 function detailHTML(e,ev,R){
   const segs=(e.segments||[]).map((s,i)=>{
     const d=segDrivingMin(s),o=segOtherMin(s),po=segPoaMin(s),r=segRestMin(s),k=segKm(s);
@@ -2207,6 +2336,7 @@ function detailHTML(e,ev,R){
   </div>
   ${e.notes?`<div class="det-sec"><h4>${t('det_notes')}</h4><div class="det-note">${e.notes}</div></div>`:''}
   <div class="det-actions">
+    <button onclick="printDayReport('${e.id}')">${t('btn_day_pdf')}</button>
     <button onclick="editEntry('${e.id}')">${t('det_edit')}</button>
     <button class="danger" onclick="deleteEntry('${e.id}')">${t('det_del')}</button>
   </div>`;
