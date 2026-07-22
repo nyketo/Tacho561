@@ -587,7 +587,7 @@ bg:{
  active_none_yet:'Стартирай поне една дейност, преди да приключиш деня.',
  btn_finish_day:'Приключи и запази деня',
  sync_title:'Синхронизация между устройства',
- sync_note:'По избор. Изисква безплатен собствен Firebase проект (5-10 мин. за настройка) — данните тогава се пазят криптирано в твоя облак, достъпни от всяко устройство, на което влезеш със същия имейл.',
+ sync_note:'Влез с Google, за да се синхронизират дните между телефона и компютъра. Данните се пазят в твоя Firebase проект и са достъпни само за твоя акаунт. Без вход приложението работи нормално, но само локално.',
  sync_config_label:'Firebase конфигурация (от твоя проект)',
  sync_config_hint:'Копира се от Firebase Console → Project settings → Your apps → SDK setup and configuration.',
  btn_sync_connect:'Свържи',
@@ -599,6 +599,7 @@ bg:{
  sync_logged_as:'Синхронизирано като: {email}', sync_not_logged:'Не си влязъл — данните стоят само на това устройство.',
  sync_cfg_empty:'Постави конфигурацията от Firebase.', sync_cfg_bad:'Конфигурацията не може да се прочете или свързването се провали.',
  sync_login_err:'Грешка: {msg}', sync_done:'Синхронизирано.',
+ sync_not_ready:'Връзката още се подготвя — опитай пак след няколко секунди.',
  dash_current:'Управление — седмица / двуседмичен период',
  dash_allow:'Използвани и оставащи допустими отклонения',
  dash_rest:'Седмичен цикъл и почивки',
@@ -806,7 +807,7 @@ en:{
  active_none_yet:'Start at least one activity before finishing the day.',
  btn_finish_day:'Finish & save the day',
  sync_title:'Cross-device sync',
- sync_note:'Optional. Needs your own free Firebase project (5-10 min. to set up) — data is then kept in your own cloud, reachable from any device you sign into with the same email.',
+ sync_note:'Sign in with Google to keep days in sync between your phone and computer. Data is stored in your own Firebase project and is only reachable by your account. Without signing in the app works normally, just locally.',
  sync_config_label:'Firebase configuration (from your project)',
  sync_config_hint:'Copy this from Firebase Console → Project settings → Your apps → SDK setup and configuration.',
  btn_sync_connect:'Connect',
@@ -818,6 +819,7 @@ en:{
  sync_logged_as:'Synced as: {email}', sync_not_logged:'Not signed in — data stays on this device only.',
  sync_cfg_empty:'Paste the configuration from Firebase.', sync_cfg_bad:'The configuration could not be read, or the connection failed.',
  sync_login_err:'Error: {msg}', sync_done:'Synced.',
+ sync_not_ready:'The connection is still starting up — try again in a few seconds.',
  dash_current:'Driving — week / two-week period',
  dash_allow:'Allowances used and remaining',
  dash_rest:'Weekly cycle and rests',
@@ -1025,7 +1027,7 @@ de:{
  active_none_yet:'Starte mindestens eine Tätigkeit, bevor du den Tag abschließt.',
  btn_finish_day:'Tag abschließen & speichern',
  sync_title:'Geräteübergreifende Synchronisierung',
- sync_note:'Optional. Erfordert ein eigenes kostenloses Firebase-Projekt (5-10 Min. Einrichtung) — die Daten liegen dann in deiner eigenen Cloud, erreichbar von jedem Gerät, auf dem du dich mit derselben E-Mail anmeldest.',
+ sync_note:'Melde dich mit Google an, damit die Tage zwischen Handy und Computer synchron bleiben. Die Daten liegen in deinem eigenen Firebase-Projekt und sind nur für dein Konto erreichbar. Ohne Anmeldung funktioniert die App normal, nur lokal.',
  sync_config_label:'Firebase-Konfiguration (aus deinem Projekt)',
  sync_config_hint:'Kopiere sie aus der Firebase-Konsole → Projekteinstellungen → Deine Apps → SDK-Einrichtung und -Konfiguration.',
  btn_sync_connect:'Verbinden',
@@ -1037,6 +1039,7 @@ de:{
  sync_logged_as:'Synchronisiert als: {email}', sync_not_logged:'Nicht angemeldet — die Daten bleiben nur auf diesem Gerät.',
  sync_cfg_empty:'Konfiguration aus Firebase einfügen.', sync_cfg_bad:'Die Konfiguration konnte nicht gelesen werden oder die Verbindung ist fehlgeschlagen.',
  sync_login_err:'Fehler: {msg}', sync_done:'Synchronisiert.',
+ sync_not_ready:'Die Verbindung wird noch aufgebaut — versuche es in ein paar Sekunden erneut.',
  dash_current:'Lenkzeit — Woche / Zweiwochenzeitraum',
  dash_allow:'Genutzte und verbleibende Ausnahmen',
  dash_rest:'Wochenzyklus und Ruhezeiten',
@@ -2696,7 +2699,22 @@ document.querySelectorAll('#themepick button').forEach(b=>{
     try{ localStorage.setItem('t561-theme',THEME); }catch(e){} applyTheme(); });
 });
 
-/* ============ Cross-device sync (Firebase, opt-in, user's own free project) ============ */
+/* ============ Cross-device sync (Firebase) ============ */
+// Built-in project config. A Firebase web apiKey is not a secret — it identifies the project,
+// it doesn't grant access. Access is controlled by the Firestore rules (each signed-in user can
+// only touch their own document) and by the authorized-domains list.
+const DEFAULT_FIREBASE_CFG={
+  apiKey:"AIzaSyA1o5I8LZEXU9HdQahMJFNFoWi27kzAzlY",
+  authDomain:"tacho561.firebaseapp.com",
+  projectId:"tacho561",
+  storageBucket:"tacho561.firebasestorage.app",
+  messagingSenderId:"124923050336",
+  appId:"1:124923050336:web:a6e7cc9efbd5c9e5a7c605"
+};
+function isStandaloneApp(){
+  return (window.navigator.standalone===true) ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+}
 let fbApp=null, fbAuth=null, fbDb=null, syncUser=null;
 const SYNC_CFG_KEY='t561-sync-config';
 function loadFirebaseSDK(){
@@ -2748,10 +2766,9 @@ function renderSyncUI(){
   const loginWrap=document.getElementById('syncLoginWrap'), loggedWrap=document.getElementById('syncLoggedWrap');
   const statusEl=document.getElementById('syncStatusLine');
   if(!setupWrap) return;
-  const hasCfg=!!(localStorage.getItem(SYNC_CFG_KEY));
-  setupWrap.style.display = hasCfg ? 'none':'block';
-  authWrap.style.display = hasCfg ? 'block':'none';
-  if(!hasCfg) return;
+  const hasCfg=true; // the project config ships with the app, so setup is never required
+  setupWrap.style.display='none';
+  authWrap.style.display='block';
   if(syncUser){
     statusEl.textContent=t('sync_logged_as',{email:syncUser.email});
     loginWrap.style.display='none'; loggedWrap.style.display='block';
@@ -2785,13 +2802,18 @@ document.getElementById('syncConnectBtn').addEventListener('click', async ()=>{
   }catch(e){ alert(t('sync_cfg_bad')); }
 });
 document.getElementById('syncGoogleBtn').addEventListener('click', async ()=>{
-  if(!fbAuth) return;
+  if(!fbAuth){ alert(t('sync_not_ready')); return; }
   const provider=new window.firebase.auth.GoogleAuthProvider();
+  // In an installed (home-screen) app a popup opens outside the app's own context and its result
+  // never comes back, so go straight to a redirect there; browsers keep the popup path.
+  if(isStandaloneApp()){
+    try{ await fbAuth.signInWithRedirect(provider); }
+    catch(e){ alert(t('sync_login_err',{msg:e.message||''})); }
+    return;
+  }
   try{
     await fbAuth.signInWithPopup(provider);
   }catch(e){
-    // installed PWAs and mobile Safari frequently block popups — fall back to a full redirect,
-    // whose result is picked up by getRedirectResult on the next page load.
     const popupIssue=['auth/popup-blocked','auth/popup-closed-by-user','auth/operation-not-supported-in-this-environment','auth/cancelled-popup-request'];
     if(popupIssue.indexOf(e.code)>=0){
       try{ await fbAuth.signInWithRedirect(provider); }
@@ -2833,7 +2855,9 @@ document.getElementById('syncLogoutBtn').addEventListener('click', async ()=>{ i
   document.getElementById('f_endCountry').value=DATA.lastCountry||'';
   renderSyncUI();
   const savedCfg=localStorage.getItem(SYNC_CFG_KEY);
-  if(savedCfg){ try{ await initFirebase(JSON.parse(savedCfg)); }catch(e){} }
+  let cfg=DEFAULT_FIREBASE_CFG;
+  if(savedCfg){ try{ const c=JSON.parse(savedCfg); if(c&&c.apiKey) cfg=c; }catch(e){} }
+  try{ await initFirebase(cfg); }catch(e){}
 })();
 
 </script>
