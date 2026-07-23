@@ -77,6 +77,33 @@ html[data-theme="carbon"]{
   --info:#a78bfa;--info-bg:#241f3a;
   --shadow:none;--picker-filter:invert(0.75);
 }
+html[data-theme="halogen"]{
+  --bg:#000000;--bg-grad:#000000;--bg-panel:#0a0a0a;--bg-panel-2:#171717;--bg-raised:#212121;
+  --border:#6e6e6e;--border-soft:#484848;
+  --text:#ffffff;--text-dim:#d2d2d2;--text-faint:#9a9a9a;
+  --accent:#ffd21f;--accent-ink:#000000;--accent-dim:#a68a10;
+  --ok:#3ee68b;--ok-bg:#0d2a1a;--warn:#ff8c00;--warn-bg:#331f00;--bad:#ff5252;--bad-bg:#3a0f0f;
+  --info:#5fc8ff;--info-bg:#04222e;
+  --shadow:none;--picker-filter:invert(1);
+}
+html[data-theme="ink"]{
+  --bg:#ffffff;--bg-grad:#ffffff;--bg-panel:#ffffff;--bg-panel-2:#f0f0f0;--bg-raised:#e2e2e2;
+  --border:#000000;--border-soft:#9a9a9a;
+  --text:#000000;--text-dim:#262626;--text-faint:#525252;
+  --accent:#5b21b6;--accent-ink:#ffffff;--accent-dim:#8b5cf6;
+  --ok:#15803d;--ok-bg:#d8f0e0;--warn:#8a5a00;--warn-bg:#fbecca;--bad:#b00020;--bad-bg:#fadadf;
+  --info:#0e7490;--info-bg:#dbeff4;
+  --shadow:none;--picker-filter:none;
+}
+html[data-theme="beacon"]{
+  --bg:#000000;--bg-grad:#000000;--bg-panel:#0a0a0a;--bg-panel-2:#171717;--bg-raised:#212121;
+  --border:#707070;--border-soft:#494949;
+  --text:#ffffff;--text-dim:#d4d4d4;--text-faint:#9c9c9c;
+  --accent:#22d3ee;--accent-ink:#001b20;--accent-dim:#1a8ea3;
+  --ok:#4ade80;--ok-bg:#0d2a17;--warn:#fbbf24;--warn-bg:#332600;--bad:#ff5252;--bad-bg:#3a0f0f;
+  --info:#c084fc;--info-bg:#241436;
+  --shadow:none;--picker-filter:invert(1);
+}
 html[data-theme="sun"]{
   --bg:#ffffff;--bg-grad:#ffffff;--bg-panel:#ffffff;--bg-panel-2:#f1f1f1;--bg-raised:#e4e4e4;
   --border:#8b8b8b;--border-soft:#bcbcbc;
@@ -98,10 +125,24 @@ body{background:radial-gradient(ellipse at top,var(--bg-grad) 0%,var(--bg) 55%);
 .brand h1{font-family:var(--display);font-weight:600;font-size:19px;margin:0;letter-spacing:.3px;}
 .brand p{margin:0;font-size:11.5px;color:var(--text-faint);letter-spacing:.4px;text-transform:uppercase;}
 .ctrls{display:flex;gap:6px;align-items:center;}
-.seg-switch{display:flex;flex-wrap:wrap;gap:2px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:8px;padding:3px;box-shadow:var(--shadow);}
+.picker{position:relative;}
+.picker-btn{display:flex;align-items:center;gap:7px;background:var(--bg-panel);border:1px solid var(--border-soft);color:var(--text);padding:7px 10px;border-radius:9px;cursor:pointer;font-family:var(--body);font-size:12.5px;font-weight:600;box-shadow:var(--shadow);white-space:nowrap;}
+.picker-btn:hover{border-color:var(--border);}
+.picker-btn .pb-ico{width:15px;height:15px;flex:none;color:var(--accent);}
+.picker-btn .pb-chev{width:11px;height:11px;flex:none;color:var(--text-faint);}
+.picker-menu{position:absolute;top:calc(100% + 5px);right:0;z-index:70;min-width:186px;background:var(--bg-panel);border:1px solid var(--border);border-radius:11px;padding:5px;box-shadow:0 10px 28px rgba(0,0,0,.24);display:none;max-height:64vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.picker-menu.open{display:block;}
+.picker-menu button{display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:none;color:var(--text-dim);font-family:var(--body);font-size:13px;font-weight:600;padding:8px 9px;border-radius:7px;cursor:pointer;text-align:left;}
+.picker-menu button:hover{background:var(--bg-raised);color:var(--text);}
+.picker-menu button.active{background:var(--bg-raised);color:var(--accent);}
+.picker-menu button svg{width:15px;height:15px;flex:none;}
+.picker-menu .pm-code{font-family:var(--mono);font-size:11px;font-weight:700;width:22px;flex:none;text-align:center;}
+.picker-group{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--text-faint);padding:9px 9px 4px;font-weight:700;}
+.picker-sep{height:1px;background:var(--border-soft);margin:4px 6px;}
 .seg-switch button{background:transparent;border:none;color:var(--text-dim);font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 7px;border-radius:6px;cursor:pointer;line-height:1;}
 .seg-switch button.active{background:var(--bg-raised);color:var(--accent);}
 .seg-switch button svg{width:13px;height:13px;display:block;}
+.seg-switch .sep{width:1px;align-self:stretch;background:var(--border);margin:2px 4px;flex:none;border-radius:1px;}
 .vehicle-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg-panel);border:1px solid var(--border-soft);border-left:3px solid var(--accent);border-radius:10px;padding:10px 12px;margin-bottom:16px;box-shadow:var(--shadow);}
 .vb-l{display:flex;flex-direction:column;gap:2px;min-width:0;}
 .vb-cap{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-faint);}
@@ -116,10 +157,32 @@ body{background:radial-gradient(ellipse at top,var(--bg-grad) 0%,var(--bg) 55%);
 @keyframes fadeIn{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:none;}}
 .card{background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);}
 .card h2{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--text-dim);margin:0 0 12px;}
-.gauge-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;}
-.gauge-box{flex:1;min-width:130px;display:flex;flex-direction:column;align-items:center;text-align:center;}
-.gauge-box svg{width:100%;max-width:150px;height:auto;}
-.gauge-label{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;margin-top:4px;}
+.gauge-row{display:block;}
+/* linear gauges — the round shape is reserved for the tacho disc */
+.lg{margin-bottom:16px;}
+.lg-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px;}
+.lg-lab{font-size:11.5px;color:var(--text-dim);}
+.lg-val{font-family:var(--mono);font-size:16px;font-weight:700;white-space:nowrap;}
+.lg-val i{font-style:normal;font-size:11px;color:var(--text-faint);font-weight:500;}
+.lg-scale{position:relative;height:26px;}
+.lg-track{position:absolute;left:0;right:0;top:0;height:9px;background:var(--bg-raised);border-radius:2px;overflow:hidden;}
+.lg-fill{position:absolute;left:0;top:0;bottom:0;border-radius:2px;transition:width .25s ease;}
+.lg-cursor{position:absolute;top:-3px;width:2px;height:15px;background:var(--text);border-radius:1px;transition:left .25s ease;}
+.lg-ticks{position:absolute;left:0;right:0;top:11px;height:6px;}
+.lg-ticks i{position:absolute;top:0;width:1px;height:4px;background:var(--border);}
+.lg-ticks i.maj{height:6px;background:var(--text-faint);}
+.lg-nums{position:absolute;left:0;right:0;top:18px;height:10px;font-family:var(--mono);font-size:8.5px;color:var(--text-faint);}
+.lg-nums b{position:absolute;transform:translateX(-50%);font-weight:400;}
+.lg-seg{display:flex;gap:2px;height:14px;}
+.lg-seg i{flex:1;background:var(--bg-raised);border-radius:1.5px;}
+.lg-seg i.on{background:var(--accent);}
+.lg-seg i.on.warn{background:var(--warn);}
+.lg-seg i.on.bad{background:var(--bad);}
+.gauge-toggle{display:flex;gap:3px;justify-content:flex-end;margin-top:-4px;}
+.gauge-toggle .gt-btn{background:transparent;border:1px solid var(--border-soft);color:var(--text-faint);
+  width:30px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.gauge-toggle .gt-btn svg{width:15px;height:15px;}
+.gauge-toggle .gt-btn.active{border-color:var(--accent-dim);color:var(--accent);background:var(--bg-raised);}
 .pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600;font-family:var(--mono);}
 .pill.ok{background:var(--ok-bg);color:var(--ok);}
 .pill.warn{background:var(--warn-bg);color:var(--warn);}
@@ -227,7 +290,7 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
 .filterbar{display:flex;gap:8px;margin-bottom:12px;}
 .filterbar input,.filterbar select{margin-bottom:0;}
 .disc-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
-.disc-wrap svg{width:100%;max-width:280px;height:auto;}
+.disc-wrap svg{width:100%;max-width:320px;height:auto;}
 .disc-legend{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:11.5px;color:var(--text-dim);}
 .disc-legend span{display:inline-flex;align-items:center;gap:5px;}
 .disc-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
@@ -262,10 +325,26 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
 .veh-r button.mk-active{color:var(--accent);font-weight:700;}
 
 /* ---- next-start card ---- */
-.next-start{display:flex;align-items:center;gap:14px;}
-.next-start .ns-time{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--accent);}
-.next-start .ns-date{font-size:11.5px;color:var(--text-faint);margin-top:2px;}
-.next-start .ns-note{font-size:12px;color:var(--text-dim);margin-top:4px;line-height:1.4;}
+/* hero: the one answer the dashboard opens with */
+.hero{background:linear-gradient(160deg,var(--bg-panel-2),var(--bg-panel));border:1px solid var(--border);
+  border-left:3px solid var(--ok);border-radius:14px;padding:18px 16px 16px;margin-bottom:14px;box-shadow:var(--shadow);}
+.hero .hero-eyebrow{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--ok);
+  font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px;}
+.hero .hero-eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:block;flex:none;}
+.hero .hero-big{font-family:var(--mono);font-size:42px;font-weight:700;line-height:1;letter-spacing:-1px;}
+.hero .hero-big small{font-family:var(--body);font-size:17px;font-weight:500;color:var(--text-dim);margin-left:7px;letter-spacing:0;}
+.hero .hero-say{font-size:13.5px;margin-top:9px;line-height:1.45;}
+.hero .hero-say b{font-family:var(--mono);}
+.hero .hero-why{font-size:11.5px;color:var(--text-faint);margin-top:5px;line-height:1.45;}
+.hero.st-warn{border-left-color:var(--warn);}
+.hero.st-warn .hero-eyebrow{color:var(--warn);} .hero.st-warn .hero-eyebrow i{background:var(--warn);}
+.hero.st-go{border-left-color:var(--accent);}
+.hero.st-go .hero-eyebrow{color:var(--accent);} .hero.st-go .hero-eyebrow i{background:var(--accent);}
+.hero.st-none{border-left-color:var(--border);}
+.hero.st-none .hero-eyebrow{color:var(--text-faint);} .hero.st-none .hero-eyebrow i{background:var(--text-faint);}
+.card.disc-card{padding:14px 16px 16px;}
+.disc-date{font-family:var(--display);font-size:12px;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--text-faint);text-align:center;margin-bottom:2px;}
 
 /* ---- logbook table view ---- */
 .log-view-toggle{display:flex;gap:6px;margin-bottom:12px;}
@@ -379,19 +458,13 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
       <div><h1>TAXO 561</h1><p data-t="subtitle"></p></div>
     </div>
     <div class="ctrls">
-      <div class="seg-switch" id="themepick">
-        <button data-theme="day" title="Day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
-        <button data-theme="night" title="Night"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
-        <button data-theme="paper" title="Paper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2.5h8l5 5v14H6z"/><path d="M14 2.5v5h5M9 12h6M9 15.5h6M9 18.5h4"/></svg></button>
-        <button data-theme="ocean" title="Ocean"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16c1.5-1.6 3-1.6 4.5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4.5 0M2 20c1.5-1.6 3-1.6 4.5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4.5 0M12 3v9"/></svg></button>
-        <button data-theme="dusk" title="Dusk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v3M5 11l1.6 1.6M19 11l-1.6 1.6M2.5 18h19M6.5 18a5.5 5.5 0 0111 0"/></svg></button>
-        <button data-theme="mist" title="Mist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h13M18.5 8H21M3 12h5M10.5 12H21M3 16h11M16.5 16H21"/></svg></button>
-        <button data-theme="carbon" title="Carbon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.6l8.2 4.7v9.4L12 21.4 3.8 16.7V7.3z"/></svg></button>
-        <button data-theme="sun" title="Sunlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18z" fill="currentColor" stroke="none"/></svg></button>
-        <button data-theme="auto" title="Auto">A</button>
+      <div class="picker" id="themePicker">
+        <button class="picker-btn" id="themeBtn" aria-haspopup="listbox" aria-expanded="false"></button>
+        <div class="picker-menu" id="themeMenu" role="listbox"></div>
       </div>
-      <div class="seg-switch" id="langpick">
-        <button data-lang="bg">BG</button><button data-lang="en">EN</button><button data-lang="de">DE</button>
+      <div class="picker" id="langPicker">
+        <button class="picker-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false"></button>
+        <div class="picker-menu" id="langMenu" role="listbox"></div>
       </div>
     </div>
   </div>
@@ -403,10 +476,10 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
 
 
   <div class="view active" id="view-dash">
-    <div class="card"><h2 data-t="dash_next"></h2><div class="next-start" id="nextStartCard"></div></div>
+    <div id="heroCard"></div>
+    <div class="card disc-card"><div class="disc-wrap" id="discCard"></div></div>
     <div class="card"><h2 data-t="dash_current"></h2><div class="gauge-row" id="gaugeRow"></div></div>
     <div class="card"><h2 data-t="dash_worktime"></h2><div id="workTimeStatus"></div></div>
-    <div class="card"><h2 data-t="dash_disc"></h2><div class="disc-wrap" id="discCard"></div></div>
     <div class="card"><h2 data-t="dash_allow"></h2><div id="allowStatus"></div></div>
     <div class="card"><h2 data-t="dash_rest"></h2><div id="restStatus"></div></div>
     <div class="card"><h2 data-t="dash_comp"></h2><div id="compStatus"></div></div>
@@ -616,7 +689,36 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
 /* ============ i18n ============ */
 const T = {
 bg:{
+ hero_onduty:'На път · {act}',
+ hero_left_drive:'остават за управление',
+ hero_driven_today:'Изкарани днес {x} ч.',
+ hero_limit_today:'Дневен лимит {lim} ч.',
+ hero_resting:'Почиваш',
+ hero_until_start:'до тръгване',
+ hero_can_start:'Можеш да тръгнеш в <b>{time}</b>, {date}.',
+ hero_ready:'Готов за тръгване',
+ hero_since:'най-рано от',
+ hero_rest_done:'Изискваната почивка е изпълнена.',
+ hero_nodata:'Няма записани дни',
+ hero_nodata_say:'Започни от „Активен ден“ — впиши километража и стартирай първата дейност.',
+ hero_exempt:'Освободен ден',
+ dash_disc_on:'Тахо шайба · {d}',
+ gs_scale:'Скала', gs_seg:'Сегменти',
  app_name:'TAXO 561',
+ th_group_light:'Дневни',
+ th_group_dark:'Нощни',
+ th_day:'Ден',
+ th_mist:'Мъгла',
+ th_paper:'Хартия',
+ th_ocean:'Океан',
+ th_sun:'Слънце',
+ th_ink:'Мастило',
+ th_night:'Нощ',
+ th_carbon:'Въглен',
+ th_dusk:'Здрач',
+ th_halogen:'Халоген',
+ th_beacon:'Фар',
+ th_auto:'Автоматично',
  subtitle:'Дневник и контрол по Регламент 561/2006',
  tab_dash:'Табло', tab_add:'Запиши ден', tab_active:'Активен ден', tab_veh:'Превозни средства', tab_month:'Отчети', tab_log:'Дневник', tab_viol:'Нарушения', tab_install:'Настройки',
  vb_cap:'Текущо превозно средство', vb_change:'Смени', vb_none:'не е зададено', vb_prompt:'Регистрационен номер:',
@@ -852,7 +954,36 @@ bg:{
  disclaimer:'Инструментът е помощен и информативен. Обхваща правилата на Регламент (ЕО) 561/2006 заедно с изключенията по чл. 3, 4(о), 8(5), 8(6а), 9(1), 12, 13 и 14, както и превозите по AETR. Националните дерогации по чл. 13 се различават по държави и се променят — приложението предлага рамка за вписването им, но не съдържа изчерпателен списък за всяка държава. Проверявай актуалните национални правила и не разчитай само на този инструмент при проверка. Не представлява правен съвет.'
 },
 en:{
+ hero_onduty:'On duty · {act}',
+ hero_left_drive:'driving left',
+ hero_driven_today:'Driven today {x} h.',
+ hero_limit_today:'Daily limit {lim} h.',
+ hero_resting:'Resting',
+ hero_until_start:'until departure',
+ hero_can_start:'You can set off at <b>{time}</b>, {date}.',
+ hero_ready:'Ready to go',
+ hero_since:'earliest from',
+ hero_rest_done:'The required rest has been completed.',
+ hero_nodata:'No days recorded',
+ hero_nodata_say:'Start from “Active day” — enter the odometer and start the first activity.',
+ hero_exempt:'Exempt day',
+ dash_disc_on:'Tacho disc · {d}',
+ gs_scale:'Scale', gs_seg:'Segments',
  app_name:'TAXO 561',
+ th_group_light:'Light',
+ th_group_dark:'Dark',
+ th_day:'Day',
+ th_mist:'Mist',
+ th_paper:'Paper',
+ th_ocean:'Ocean',
+ th_sun:'Sunlight',
+ th_ink:'Ink',
+ th_night:'Night',
+ th_carbon:'Carbon',
+ th_dusk:'Dusk',
+ th_halogen:'Halogen',
+ th_beacon:'Beacon',
+ th_auto:'Automatic',
  subtitle:'Logbook & compliance for Regulation 561/2006',
  tab_dash:'Dashboard', tab_add:'Record day', tab_active:'Active day', tab_veh:'Vehicles', tab_month:'Reports', tab_log:'Logbook', tab_viol:'Violations', tab_install:'Settings',
  vb_cap:'Current vehicle', vb_change:'Change', vb_none:'not set', vb_prompt:'Number plate:',
@@ -1087,8 +1218,1633 @@ en:{
  import_ok:'Data restored successfully.', import_err:'The file could not be read.',
  disclaimer:'This tool is informational. It covers the rules of Regulation (EC) 561/2006 together with the exceptions under Art. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 and 14, as well as transport under AETR. National derogations under Art. 13 differ between countries and change over time — the app provides a framework for recording them but does not hold an exhaustive list for every country. Check the current national rules and do not rely on this tool alone during an inspection. Not legal advice.'
 },
-de:{
+ro:{
+ hero_onduty:'În cursă · {act}',
+ hero_left_drive:'rămase pentru conducere',
+ hero_driven_today:'Conduse azi {x} h.',
+ hero_limit_today:'Limita zilnică {lim} h.',
+ hero_resting:'În repaus',
+ hero_until_start:'până la plecare',
+ hero_can_start:'Poți pleca la <b>{time}</b>, {date}.',
+ hero_ready:'Gata de plecare',
+ hero_since:'cel mai devreme de la',
+ hero_rest_done:'Repausul necesar a fost efectuat.',
+ hero_nodata:'Nicio zi înregistrată',
+ hero_nodata_say:'Începe din „Ziua activă" — introdu kilometrajul și pornește prima activitate.',
+ hero_exempt:'Zi exceptată',
+ dash_disc_on:'Diagramă tahograf · {d}',
+ gs_scale:'Scală', gs_seg:'Segmente',
+ th_group_light:'Deschise',
+ th_group_dark:'Închise',
+ th_day:'Zi',
+ th_mist:'Ceață',
+ th_paper:'Hârtie',
+ th_ocean:'Ocean',
+ th_sun:'Lumina zilei',
+ th_ink:'Cerneală',
+ th_night:'Noapte',
+ th_carbon:'Carbon',
+ th_dusk:'Amurg',
+ th_halogen:'Halogen',
+ th_beacon:'Far',
+ th_auto:'Automat',
  app_name:'TAXO 561',
+ subtitle:'Jurnal și control conform Regulamentului 561/2006',
+ tab_dash:'Tablou', tab_add:'Înregistrează ziua', tab_active:'Ziua activă', tab_veh:'Vehicule', tab_month:'Rapoarte', tab_log:'Jurnal', tab_viol:'Încălcări', tab_install:'Setări',
+ vb_cap:'Vehicul curent', vb_change:'Schimbă', vb_none:'nesetat', vb_prompt:'Număr de înmatriculare:',
+ dash_next:'Cea mai devreme pornire următoare',
+ dash_worktime:'Timp de lucru săptămânal (Directiva 2002/15/CE)',
+ ns_exempt:'Ziua este exceptată de la 561/2006 — estimarea nu se aplică pentru ea.',
+ ns_note_weekly:'Este necesar un repaus săptămânal (min. {h} h redus — se datorează compensare).',
+ ns_note_reduced:'Pe baza unui repaus zilnic redus (min. {h} h).',
+ ns_note_regular:'Repausurile reduse din acest ciclu sunt epuizate — este necesar unul normal (min. {h} h).',
+ wt_week:'Săptămâna aceasta', wt_avg:'Media (săptămânile înregistrate)',
+ wt_hint:'Timp de lucru = conducere + alte activități, fără pauze și disponibilitate. Limita fermă de 60 h/săptămână este art. 4(b); media de 48 h se evaluează oficial pe o perioadă de referință de 4 (până la 6) luni — valoarea de aici este doar orientativă.',
+ l_poa:'Disponibilitate / POA (Directiva 2002/15/CE, art. 3(b))',
+ poa_hint:'Timpul în care nu ești la postul de lucru, dar trebuie să rămâi disponibil (de ex. așteptare la încărcare, traversare cu feribotul). Nu se socotește ca timp de lucru, dar nici ca perioadă de repaus.',
+ disc_poa:'disponibilitate',
+ po_driver:'Conducător auto', po_worktime:'Timp de lucru (2002/15/CE)',
+ v_worktime_over60:'Timp de lucru săptămânal {x} h față de limita fermă de 60 h (săptămâna {wk})',
+ veh_title:'Vehicule', veh_note:'Registrul vehiculelor — cel activ este propus automat la o zi nouă.',
+ btn_add_veh:'+ Adaugă vehicul', veh_empty:'Niciun vehicul adăugat încă.',
+ veh_active_badge:'activ', veh_make_active:'Fă-l activ', veh_confirm_del:'Ștergi acest vehicul din registru?',
+ veh_dup:'Există deja un vehicul cu acest număr.',
+ per_week:'Săptămână', per_pair:'Două săptămâni', per_month:'Lună', per_custom:'Perioadă',
+ l_from:'De la', l_to:'Până la', btn_csv:'Export CSV', btn_print:'Tipărire / PDF',
+ lv_cards:'Fișe', lv_table:'Tabel', lt_time:'Ore', lt_drv:'Conducere', lt_status:'Stare',
+ driver_title:'Date despre conducător', l_driver_name:'Numele conducătorului',
+ active_title:'Ziua activă cu cronometru', active_note:'Aici începe ziua de lucru: introdu kilometrajul și pornește prima activitate. Alegerea alteia o încheie automat pe cea curentă. La final apasă „Încheie și salvează ziua" — totalurile trec în înregistrarea zilei.',
+ active_empty:'Nicio activitate pornită.', act_stop:'Oprește', act_now:'ACUM',
+ active_log_title:'Activitățile de azi', active_log_empty:'Nicio activitate înregistrată încă.',
+ act_confirm_del:'Ștergi această activitate?',
+ active_none_yet:'Pornește cel puțin o activitate înainte de a încheia ziua.',
+ btn_finish_day:'Încheie și salvează ziua',
+ l_active_odo:'Kilometraj de început al zilei',
+ active_odo_hint:'Introdu-l o singură dată la începutul turei — la încheiere se completează automat în înregistrarea zilei.',
+ sync_title:'Sincronizare între dispozitive',
+ sync_note:'Autentifică-te cu Google pentru ca zilele să fie sincronizate între telefon și calculator. Datele se păstrează în propriul tău proiect Firebase și sunt accesibile doar contului tău. Fără autentificare aplicația funcționează normal, dar numai local.',
+ sync_config_label:'Configurație Firebase (din proiectul tău)',
+ sync_config_hint:'Se copiază din Firebase Console → Project settings → Your apps → SDK setup and configuration.',
+ btn_sync_connect:'Conectează',
+ l_email:'E-mail', l_password:'Parolă',
+ btn_sync_google:'Autentificare cu Google', sync_or:'sau cu e-mail și parolă:',
+ btn_sync_login:'Autentificare', btn_sync_register:'Înregistrare',
+ btn_sync_now:'Sincronizează acum', btn_sync_logout:'Deconectare',
+ sync_confirm_pull:'În cloud există date de pe alt dispozitiv, diferite de cele stocate aici. Le încarc acum? (datele locale vor fi înlocuite)',
+ sync_logged_as:'Sincronizat ca: {email}', sync_not_logged:'Neautentificat — datele rămân doar pe acest dispozitiv.',
+ sync_cfg_empty:'Lipește configurația din Firebase.', sync_cfg_bad:'Configurația nu a putut fi citită sau conectarea a eșuat.',
+ sync_login_err:'Eroare: {msg}', sync_done:'Sincronizat.',
+ sync_not_ready:'Conexiunea încă se pregătește — încearcă din nou peste câteva secunde.',
+ sync_email_only:'Într-o aplicație de pe ecranul principal, iOS nu poate reveni de pe pagina Google, așa că aici te autentifici cu e-mail și parolă (cele pe care le înregistrezi o dată):',
+ l_new_password:'Parolă nouă pentru acest cont',
+ btn_sync_setpw:'Setează o parolă pentru acest cont',
+ sync_setpw_hint:'Dacă te-ai autentificat cu Google, setează aici o parolă pe același cont. Apoi te autentifici pe telefon cu același e-mail și această parolă — datele rămân aceleași.',
+ sync_pw_set:'Gata. Acum te poți autentifica și cu {email} și această parolă.',
+ sync_pw_short:'Parola trebuie să aibă cel puțin 6 caractere.',
+ sync_email_taken:'Acest e-mail este deja folosit de o altă metodă de autentificare (de ex. Google). Autentifică-te cu Google într-un browser și setează o parolă pe același cont — apoi te vei putea autentifica și cu parolă.',
+ dash_current:'Conducere — săptămână / perioadă de două săptămâni',
+ dash_allow:'Derogări folosite și rămase',
+ dash_rest:'Ciclu săptămânal și repausuri',
+ dash_comp:'Compensare datorată',
+ dash_strip:'Ultimele 14 zile — conducere',
+ add_title:'Încheierea unei zile de lucru', edit_title:'Editarea zilei de lucru',
+ add_note:'Numărul de înmatriculare se reține automat. Îl introduci doar când schimbi camionul.',
+ l_date:'Data', l_start:'Începutul zilei de lucru', l_end:'Sfârșitul zilei de lucru',
+ sh_places:'Locul de început și de sfârșit',
+ l_startPlace:'Locul de început', l_startCountry:'Țara',
+ l_endPlace:'Locul de sfârșit', l_endCountry:'Țara',
+ places_hint:'Înregistrare obligatorie conform art. 34 din Regulamentul 165/2014 — se verifică față de introducerile manuale din tahograf la un control în trafic.',
+ sh_veh:'Indicații de la tahograf', sh_rest:'Repaus după sfârșitul zilei',
+ seg_title:'Vehicul', seg_plate:'Număr de înmatriculare',
+ seg_odo_start:'Kilometraj — început', seg_odo_end:'Kilometraj — sfârșit',
+ seg_drv_start:'Contor conducere — început (hh:mm)', seg_drv_end:'Contor conducere — sfârșit (hh:mm)',
+ seg_rest_start:'Contor pauze — început (hh:mm)', seg_rest_end:'Contor pauze — sfârșit (hh:mm)',
+ seg_hint:'Două puncte se pun automat — scrie doar cifrele (de ex. 145 → 1:45). Dacă tahograful nu arată un contor cumulativ, lasă „început" gol și introdu totalul zilei la „sfârșit".',
+ calc_prefix:'Calculat:', calc_drv:'conducere', calc_other:'alte activități', calc_poa:'disponibilitate', calc_rest:'pauze', calc_km:'km',
+ step1_title:'Sfârșitul turei', step1_sub:'Când și unde se încheie ziua de lucru.',
+ step2_title:'Înregistrare tahograf', step2_sub:'Valorile cumulate finale de la tahograf. Diferența față de început se calculează automat.',
+ seg_other_start:'Alte activități — început (hh:mm)', seg_other_end:'Alte activități — sfârșit (hh:mm)',
+ seg_poa_start:'Disponibilitate — început (hh:mm)', seg_poa_end:'Disponibilitate — sfârșit (hh:mm)',
+ l_reading_source:'Sursa datelor', opt_source_display:'Afișaj', opt_source_printout:'Tipăritură', opt_source_manual:'Introducere manuală',
+ l_card_state:'Starea cardului', opt_card_inserted:'Card introdus', opt_card_withdrawn:'Card scos',
+ po_source:'Sursă', po_card:'Card',
+ btn_day_pdf:'PDF / Tipărire',
+ pd_subtitle:'Raport pentru ziua de lucru · Regulamentul (CE) 561/2006',
+ pd_sign_driver:'Semnătura conducătorului', pd_sign_control:'Semnătura inspectorului',
+ pd_generated:'Generat la {d}',
+ pd_disclaimer:'Document ajutător. Nu înlocuiește tipăritura de la tahograf și nu este document oficial la un control.',
+ btn_add_vehicle:'+ Adaugă vehicul (schimb de camion)',
+ l_resttype:'Tipul repausului după zi',
+ rt_none:'Fără repaus încă / în continuare',
+ rt_reg11:'Repaus zilnic normal (≥ 11 h)',
+ rt_red9:'Repaus zilnic redus (9–11 h)',
+ rt_split:'Repaus zilnic fracționat (3 h + 9 h)',
+ rt_mm9:'Repaus în echipaj multiplu (≥ 9 h în 30 h)',
+ rt_wreg:'Repaus săptămânal normal (≥ 45 h)',
+ rt_wred:'Repaus săptămânal redus (24–45 h)',
+ l_resthours:'Durata repausului (ore)',
+ l_apply_comp:'Acest repaus include compensarea unui repaus săptămânal redus anterior',
+ l_comp_hours:'Ore de compensare aplicate',
+ sh_exceptions:'Excepții și derogări',
+ exc_note:'Bifează doar ce se aplică cu adevărat zilei. Fiecare excepție schimbă regulile după care este verificată ziua.',
+ exc_ferry_t:'Feribot sau tren — art. 9(1)',
+ exc_ferry_d:'Repausul a fost întrerupt de îmbarcarea sau debarcarea de pe un feribot ori tren.',
+ exc_ferry_kind:'Repaus întrerupt', exc_ferry_kind_daily:'Repaus zilnic normal', exc_ferry_kind_weekly:'Repaus săptămânal (călătorie ≥ 8 h)',
+ exc_ferry_count:'Număr de întreruperi', exc_ferry_mins:'Timp total de întrerupere (min)',
+ exc_ferry_couch:'A fost disponibilă o cușetă sau un pat',
+ exc_mm_t:'Echipaj multiplu — art. 4(o) și 8(5)',
+ exc_mm_d:'Doi sau mai mulți conducători la bord pe durata conducerii. Repausul zilnic devine ≥ 9 h în 30 h.',
+ exc_mm_co:'Al doilea conducător (nume sau număr de card)', exc_mm_from:'Echipaj comun de la (ora)',
+ exc_a12_t:'Împrejurări excepționale — art. 12',
+ exc_a12_d:'Abatere de la reguli pentru a ajunge la un loc de oprire potrivit sau la centrul operațional / domiciliu pentru repausul săptămânal.',
+ exc_a12_type:'Tipul abaterii', exc_a12_type_stop:'Ajungerea la un loc de oprire potrivit (siguranță)',
+ exc_a12_type_home:'Ajungerea la centrul operațional sau acasă pentru repausul săptămânal',
+ exc_a12_extra:'Timp de conducere depășit cu (minute)', exc_a12_reason:'Motivul (se scrie de mână pe tipăritură)',
+ exc_a12_break30:'Imediat înainte s-a luat o pauză de 30 de minute (permite până la 2 h)',
+ exc_a12_noted:'Motivul a fost consemnat pe spatele tipăririi de la tahograf',
+ exc_12d_t:'Regula celor 12 zile — art. 8(6a)',
+ exc_12d_d:'Transport internațional ocazional de persoane, singular. Repausul săptămânal poate fi amânat până la 12 perioade consecutive de 24 de ore.',
+ exc_12d_since:'Începutul serviciului (data)', exc_12d_conf:'Condițiile art. 8(6a) sunt îndeplinite (≥ 24 h în altă țară, tahograf, documentație)',
+ exc_nat_t:'Derogare națională — art. 13 / art. 14',
+ exc_nat_d:'Scutire conform legislației naționale a țării în care are loc transportul.',
+ exc_nat_country:'Țara derogării', exc_nat_cat:'Temei', exc_nat_desc:'Descriere / număr autorizație',
+ exc_nat_full:'Ziua este complet exceptată de la Regulamentul 561/2006',
+ exc_oos_t:'În afara domeniului de aplicare — art. 3',
+ exc_oos_d:'Vehiculul sau transportul nu intră în domeniul de aplicare (de ex. până la 3,5 t, până la 7,5 t pe rază de 100 km cu materiale proprii, uz necomercial etc.).',
+ exc_oos_reason:'Temei',
+ exc_aetr_t:'AETR — transport în afara UE/SEE',
+ exc_aetr_d:'Conducere într-o țară din afara UE unde se aplică Acordul AETR. Regulile sunt echivalente, dar ziua se înregistrează separat.',
+ nat_cats:{
+  '':'— alege —',
+  utility:'Utilități (apă, electricitate, gaz, canalizare)',
+  agri:'Agricultură, silvicultură, pescuit (pe rază de 100 km)',
+  post:'Serviciu poștal universal',
+  milk:'Colectarea laptelui de la ferme',
+  market:'Magazine mobile la piețele locale',
+  circus:'Circuri și parcuri de distracții',
+  vet:'Activitate veterinară',
+  rescue:'Servicii de urgență și operațiuni de salvare',
+  medical:'Echipamente și materiale medicale',
+  driving_school:'Instruire și examene auto',
+  waste:'Colectarea deșeurilor, întreținerea drumurilor',
+  animals:'Animale vii de la fermă la piață (pe rază de 100 km)',
+  museum:'Vehicule de interes istoric',
+  other:'Alt temei (precizează mai jos)'
+ },
+ l_notes:'Note (opțional)', btn_save:'Calculează și salvează ziua', btn_update:'Salvează modificările', btn_cancel:'Renunță la editare',
+ result_title:'Rezultat pentru',
+ r_workday:'Durata zilei de lucru', r_driving:'Conducere în această zi',
+ r_breaks:'Pauze în timpul zilei', r_km:'Distanța parcursă', r_vehicles:'Vehicule',
+ r_route:'Traseu', r_limit:'Limita zilnică aplicată',
+ r_rem_week:'Rămas săptămâna aceasta', r_rem_pair:'Rămas pentru perioada de două săptămâni',
+ r_ext_left:'Zile prelungite rămase (10 h)', r_reduced_left:'Repausuri zilnice reduse rămase',
+ r_days_left:'Perioade până la repausul săptămânal obligatoriu', r_next_week:'Disponibil pentru săptămâna viitoare',
+ r_viol:'Încălcări pentru ziua respectivă', r_exc:'Excepții aplicate',
+ month_title:'Rezumat lunar', l_month:'Luna',
+ m_km:'kilometri', m_drv:'ore de conducere', m_rest:'ore de pauze',
+ m_days:'zile lucrătoare', m_avg:'medie conducere/zi', m_viol:'încălcări',
+ m_empty:'Nicio zi înregistrată pentru luna selectată.',
+ m_weeks:'Săptămânile din lună', m_plates:'Vehicule folosite', m_countries:'Țări vizitate', m_exc:'Excepții folosite',
+ log_title:'Jurnalul zilelor de lucru', log_hint:'Atinge o zi pentru a vedea detalierea completă.',
+ log_empty:'Nicio zi de lucru înregistrată încă.',
+ det_times:'Ore', det_veh:'Vehicule și contoare', det_rest:'Repaus', det_bal:'Bilanț la această zi',
+ det_exc:'Excepții', det_viol:'Încălcări și note', det_notes:'Note',
+ det_edit:'Editează', det_del:'Șterge', det_confirm:'Ștergi această zi?',
+ det_noviol:'Nicio încălcare constatată pentru această zi.',
+ det_start:'Început', det_end:'Sfârșit', det_workday:'Ziua de lucru',
+ det_weekdrv:'Conducere pentru săptămână', det_pairdrv:'Conducere pentru perioada de două săptămâni',
+ viol_title:'Încălcări constatate', viol_empty:'Nicio încălcare constatată.',
+ rest_days:'Perioade de 24 de ore de la ultimul repaus săptămânal',
+ rest_left:'Perioade rămase până la repausul săptămânal',
+ allow_ext_t:'Zile de conducere prelungită până la 10 h', allow_ext_d:'Cel mult de două ori în săptămâna calendaristică — art. 6(1)',
+ allow_red_t:'Repausuri zilnice reduse (9–11 h)', allow_red_d:'Cel mult de trei ori între două repausuri săptămânale — art. 8(4)',
+ allow_wred_t:'Repaus săptămânal redus în perioada de două săptămâni', allow_wred_d:'În oricare două săptămâni consecutive cel puțin un repaus trebuie să fie normal (45 h) — art. 8(6)',
+ allow_wdead_t:'Termen pentru începerea repausului săptămânal', allow_wdead_d:'Cel târziu la sfârșitul celei de-a șasea perioade de 24 de ore — art. 8(6)',
+ allow_12d:'Regula celor 12 zile este activă — termenul se prelungește la 12 perioade',
+ used:'folosite', left:'rămase', of:'din',
+ no_comp:'Nu se datorează compensare în acest moment.', no_data:'Nicio zi înregistrată încă.',
+ ok_status:'OK', viol_count:'încălc.', exempt_badge:'exceptat',
+ unit_days:'zile', unit_hours:'h', unit_km:'km', unit_min:'min', comp_deadline:'termen',
+ gauge_week:'Săptămâna aceasta', gauge_pair:'Perioada de două săptămâni',
+ rest_labels:{none:'fără repaus',regular11:'zilnic normal',reduced9:'zilnic redus',split:'fracționat',mm9:'echipaj multiplu',
+  'weekly-regular':'săptămânal normal','weekly-reduced':'săptămânal redus'},
+ v_driving_abs:'Conducere zilnică depășită: {x} h față de {lim} h permise',
+ v_driving_ext:'A treia sau o nouă prelungire peste 9 h în săptămâna {wk} — sunt permise două',
+ v_break_missing:'Pauză insuficientă: la {x} h de conducere se cer cel puțin 45 min ({y} min înregistrate)',
+ v_short_rest:'Repaus zilnic sub 11 h — {x} h',
+ v_shift_over15:'Zi de lucru depășită: {x} h. Maximul este 15 h — nici măcar repausul redus de 9 h nu mai încape în perioada de 24 h de după repausul anterior.',
+ v_shift_over13_reg:'Zi de lucru de {x} h cu repaus normal (≥ 11 h) — maximul în acest caz este 13 h. Peste 13 h se cere un repaus redus (9–11 h), care se socotește la cele trei permise între două repausuri săptămânale.',
+ n_shift_15:'Zi de lucru {x} h — se admit până la 15 h, dar numai cu repaus zilnic redus. Acesta este repausul redus nr. {n} din cele 3 permise între două repausuri săptămânale.',
+ v_worktime_break:'Pauză insuficientă față de timpul de lucru: la {x} h de muncă se cer cel puțin {req} min ({y} min înregistrate)',
+ v_reduced_short:'Repaus zilnic redus sub 9 h — {x} h',
+ v_reduced_too_many:'Al patrulea sau un nou repaus zilnic redus între două repausuri săptămânale ({x})',
+ v_split_short:'Repaus zilnic fracționat sub 12 h în total',
+ v_mm_short:'Repaus în echipaj multiplu sub 9 h — {x} h',
+ v_wreg_short:'Marcat ca repaus săptămânal normal, dar sub 45 h',
+ v_wk_under24:'Repaus săptămânal sub minimul de 24 h',
+ v_week_late:'Repaus săptămânal întârziat — au trecut {x} perioade față de {lim} permise',
+ v_two_reduced:'Două repausuri săptămânale reduse consecutive — cel puțin unul în perioada de două săptămâni trebuie să fie ≥ 45 h',
+ v_comp_overdue:'Compensare restantă din {d} — {x} h datorate (termen {dl})',
+ v_week_over56:'Conducere săptămânală depășită: {x} h față de limita de 56 h ({wk})',
+ n_long_workday:'Zi de lucru lungă — {x} h între două repausuri. Nu este o încălcare conform 561/2006, dar merită atenție la oboseală.',
+ v_pair_over90:'Limita pe două săptămâni depășită: {x} h față de limita de 90 h',
+ v_ferry_count:'Repausul a fost întrerupt de {x} ori pentru feribot/tren — se permit cel mult 2',
+ v_ferry_mins:'Întreruperea totală este de {x} min — se permit cel mult 60 min',
+ v_ferry_couch:'Nu este consemnată disponibilitatea unei cușete sau a unui pat — condiție a art. 9(1)',
+ v_a12_over:'Depășirea conform art. 12 este de {x} min față de {lim} min permise',
+ v_a12_note:'Motivul conform art. 12 nu este consemnat pe tipăritură — este necesară o mențiune manuală',
+ v_a12_comp:'O abatere conform art. 12 pentru întoarcerea acasă impune un repaus compensator luat în bloc înainte de sfârșitul celei de-a treia săptămâni următoare',
+ n_exempt:'Ziua este exceptată de la 561/2006 — nu se socotește la limitele săptămânale și pe două săptămâni',
+ n_ferry_ok:'Întrerupere pentru feribot/tren în limitele permise — repausul rămâne unul normal',
+ n_mm:'Echipaj multiplu: repausul zilnic este ≥ 9 h în 30 h; în prima oră prezența celui de-al doilea conducător este opțională',
+ n_a12:'Art. 12 aplicat — abatere de {x} min. Consemnarea de mână a motivului pe tipăritură este obligatorie',
+ n_12d:'Regula celor 12 zile conform art. 8(6a) este activă — serviciul trebuie urmat de două repausuri săptămânale normale sau de unul normal și unul redus',
+ n_aetr:'Transportul se înregistrează conform AETR — ziua nu se socotește la limitele 561/2006',
+ dash_disc:'Diagramă tahograf — ultima zi de lucru',
+ det_disc:'Diagramă tahograf pentru ziua respectivă',
+ disc_drv:'conducere', disc_brk:'pauze', disc_oth:'alte activități', disc_rest:'repaus',
+ disc_approx:'Distribuția pe cadran este aproximativă — pe baza totalurilor zilei.',
+ rest_auto:'Repaus zilnic după {d}: {x} h — se va înregistra automat la ziua anterioară',
+ rest_auto_type:'tip propus',
+ po_show:'Vezi ca tipăritură de tahograf', po_hide:'Ascunde tipăritura',
+ po_head:'TIPĂRITURĂ DE CONTROL · 24 h', po_veh:'Vehicul', po_odo:'Kilometraj',
+ po_counters:'Contoare', po_places:'Loc', po_sum:'REZUMATUL ZILEI', po_rest_after:'Repaus după zi',
+ po_exc:'EXCEPȚII', po_viol_h:'ÎNCĂLCĂRI', po_none:'niciuna', po_bal:'BILANȚ',
+ po_foot:'Generat de TAXO 561 · document neoficial',
+ install_title:'Instalare pe dispozitiv',
+ install_intro:'Aplicația funcționează offline și poate fi adăugată ca pictogramă pe ecranul principal sau în meniul de aplicații.',
+ btn_install:'Instalează aplicația',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Deschide pagina în Safari → butonul Partajare → „Adaugă la ecranul principal" → „Adaugă".',
+ ins_and:'Android (Chrome)', ins_and_s:'Deschide în Chrome → meniul ⋮ din dreapta sus → „Instalează aplicația".',
+ ins_lap:'Laptop (Chrome / Edge)', ins_lap_s:'Deschide pagina → pictograma de instalare din bara de adrese → „Instalează".',
+ ins_file:'Fișier offline', ins_file_s:'Descarcă fișierul HTML și deschide-l cu dublu clic — funcționează fără internet pe orice dispozitiv.',
+ data_title:'Copie de rezervă a datelor', data_note:'Datele se păstrează pe acest dispozitiv. Fă o copie înainte de a schimba telefonul sau de a curăța browserul.',
+ btn_export:'Descarcă copia de rezervă (JSON)', btn_import:'Restaurează din fișier',
+ import_ok:'Datele au fost restaurate cu succes.', import_err:'Fișierul nu a putut fi citit.',
+ disclaimer:'Acest instrument are caracter informativ. Acoperă regulile Regulamentului (CE) 561/2006 împreună cu excepțiile de la art. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 și 14, precum și transporturile conform AETR. Derogările naționale de la art. 13 diferă de la o țară la alta și se schimbă în timp — aplicația oferă un cadru pentru consemnarea lor, dar nu conține o listă exhaustivă pentru fiecare țară. Verifică regulile naționale în vigoare și nu te baza doar pe acest instrument la un control. Nu constituie consultanță juridică.'
+},
+
+sr:{
+ hero_onduty:'Na putu · {act}',
+ hero_left_drive:'preostalo za voznju',
+ hero_driven_today:'Danas provezeno {x} h.',
+ hero_limit_today:'Dnevni limit {lim} h.',
+ hero_resting:'Odmaras',
+ hero_until_start:'do polaska',
+ hero_can_start:'Mozes da krenes u <b>{time}</b>, {date}.',
+ hero_ready:'Spreman za polazak',
+ hero_since:'najranije od',
+ hero_rest_done:'Potreban odmor je ispunjen.',
+ hero_nodata:'Nema upisanih dana',
+ hero_nodata_say:'Pocni od „Aktivan dan" — unesi kilometrazu i pokreni prvu aktivnost.',
+ hero_exempt:'Izuzet dan',
+ dash_disc_on:'Tahografski list · {d}',
+ gs_scale:'Skala', gs_seg:'Segmenti',
+ app_name:'TAXO 561',
+ th_group_light:'Svetle',
+ th_group_dark:'Tamne',
+ th_day:'Dan',
+ th_mist:'Magla',
+ th_paper:'Papir',
+ th_ocean:'Okean',
+ th_sun:'Suncevo svetlo',
+ th_ink:'Mastilo',
+ th_night:'Noc',
+ th_carbon:'Karbon',
+ th_dusk:'Sumrak',
+ th_halogen:'Halogen',
+ th_beacon:'Svetionik',
+ th_auto:'Automatski',
+ subtitle:'Dnevnik i kontrola prema Uredbi 561/2006',
+ tab_dash:'Tabla', tab_add:'Upisi dan', tab_active:'Aktivan dan', tab_veh:'Vozila', tab_month:'Izvestaji', tab_log:'Dnevnik', tab_viol:'Prekrsaji', tab_install:'Podesavanja',
+ vb_cap:'Trenutno vozilo', vb_change:'Promeni', vb_none:'nije zadato', vb_prompt:'Registarska oznaka:',
+ dash_next:'Najranije sledece polazenje',
+ dash_worktime:'Nedeljno radno vreme (Direktiva 2002/15/EZ)',
+ ns_exempt:'Dan je izuzet od 561/2006 — ova procena ne vazi za njega.',
+ ns_note_weekly:'Potreban je nedeljni odmor (min. {h} h skraceni — duguje se nadoknada).',
+ ns_note_reduced:'Na osnovu skracenog dnevnog odmora (min. {h} h).',
+ ns_note_regular:'Skraceni odmori u ovom ciklusu su iskorisceni — potreban je redovan (min. {h} h).',
+ wt_week:'Ove nedelje', wt_avg:'Prosek (upisane nedelje)',
+ wt_hint:'Radno vreme = voznja + drugi rad, bez pauza i raspolozivosti. Cvrsta granica od 60 h nedeljno je clan 4(b); prosek od 48 h zvanicno se racuna na referentni period od 4 (do 6) meseca — vrednost ovde je samo orijentaciona.',
+ l_poa:'Raspolozivost / POA (Direktiva 2002/15/EZ, clan 3(b))',
+ poa_hint:'Vreme kada nisi na radnom mestu, ali moras ostati raspoloziv (npr. cekanje pri utovaru, voznja trajektom). Ne racuna se kao radno vreme, ali ni kao odmor.',
+ disc_poa:'raspolozivost',
+ po_driver:'Vozac', po_worktime:'Radno vreme (2002/15/EZ)',
+ v_worktime_over60:'Nedeljno radno vreme {x} h prema cvrstoj granici od 60 h (nedelja {wk})',
+ veh_title:'Vozila', veh_note:'Registar vozila — aktivno se automatski predlaze pri novom danu.',
+ btn_add_veh:'+ Dodaj vozilo', veh_empty:'Jos nema dodatih vozila.',
+ veh_active_badge:'aktivno', veh_make_active:'Postavi kao aktivno', veh_confirm_del:'Da obrisem ovo vozilo iz registra?',
+ veh_dup:'Vozilo sa tom oznakom vec postoji.',
+ per_week:'Nedelja', per_pair:'Dve nedelje', per_month:'Mesec', per_custom:'Period',
+ l_from:'Od', l_to:'Do', btn_csv:'Izvoz CSV', btn_print:'Stampa / PDF',
+ lv_cards:'Kartice', lv_table:'Tabela', lt_time:'Vreme', lt_drv:'Voznja', lt_status:'Status',
+ driver_title:'Podaci o vozacu', l_driver_name:'Ime vozaca',
+ active_title:'Aktivan dan sa merenjem vremena', active_note:'Ovde pocinje radni dan: unesi kilometrazu i pokreni prvu aktivnost. Izbor druge automatski zavrsava tekucu. Na kraju pritisni „Zavrsi i sacuvaj dan" — zbirovi prelaze u zapis dana.',
+ active_empty:'Nijedna aktivnost nije pokrenuta.', act_stop:'Zaustavi', act_now:'SADA',
+ active_log_title:'Aktivnosti danas', active_log_empty:'Jos nema upisanih aktivnosti.',
+ act_confirm_del:'Da obrisem ovu aktivnost?',
+ active_none_yet:'Pokreni bar jednu aktivnost pre zavrsetka dana.',
+ btn_finish_day:'Zavrsi i sacuvaj dan',
+ l_active_odo:'Pocetna kilometraza za dan',
+ active_odo_hint:'Unesi je jednom na pocetku smene — pri zavrsetku se automatski upisuje u zapis dana.',
+ sync_title:'Sinhronizacija izmedu uredaja',
+ sync_note:'Prijavi se preko Google naloga da bi dani bili sinhronizovani izmedu telefona i racunara. Podaci se cuvaju u tvom Firebase projektu i dostupni su samo tvom nalogu. Bez prijave aplikacija radi normalno, ali samo lokalno.',
+ sync_config_label:'Firebase konfiguracija (iz tvog projekta)',
+ sync_config_hint:'Kopira se iz Firebase Console → Project settings → Your apps → SDK setup and configuration.',
+ btn_sync_connect:'Povezi',
+ l_email:'E-posta', l_password:'Lozinka',
+ btn_sync_google:'Prijava preko Google', sync_or:'ili preko e-poste i lozinke:',
+ btn_sync_login:'Prijava', btn_sync_register:'Registracija',
+ btn_sync_now:'Sinhronizuj sada', btn_sync_logout:'Odjava',
+ sync_confirm_pull:'U oblaku postoje podaci sa drugog uredaja, razliciti od ovih ovde. Da ih ucitam sada? (lokalni podaci ce biti zamenjeni)',
+ sync_logged_as:'Sinhronizovano kao: {email}', sync_not_logged:'Nisi prijavljen — podaci ostaju samo na ovom uredaju.',
+ sync_cfg_empty:'Nalepi konfiguraciju iz Firebase-a.', sync_cfg_bad:'Konfiguracija nije mogla da se procita ili povezivanje nije uspelo.',
+ sync_login_err:'Greska: {msg}', sync_done:'Sinhronizovano.',
+ sync_not_ready:'Veza se jos uspostavlja — pokusaj ponovo za nekoliko sekundi.',
+ sync_email_only:'U aplikaciji sa pocetnog ekrana iOS ne moze da se vrati sa Google stranice, pa se ovde prijavljujes e-postom i lozinkom (onima koje jednom registrujes):',
+ l_new_password:'Nova lozinka za ovaj nalog',
+ btn_sync_setpw:'Postavi lozinku za ovaj nalog',
+ sync_setpw_hint:'Ako si se prijavio preko Google naloga, ovde postavi lozinku na tom istom nalogu. Zatim se na telefonu prijavi istom e-postom i ovom lozinkom — podaci ostaju isti.',
+ sync_pw_set:'Gotovo. Sada mozes da se prijavis i sa {email} i ovom lozinkom.',
+ sync_pw_short:'Lozinka mora imati bar 6 znakova.',
+ sync_email_taken:'Ta e-posta se vec koristi za drugi nacin prijave (npr. Google). Prijavi se preko Google naloga u pregledacu i postavi lozinku na tom istom nalogu — onda ces moci i sa lozinkom.',
+ dash_current:'Voznja — nedelja / dvonedeljni period',
+ dash_allow:'Iskoriscena i preostala odstupanja',
+ dash_rest:'Nedeljni ciklus i odmori',
+ dash_comp:'Dugovana nadoknada',
+ dash_strip:'Poslednjih 14 dana — voznja',
+ add_title:'Zavrsetak radnog dana', edit_title:'Izmena radnog dana',
+ add_note:'Registarska oznaka se pamti automatski. Unosis je samo kada menjas kamion.',
+ l_date:'Datum', l_start:'Pocetak radnog dana', l_end:'Kraj radnog dana',
+ sh_places:'Mesto pocetka i zavrsetka',
+ l_startPlace:'Mesto pocetka', l_startCountry:'Drzava',
+ l_endPlace:'Mesto zavrsetka', l_endCountry:'Drzava',
+ places_hint:'Obavezan zapis prema clanu 34 Uredbe 165/2014 — proverava se prema rucnim unosima na tahografu pri kontroli na putu.',
+ sh_veh:'Ocitavanja sa tahografa', sh_rest:'Odmor posle kraja dana',
+ seg_title:'Vozilo', seg_plate:'Registarska oznaka',
+ seg_odo_start:'Kilometraza — pocetak', seg_odo_end:'Kilometraza — kraj',
+ seg_drv_start:'Brojac voznje — pocetak (hh:mm)', seg_drv_end:'Brojac voznje — kraj (hh:mm)',
+ seg_rest_start:'Brojac pauza — pocetak (hh:mm)', seg_rest_end:'Brojac pauza — kraj (hh:mm)',
+ seg_hint:'Dvotacka se stavlja automatski — kucaj samo cifre (npr. 145 → 1:45). Ako tahograf ne prikazuje zbirni brojac, ostavi „pocetak" prazno i upisi ukupan zbir dana u „kraj".',
+ calc_prefix:'Izracunato:', calc_drv:'voznja', calc_other:'drugi rad', calc_poa:'raspolozivost', calc_rest:'pauze', calc_km:'km',
+ step1_title:'Kraj smene', step1_sub:'Kada i gde se zavrsava radni dan.',
+ step2_title:'Zapis sa tahografa', step2_sub:'Zavrsne zbirne vrednosti sa tahografa. Razlika u odnosu na pocetak racuna se automatski.',
+ seg_other_start:'Drugi rad — pocetak (hh:mm)', seg_other_end:'Drugi rad — kraj (hh:mm)',
+ seg_poa_start:'Raspolozivost — pocetak (hh:mm)', seg_poa_end:'Raspolozivost — kraj (hh:mm)',
+ l_reading_source:'Izvor podataka', opt_source_display:'Displej', opt_source_printout:'Ispis', opt_source_manual:'Rucni unos',
+ l_card_state:'Stanje kartice', opt_card_inserted:'Kartica ubacena', opt_card_withdrawn:'Kartica izvadena',
+ po_source:'Izvor', po_card:'Kartica',
+ btn_day_pdf:'PDF / Stampa',
+ pd_subtitle:'Izvestaj o radnom danu · Uredba (EZ) 561/2006',
+ pd_sign_driver:'Potpis vozaca', pd_sign_control:'Potpis kontrolora',
+ pd_generated:'Generisano {d}',
+ pd_disclaimer:'Pomocni dokument. Ne zamenjuje ispis sa tahografa i nije zvanican dokument pri kontroli.',
+ btn_add_vehicle:'+ Dodaj vozilo (promena kamiona)',
+ l_resttype:'Vrsta odmora posle dana',
+ rt_none:'Jos bez odmora / nastavlja se',
+ rt_reg11:'Redovan dnevni odmor (≥ 11 h)',
+ rt_red9:'Skraceni dnevni odmor (9–11 h)',
+ rt_split:'Podeljeni dnevni odmor (3 h + 9 h)',
+ rt_mm9:'Odmor u visecalnoj posadi (≥ 9 h u 30 h)',
+ rt_wreg:'Redovan nedeljni odmor (≥ 45 h)',
+ rt_wred:'Skraceni nedeljni odmor (24–45 h)',
+ l_resthours:'Trajanje odmora (sati)',
+ l_apply_comp:'Ovaj odmor ukljucuje nadoknadu za raniji skraceni nedeljni odmor',
+ l_comp_hours:'Primenjeni sati nadoknade',
+ sh_exceptions:'Izuzeci i odstupanja',
+ exc_note:'Oznaci samo ono sto se zaista odnosi na dan. Svaki izuzetak menja pravila po kojima se dan proverava.',
+ exc_ferry_t:'Trajekt ili voz — clan 9(1)',
+ exc_ferry_d:'Odmor je prekinut ukrcavanjem ili iskrcavanjem sa trajekta ili voza.',
+ exc_ferry_kind:'Prekinuti odmor', exc_ferry_kind_daily:'Redovan dnevni odmor', exc_ferry_kind_weekly:'Nedeljni odmor (putovanje ≥ 8 h)',
+ exc_ferry_count:'Broj prekida', exc_ferry_mins:'Ukupno vreme prekida (min)',
+ exc_ferry_couch:'Bio je na raspolaganju lezaj ili kusete',
+ exc_mm_t:'Visecalna posada — clan 4(o) i 8(5)',
+ exc_mm_d:'Dva ili vise vozaca u vozilu tokom voznje. Dnevni odmor postaje ≥ 9 h u okviru 30 h.',
+ exc_mm_co:'Drugi vozac (ime ili broj kartice)', exc_mm_from:'Zajednicka posada od (vreme)',
+ exc_a12_t:'Vanredne okolnosti — clan 12',
+ exc_a12_d:'Odstupanje od pravila radi dolaska do pogodnog mesta za zaustavljanje ili do operativnog centra / kuce radi nedeljnog odmora.',
+ exc_a12_type:'Vrsta odstupanja', exc_a12_type_stop:'Dolazak do pogodnog mesta za zaustavljanje (bezbednost)',
+ exc_a12_type_home:'Dolazak do operativnog centra ili kuce radi nedeljnog odmora',
+ exc_a12_extra:'Vreme voznje prekoraceno za (minuta)', exc_a12_reason:'Razlog (mora se rukom upisati na ispisu)',
+ exc_a12_break30:'Neposredno pre toga uzeta je pauza od 30 minuta (dozvoljava do 2 h)',
+ exc_a12_noted:'Razlog je upisan na poledini ispisa sa tahografa',
+ exc_12d_t:'Pravilo 12 dana — clan 8(6a)',
+ exc_12d_d:'Pojedinacan povremeni medunarodni prevoz putnika. Nedeljni odmor moze da se odlozi do 12 uzastopnih perioda od 24 sata.',
+ exc_12d_since:'Pocetak usluge (datum)', exc_12d_conf:'Uslovi clana 8(6a) su ispunjeni (≥ 24 h u drugoj drzavi, tahograf, dokumentacija)',
+ exc_nat_t:'Nacionalno odstupanje — clan 13 / clan 14',
+ exc_nat_d:'Izuzece po nacionalnom propisu drzave u kojoj se prevoz obavlja.',
+ exc_nat_country:'Drzava odstupanja', exc_nat_cat:'Osnov', exc_nat_desc:'Opis / broj dozvole',
+ exc_nat_full:'Dan je u potpunosti izuzet od Uredbe 561/2006',
+ exc_oos_t:'Van polja primene — clan 3',
+ exc_oos_d:'Vozilo ili prevoz ne spada u polje primene (npr. do 3,5 t, do 7,5 t u krugu od 100 km sa sopstvenim materijalom, nekomercijalna upotreba itd.).',
+ exc_oos_reason:'Osnov',
+ exc_aetr_t:'AETR — prevoz van EU/EEP',
+ exc_aetr_d:'Voznja u drzavi van EU gde se primenjuje Sporazum AETR. Pravila su istovetna, ali se dan upisuje odvojeno.',
+ nat_cats:{
+  '':'— izaberi —',
+  utility:'Komunalne usluge (voda, struja, gas, kanalizacija)',
+  agri:'Poljoprivreda, sumarstvo, ribarstvo (u krugu od 100 km)',
+  post:'Univerzalna postanska usluga',
+  milk:'Prikupljanje mleka sa farmi',
+  market:'Pokretne prodavnice na lokalnim pijacama',
+  circus:'Cirkusi i zabavni parkovi',
+  vet:'Veterinarska delatnost',
+  rescue:'Hitne sluzbe i spasilacke operacije',
+  medical:'Medicinska oprema i materijal',
+  driving_school:'Obuka i ispiti za vozace',
+  waste:'Odnosenje otpada, odrzavanje puteva',
+  animals:'Ziva stoka od farme do pijace (u krugu od 100 km)',
+  museum:'Vozila od istorijskog znacaja',
+  other:'Drugi osnov (navedi ispod)'
+ },
+ l_notes:'Napomene (opciono)', btn_save:'Izracunaj i sacuvaj dan', btn_update:'Sacuvaj izmene', btn_cancel:'Odustani od izmene',
+ result_title:'Rezultat za',
+ r_workday:'Trajanje radnog dana', r_driving:'Voznja tog dana',
+ r_breaks:'Pauze tokom dana', r_km:'Predeni kilometri', r_vehicles:'Vozila',
+ r_route:'Ruta', r_limit:'Primenjeni dnevni limit',
+ r_rem_week:'Preostalo ove nedelje', r_rem_pair:'Preostalo za dvonedeljni period',
+ r_ext_left:'Preostali produzeni dani (10 h)', r_reduced_left:'Preostali skraceni dnevni odmori',
+ r_days_left:'Perioda do obaveznog nedeljnog odmora', r_next_week:'Raspolozivo za sledecu nedelju',
+ r_viol:'Prekrsaji za dan', r_exc:'Primenjeni izuzeci',
+ month_title:'Mesecni pregled', l_month:'Mesec',
+ m_km:'kilometara', m_drv:'sati voznje', m_rest:'sati pauza',
+ m_days:'radnih dana', m_avg:'prosek voznje/dan', m_viol:'prekrsaja',
+ m_empty:'Nema upisanih dana za izabrani mesec.',
+ m_weeks:'Nedelje u mesecu', m_plates:'Koriscena vozila', m_countries:'Posecene drzave', m_exc:'Korisceni izuzeci',
+ log_title:'Dnevnik radnih dana', log_hint:'Dodirni dan da vidis potpunu razradu.',
+ log_empty:'Jos nema upisanih radnih dana.',
+ det_times:'Vreme', det_veh:'Vozila i brojaci', det_rest:'Odmor', det_bal:'Bilans na taj dan',
+ det_exc:'Izuzeci', det_viol:'Prekrsaji i napomene', det_notes:'Napomene',
+ det_edit:'Izmeni', det_del:'Obrisi', det_confirm:'Da obrisem ovaj dan?',
+ det_noviol:'Nema utvrdenih prekrsaja za ovaj dan.',
+ det_start:'Pocetak', det_end:'Kraj', det_workday:'Radni dan',
+ det_weekdrv:'Voznja za nedelju', det_pairdrv:'Voznja za dvonedeljni period',
+ viol_title:'Utvrdeni prekrsaji', viol_empty:'Nema utvrdenih prekrsaja.',
+ rest_days:'Perioda od 24 sata od poslednjeg nedeljnog odmora',
+ rest_left:'Preostalih perioda do nedeljnog odmora',
+ allow_ext_t:'Dani produzene voznje do 10 h', allow_ext_d:'Najvise dva puta u kalendarskoj nedelji — clan 6(1)',
+ allow_red_t:'Skraceni dnevni odmori (9–11 h)', allow_red_d:'Najvise tri puta izmedu dva nedeljna odmora — clan 8(4)',
+ allow_wred_t:'Skraceni nedeljni odmor u dvonedeljnom periodu', allow_wred_d:'U bilo koje dve uzastopne nedelje bar jedan odmor mora biti redovan (45 h) — clan 8(6)',
+ allow_wdead_t:'Rok za pocetak nedeljnog odmora', allow_wdead_d:'Najkasnije do kraja sestog perioda od 24 sata — clan 8(6)',
+ allow_12d:'Pravilo 12 dana je aktivno — rok se produzava na 12 perioda',
+ used:'iskorisceno', left:'preostalo', of:'od',
+ no_comp:'Trenutno se ne duguje nadoknada.', no_data:'Jos nema upisanih dana.',
+ ok_status:'U redu', viol_count:'prekr.', exempt_badge:'izuzet',
+ unit_days:'dana', unit_hours:'h', unit_km:'km', unit_min:'min', comp_deadline:'rok',
+ gauge_week:'Ove nedelje', gauge_pair:'Dvonedeljni period',
+ rest_labels:{none:'bez odmora',regular11:'redovan dnevni',reduced9:'skraceni dnevni',split:'podeljeni',mm9:'visecalna posada',
+  'weekly-regular':'redovan nedeljni','weekly-reduced':'skraceni nedeljni'},
+ v_driving_abs:'Prekoracena dnevna voznja: {x} h prema dozvoljenih {lim} h',
+ v_driving_ext:'Trece ili dalje produzenje preko 9 h u nedelji {wk} — dozvoljena su dva',
+ v_break_missing:'Nedovoljna pauza: pri {x} h voznje trazi se bar 45 min (upisano {y} min)',
+ v_short_rest:'Dnevni odmor ispod 11 h — {x} h',
+ v_shift_over15:'Prekoracen radni dan: {x} h. Maksimum je 15 h — cak ni skraceni odmor od 9 h vise ne staje u period od 24 h posle prethodnog odmora.',
+ v_shift_over13_reg:'Radni dan od {x} h sa redovnim odmorom (≥ 11 h) — maksimum je u tom slucaju 13 h. Preko 13 h trazi se skraceni odmor (9–11 h), koji se racuna u tri dozvoljena izmedu dva nedeljna odmora.',
+ n_shift_15:'Radni dan {x} h — dozvoljeno je do 15 h, ali samo uz skraceni dnevni odmor. Ovo je skraceni odmor br. {n} od 3 dozvoljena izmedu dva nedeljna odmora.',
+ v_worktime_break:'Nedovoljna pauza u odnosu na radno vreme: pri {x} h rada trazi se bar {req} min (upisano {y} min)',
+ v_reduced_short:'Skraceni dnevni odmor ispod 9 h — {x} h',
+ v_reduced_too_many:'Cetvrti ili dalji skraceni dnevni odmor izmedu dva nedeljna odmora ({x})',
+ v_split_short:'Podeljeni dnevni odmor ispod 12 h ukupno',
+ v_mm_short:'Odmor u visecalnoj posadi ispod 9 h — {x} h',
+ v_wreg_short:'Oznaceno kao redovan nedeljni odmor, ali ispod 45 h',
+ v_wk_under24:'Nedeljni odmor ispod minimuma od 24 h',
+ v_week_late:'Nedeljni odmor je zakasnio — proteklo je {x} perioda prema dozvoljenih {lim}',
+ v_two_reduced:'Dva uzastopna skracena nedeljna odmora — bar jedan u dvonedeljnom periodu mora biti ≥ 45 h',
+ v_comp_overdue:'Zakasnela nadoknada od {d} — duguje se {x} h (rok {dl})',
+ v_week_over56:'Prekoracena nedeljna voznja: {x} h prema granici od 56 h ({wk})',
+ n_long_workday:'Dug radni dan — {x} h izmedu dva odmora. Nije prekrsaj po 561/2006, ali vredi paziti na umor.',
+ v_pair_over90:'Prekoracen dvonedeljni limit: {x} h prema granici od 90 h',
+ v_ferry_count:'Odmor je prekinut {x} puta zbog trajekta/voza — dozvoljena su najvise 2',
+ v_ferry_mins:'Ukupan prekid je {x} min — dozvoljeno je najvise 60 min',
+ v_ferry_couch:'Nije upisano da je bio dostupan lezaj ili kusete — uslov clana 9(1)',
+ v_a12_over:'Prekoracenje po clanu 12 je {x} min prema dozvoljenih {lim} min',
+ v_a12_note:'Razlog po clanu 12 nije upisan na ispisu — potreban je rucni unos',
+ v_a12_comp:'Odstupanje po clanu 12 radi povratka kuci trazi nadoknadni odmor uzet u celini pre kraja trece naredne nedelje',
+ n_exempt:'Dan je izuzet od 561/2006 — ne racuna se u nedeljne i dvonedeljne limite',
+ n_ferry_ok:'Prekid zbog trajekta/voza u dozvoljenim granicama — odmor ostaje redovan',
+ n_mm:'Visecalna posada: dnevni odmor je ≥ 9 h u okviru 30 h; u prvom satu prisustvo drugog vozaca nije obavezno',
+ n_a12:'Primenjen clan 12 — odstupanje od {x} min. Rucni upis razloga na ispisu je obavezan',
+ n_12d:'Pravilo 12 dana po clanu 8(6a) je aktivno — posle usluge moraju slediti dva redovna nedeljna odmora ili jedan redovan i jedan skraceni',
+ n_aetr:'Prevoz se upisuje po AETR — dan se ne racuna u limite 561/2006',
+ dash_disc:'Tahografski list — poslednji radni dan',
+ det_disc:'Tahografski list za dan',
+ disc_drv:'voznja', disc_brk:'pauze', disc_oth:'drugi rad', disc_rest:'odmor',
+ disc_approx:'Raspored po brojcaniku je priblizan — na osnovu zbirova dana.',
+ rest_auto:'Dnevni odmor posle {d}: {x} h — bice automatski upisan uz prethodni dan',
+ rest_auto_type:'predlozena vrsta',
+ po_show:'Prikazi kao tahografski ispis', po_hide:'Sakrij ispis',
+ po_head:'KONTROLNI ISPIS · 24 h', po_veh:'Vozilo', po_odo:'Kilometraza',
+ po_counters:'Brojaci', po_places:'Mesto', po_sum:'ZBIR DANA', po_rest_after:'Odmor posle dana',
+ po_exc:'IZUZECI', po_viol_h:'PREKRSAJI', po_none:'nema', po_bal:'BILANS',
+ po_foot:'Generisano u TAXO 561 · nezvanican dokument',
+ install_title:'Instalacija na uredaj',
+ install_intro:'Aplikacija radi bez interneta i moze da se doda kao ikonica na pocetni ekran ili u meni aplikacija.',
+ btn_install:'Instaliraj aplikaciju',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Otvori stranicu u Safari-ju → dugme Podeli → „Dodaj na pocetni ekran" → „Dodaj".',
+ ins_and:'Android (Chrome)', ins_and_s:'Otvori u Chrome-u → meni ⋮ gore desno → „Instaliraj aplikaciju".',
+ ins_lap:'Laptop (Chrome / Edge)', ins_lap_s:'Otvori stranicu → ikonica za instalaciju u adresnoj traci → „Instaliraj".',
+ ins_file:'Fajl bez interneta', ins_file_s:'Preuzmi HTML fajl i otvori ga dvoklikom — radi bez interneta na svakom uredaju.',
+ data_title:'Rezervna kopija podataka', data_note:'Podaci se cuvaju na ovom uredaju. Napravi kopiju pre zamene telefona ili ciscenja pregledaca.',
+ btn_export:'Preuzmi rezervnu kopiju (JSON)', btn_import:'Vrati iz fajla',
+ import_ok:'Podaci su uspesno vraceni.', import_err:'Fajl nije mogao da se procita.',
+ disclaimer:'Ovaj alat je informativan. Pokriva pravila Uredbe (EZ) 561/2006 zajedno sa izuzecima po clanovima 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 i 14, kao i prevoz po AETR. Nacionalna odstupanja po clanu 13 razlikuju se od drzave do drzave i menjaju se — aplikacija daje okvir za njihovo upisivanje, ali ne sadrzi potpun spisak za svaku drzavu. Proveri vazeca nacionalna pravila i pri kontroli se ne oslanjaj samo na ovaj alat. Nije pravni savet.'
+},
+
+tr:{
+ hero_onduty:'Görevde · {act}',
+ hero_left_drive:'sürüş için kalan',
+ hero_driven_today:'Bugün sürülen {x} sa.',
+ hero_limit_today:'Günlük sınır {lim} sa.',
+ hero_resting:'Dinleniyorsun',
+ hero_until_start:'harekete kalan',
+ hero_can_start:'<b>{time}</b> saatinde yola çıkabilirsin, {date}.',
+ hero_ready:'Yola çıkmaya hazır',
+ hero_since:'en erken',
+ hero_rest_done:'Gereken dinlenme tamamlandı.',
+ hero_nodata:'Kayıtlı gün yok',
+ hero_nodata_say:'„Aktif gün"den başla — kilometreyi gir ve ilk faaliyeti başlat.',
+ hero_exempt:'Muaf gün',
+ dash_disc_on:'Takograf diski · {d}',
+ gs_scale:'Skala', gs_seg:'Segmentler',
+ th_group_light:'Açık',
+ th_group_dark:'Koyu',
+ th_day:'Gündüz',
+ th_mist:'Sis',
+ th_paper:'Kâğıt',
+ th_ocean:'Okyanus',
+ th_sun:'Gün ışığı',
+ th_ink:'Mürekkep',
+ th_night:'Gece',
+ th_carbon:'Karbon',
+ th_dusk:'Alacakaranlık',
+ th_halogen:'Halojen',
+ th_beacon:'Fener',
+ th_auto:'Otomatik',
+ app_name:'TAXO 561',
+ subtitle:'561/2006 sayılı Tüzüğe göre kayıt ve kontrol',
+ tab_dash:'Panel', tab_add:'Günü kaydet', tab_active:'Aktif gün', tab_veh:'Araçlar', tab_month:'Raporlar', tab_log:'Kayıt defteri', tab_viol:'İhlaller', tab_install:'Ayarlar',
+ vb_cap:'Geçerli araç', vb_change:'Değiştir', vb_none:'ayarlanmadı', vb_prompt:'Plaka:',
+ dash_next:'En erken sonraki başlangıç',
+ dash_worktime:'Haftalık çalışma süresi (2002/15/AT Direktifi)',
+ ns_exempt:'Gün 561/2006 kapsamı dışındadır — bu tahmin onun için geçerli değildir.',
+ ns_note_weekly:'Haftalık dinlenme gerekiyor (en az {h} sa kısaltılmış — telafi borcu doğar).',
+ ns_note_reduced:'Kısaltılmış günlük dinlenmeye göre (en az {h} sa).',
+ ns_note_regular:'Bu döngüdeki kısaltılmış dinlenmeler tükendi — normal bir dinlenme gerekiyor (en az {h} sa).',
+ wt_week:'Bu hafta', wt_avg:'Ortalama (kayıtlı haftalar)',
+ wt_hint:'Çalışma süresi = sürüş + diğer işler; molalar ve hazır bulunma hariç. Haftada 60 saatlik kesin sınır madde 4(b); 48 saatlik ortalama resmi olarak 4 (en fazla 6) aylık referans döneminde değerlendirilir — buradaki değer yalnızca fikir vericidir.',
+ l_poa:'Hazır bulunma / POA (2002/15/AT Direktifi, madde 3(b))',
+ poa_hint:'İş yerinde olmadığın, ancak hazır beklemen gereken süre (örn. yükleme sırasında bekleme, feribot geçişi). Çalışma süresi sayılmaz, ama dinlenme süresi de sayılmaz.',
+ disc_poa:'hazır bulunma',
+ po_driver:'Sürücü', po_worktime:'Çalışma süresi (2002/15/AT)',
+ v_worktime_over60:'Haftalık çalışma süresi {x} sa, 60 saatlik kesin sınıra karşı (hafta {wk})',
+ veh_title:'Araçlar', veh_note:'Araç kaydı — aktif olan yeni günde otomatik önerilir.',
+ btn_add_veh:'+ Araç ekle', veh_empty:'Henüz araç eklenmedi.',
+ veh_active_badge:'aktif', veh_make_active:'Aktif yap', veh_confirm_del:'Bu araç kayıttan silinsin mi?',
+ veh_dup:'Bu plakayla bir araç zaten var.',
+ per_week:'Hafta', per_pair:'İki hafta', per_month:'Ay', per_custom:'Dönem',
+ l_from:'Başlangıç', l_to:'Bitiş', btn_csv:'CSV dışa aktar', btn_print:'Yazdır / PDF',
+ lv_cards:'Kartlar', lv_table:'Tablo', lt_time:'Saatler', lt_drv:'Sürüş', lt_status:'Durum',
+ driver_title:'Sürücü bilgileri', l_driver_name:'Sürücü adı',
+ active_title:'Zamanlayıcılı aktif gün', active_note:'İş günü burada başlar: kilometreyi gir ve ilk faaliyeti başlat. Başka birini seçmek mevcut olanı otomatik bitirir. Sonunda „Günü bitir ve kaydet" düğmesine bas — toplamlar gün kaydına aktarılır.',
+ active_empty:'Çalışan faaliyet yok.', act_stop:'Durdur', act_now:'ŞİMDİ',
+ active_log_title:'Bugünkü faaliyetler', active_log_empty:'Henüz faaliyet kaydedilmedi.',
+ act_confirm_del:'Bu faaliyet silinsin mi?',
+ active_none_yet:'Günü bitirmeden önce en az bir faaliyet başlat.',
+ btn_finish_day:'Günü bitir ve kaydet',
+ l_active_odo:'Günün başlangıç kilometresi',
+ active_odo_hint:'Vardiya başında bir kez gir — bitirdiğinde gün kaydına otomatik işlenir.',
+ sync_title:'Cihazlar arası eşitleme',
+ sync_note:'Günlerin telefon ile bilgisayar arasında eşitlenmesi için Google ile giriş yap. Veriler kendi Firebase projende saklanır ve yalnızca senin hesabından erişilir. Giriş yapmadan da uygulama normal çalışır, ancak yalnızca yerel olarak.',
+ sync_config_label:'Firebase yapılandırması (kendi projenden)',
+ sync_config_hint:'Firebase Console → Project settings → Your apps → SDK setup and configuration adresinden kopyalanır.',
+ btn_sync_connect:'Bağlan',
+ l_email:'E-posta', l_password:'Parola',
+ btn_sync_google:'Google ile giriş', sync_or:'veya e-posta ve parola ile:',
+ btn_sync_login:'Giriş', btn_sync_register:'Kayıt ol',
+ btn_sync_now:'Şimdi eşitle', btn_sync_logout:'Çıkış',
+ sync_confirm_pull:'Bulutta başka bir cihazdan gelen, buradakinden farklı veriler var. Şimdi yüklensin mi? (yerel veriler değiştirilecek)',
+ sync_logged_as:'Şu hesapla eşitlendi: {email}', sync_not_logged:'Giriş yapılmadı — veriler yalnızca bu cihazda kalır.',
+ sync_cfg_empty:'Firebase yapılandırmasını yapıştır.', sync_cfg_bad:'Yapılandırma okunamadı veya bağlantı kurulamadı.',
+ sync_login_err:'Hata: {msg}', sync_done:'Eşitlendi.',
+ sync_not_ready:'Bağlantı henüz hazırlanıyor — birkaç saniye sonra tekrar dene.',
+ sync_email_only:'Ana ekrandaki uygulamada iOS, Google sayfasından geri dönemez; bu yüzden burada e-posta ve parola ile giriş yapılır (bir kez kaydettiklerinle):',
+ l_new_password:'Bu hesap için yeni parola',
+ btn_sync_setpw:'Bu hesap için parola belirle',
+ sync_setpw_hint:'Google ile giriş yaptıysan, aynı hesap için burada bir parola belirle. Sonra telefonda aynı e-posta ve bu parola ile giriş yap — veriler aynı kalır.',
+ sync_pw_set:'Tamam. Artık {email} ve bu parola ile de giriş yapabilirsin.',
+ sync_pw_short:'Parola en az 6 karakter olmalıdır.',
+ sync_email_taken:'Bu e-posta başka bir giriş yöntemiyle (örn. Google) zaten kullanılıyor. Tarayıcıda Google ile giriş yap ve aynı hesap için bir parola belirle — sonra parolayla da giriş yapabilirsin.',
+ dash_current:'Sürüş — hafta / iki haftalık dönem',
+ dash_allow:'Kullanılan ve kalan haklar',
+ dash_rest:'Haftalık döngü ve dinlenmeler',
+ dash_comp:'Borçlu telafi',
+ dash_strip:'Son 14 gün — sürüş',
+ add_title:'İş gününü kapatma', edit_title:'İş gününü düzenleme',
+ add_note:'Plaka otomatik hatırlanır. Yalnızca kamyon değiştirdiğinde girersin.',
+ l_date:'Tarih', l_start:'İş günü başlangıcı', l_end:'İş günü bitişi',
+ sh_places:'Başlangıç ve bitiş yeri',
+ l_startPlace:'Başlangıç yeri', l_startCountry:'Ülke',
+ l_endPlace:'Bitiş yeri', l_endCountry:'Ülke',
+ places_hint:'165/2014 sayılı Tüzüğün 34. maddesi uyarınca zorunlu kayıt — yol kontrolünde takograftaki elle girişler ile karşılaştırılır.',
+ sh_veh:'Takograf göstergeleri', sh_rest:'Gün bitiminden sonraki dinlenme',
+ seg_title:'Araç', seg_plate:'Plaka',
+ seg_odo_start:'Kilometre — başlangıç', seg_odo_end:'Kilometre — bitiş',
+ seg_drv_start:'Sürüş sayacı — başlangıç (ss:dd)', seg_drv_end:'Sürüş sayacı — bitiş (ss:dd)',
+ seg_rest_start:'Mola sayacı — başlangıç (ss:dd)', seg_rest_end:'Mola sayacı — bitiş (ss:dd)',
+ seg_hint:'İki nokta otomatik konur — yalnızca rakamları yaz (örn. 145 → 1:45). Takografın toplam sayaç göstermiyorsa „başlangıç" boş bırak ve gün toplamını „bitiş" alanına gir.',
+ calc_prefix:'Hesaplanan:', calc_drv:'sürüş', calc_other:'diğer iş', calc_poa:'hazır bulunma', calc_rest:'molalar', calc_km:'km',
+ step1_title:'Vardiya sonu', step1_sub:'İş gününün ne zaman ve nerede bittiği.',
+ step2_title:'Takograf kaydı', step2_sub:'Takograftan alınan son toplam değerler. Başlangıca göre fark otomatik hesaplanır.',
+ seg_other_start:'Diğer iş — başlangıç (ss:dd)', seg_other_end:'Diğer iş — bitiş (ss:dd)',
+ seg_poa_start:'Hazır bulunma — başlangıç (ss:dd)', seg_poa_end:'Hazır bulunma — bitiş (ss:dd)',
+ l_reading_source:'Veri kaynağı', opt_source_display:'Ekran', opt_source_printout:'Çıktı', opt_source_manual:'Elle giriş',
+ l_card_state:'Kart durumu', opt_card_inserted:'Kart takılı', opt_card_withdrawn:'Kart çıkarıldı',
+ po_source:'Kaynak', po_card:'Kart',
+ btn_day_pdf:'PDF / Yazdır',
+ pd_subtitle:'İş günü raporu · (AT) 561/2006 sayılı Tüzük',
+ pd_sign_driver:'Sürücü imzası', pd_sign_control:'Denetçi imzası',
+ pd_generated:'{d} tarihinde oluşturuldu',
+ pd_disclaimer:'Yardımcı belge. Takograf çıktısının yerine geçmez ve denetimde resmi belge değildir.',
+ btn_add_vehicle:'+ Araç ekle (kamyon değişimi)',
+ l_resttype:'Gün sonrası dinlenme türü',
+ rt_none:'Henüz dinlenme yok / devam ediyor',
+ rt_reg11:'Normal günlük dinlenme (≥ 11 sa)',
+ rt_red9:'Kısaltılmış günlük dinlenme (9–11 sa)',
+ rt_split:'Bölünmüş günlük dinlenme (3 sa + 9 sa)',
+ rt_mm9:'Çoklu sürücü dinlenmesi (30 sa içinde ≥ 9 sa)',
+ rt_wreg:'Normal haftalık dinlenme (≥ 45 sa)',
+ rt_wred:'Kısaltılmış haftalık dinlenme (24–45 sa)',
+ l_resthours:'Dinlenme süresi (saat)',
+ l_apply_comp:'Bu dinlenme, daha önceki kısaltılmış haftalık dinlenmenin telafisini içerir',
+ l_comp_hours:'Uygulanan telafi saati',
+ sh_exceptions:'İstisnalar ve muafiyetler',
+ exc_note:'Yalnızca güne gerçekten uyanı işaretle. Her istisna, günün hangi kurallara göre kontrol edileceğini değiştirir.',
+ exc_ferry_t:'Feribot veya tren — madde 9(1)',
+ exc_ferry_d:'Dinlenme, feribota veya trene binme ya da inme nedeniyle kesildi.',
+ exc_ferry_kind:'Kesilen dinlenme', exc_ferry_kind_daily:'Normal günlük dinlenme', exc_ferry_kind_weekly:'Haftalık dinlenme (yolculuk ≥ 8 sa)',
+ exc_ferry_count:'Kesinti sayısı', exc_ferry_mins:'Toplam kesinti süresi (dk)',
+ exc_ferry_couch:'Yatak veya kuşet mevcuttu',
+ exc_mm_t:'Çoklu sürücü — madde 4(o) ve 8(5)',
+ exc_mm_d:'Sürüş süresi boyunca araçta iki veya daha fazla sürücü. Günlük dinlenme 30 saat içinde ≥ 9 saate döner.',
+ exc_mm_co:'İkinci sürücü (ad veya kart numarası)', exc_mm_from:'Ortak ekip şu saatten itibaren',
+ exc_a12_t:'Olağanüstü durumlar — madde 12',
+ exc_a12_d:'Uygun bir duraklama yerine ya da haftalık dinlenme için işletme merkezine / eve ulaşmak amacıyla kurallardan sapma.',
+ exc_a12_type:'Sapma türü', exc_a12_type_stop:'Uygun bir duraklama yerine ulaşma (güvenlik)',
+ exc_a12_type_home:'Haftalık dinlenme için işletme merkezine veya eve ulaşma',
+ exc_a12_extra:'Sürüş süresinin aşılma miktarı (dakika)', exc_a12_reason:'Gerekçe (çıktı üzerine elle yazılmalıdır)',
+ exc_a12_break30:'Hemen öncesinde 30 dakikalık mola verildi (2 saate kadar izin verir)',
+ exc_a12_noted:'Gerekçe takograf çıktısının arkasına yazıldı',
+ exc_12d_t:'12 gün kuralı — madde 8(6a)',
+ exc_12d_d:'Tek seferlik arızi uluslararası yolcu taşımacılığı. Haftalık dinlenme, 24 saatlik 12 ardışık döneme kadar ertelenebilir.',
+ exc_12d_since:'Hizmetin başlangıcı (tarih)', exc_12d_conf:'Madde 8(6a) koşulları sağlanıyor (başka ülkede ≥ 24 sa, takograf, belgeler)',
+ exc_nat_t:'Ulusal muafiyet — madde 13 / madde 14',
+ exc_nat_d:'Taşımanın yapıldığı ülkenin ulusal mevzuatına göre muafiyet.',
+ exc_nat_country:'Muafiyetin ülkesi', exc_nat_cat:'Dayanak', exc_nat_desc:'Açıklama / izin numarası',
+ exc_nat_full:'Gün, 561/2006 sayılı Tüzükten tamamen muaftır',
+ exc_oos_t:'Kapsam dışı — madde 3',
+ exc_oos_d:'Araç veya taşıma kapsam dışındadır (örn. 3,5 tona kadar; kendi malzemesini taşıyan 100 km yarıçapında 7,5 tona kadar; ticari olmayan kullanım vb.).',
+ exc_oos_reason:'Dayanak',
+ exc_aetr_t:'AETR — AB/AEA dışında taşıma',
+ exc_aetr_d:'AETR Anlaşmasının uygulandığı, AB dışı bir ülkede sürüş. Kurallar eşdeğerdir, ancak gün ayrı kaydedilir.',
+ nat_cats:{
+  '':'— seç —',
+  utility:'Altyapı hizmetleri (su, elektrik, gaz, kanalizasyon)',
+  agri:'Tarım, ormancılık, balıkçılık (100 km yarıçapında)',
+  post:'Evrensel posta hizmeti',
+  milk:'Çiftliklerden süt toplama',
+  market:'Yerel pazarlarda seyyar satış',
+  circus:'Sirkler ve lunaparklar',
+  vet:'Veterinerlik faaliyeti',
+  rescue:'Acil servisler ve kurtarma operasyonları',
+  medical:'Tıbbi cihaz ve malzeme',
+  driving_school:'Sürücü eğitimi ve sınavları',
+  waste:'Atık toplama, yol bakımı',
+  animals:'Çiftlikten pazara canlı hayvan (100 km yarıçapında)',
+  museum:'Tarihi değeri olan araçlar',
+  other:'Diğer dayanak (aşağıda belirt)'
+ },
+ l_notes:'Notlar (isteğe bağlı)', btn_save:'Günü hesapla ve kaydet', btn_update:'Değişiklikleri kaydet', btn_cancel:'Düzenlemeden vazgeç',
+ result_title:'Şu günün sonucu:',
+ r_workday:'İş günü süresi', r_driving:'Bu günkü sürüş',
+ r_breaks:'Gün içindeki molalar', r_km:'Alınan yol', r_vehicles:'Araçlar',
+ r_route:'Güzergâh', r_limit:'Uygulanan günlük sınır',
+ r_rem_week:'Bu hafta kalan', r_rem_pair:'İki haftalık dönem için kalan',
+ r_ext_left:'Kalan uzatılmış günler (10 sa)', r_reduced_left:'Kalan kısaltılmış günlük dinlenmeler',
+ r_days_left:'Zorunlu haftalık dinlenmeye kalan dönem', r_next_week:'Gelecek hafta için kullanılabilir',
+ r_viol:'Güne ait ihlaller', r_exc:'Uygulanan istisnalar',
+ month_title:'Aylık özet', l_month:'Ay',
+ m_km:'kilometre', m_drv:'sürüş saati', m_rest:'mola saati',
+ m_days:'iş günü', m_avg:'günlük ortalama sürüş', m_viol:'ihlal',
+ m_empty:'Seçilen ay için kayıtlı gün yok.',
+ m_weeks:'Aydaki haftalar', m_plates:'Kullanılan araçlar', m_countries:'Gidilen ülkeler', m_exc:'Kullanılan istisnalar',
+ log_title:'İş günleri kaydı', log_hint:'Ayrıntılı dökümü görmek için bir güne dokun.',
+ log_empty:'Henüz kayıtlı iş günü yok.',
+ det_times:'Saatler', det_veh:'Araçlar ve sayaçlar', det_rest:'Dinlenme', det_bal:'Bu güne kadarki durum',
+ det_exc:'İstisnalar', det_viol:'İhlaller ve notlar', det_notes:'Notlar',
+ det_edit:'Düzenle', det_del:'Sil', det_confirm:'Bu gün silinsin mi?',
+ det_noviol:'Bu gün için ihlal tespit edilmedi.',
+ det_start:'Başlangıç', det_end:'Bitiş', det_workday:'İş günü',
+ det_weekdrv:'Haftalık sürüş', det_pairdrv:'İki haftalık dönem sürüşü',
+ viol_title:'Tespit edilen ihlaller', viol_empty:'İhlal tespit edilmedi.',
+ rest_days:'Son haftalık dinlenmeden bu yana 24 saatlik dönem sayısı',
+ rest_left:'Haftalık dinlenmeye kalan dönem sayısı',
+ allow_ext_t:'10 saate kadar uzatılmış sürüş günleri', allow_ext_d:'Takvim haftasında en fazla iki kez — madde 6(1)',
+ allow_red_t:'Kısaltılmış günlük dinlenmeler (9–11 sa)', allow_red_d:'İki haftalık dinlenme arasında en fazla üç kez — madde 8(4)',
+ allow_wred_t:'İki haftalık dönemde kısaltılmış haftalık dinlenme', allow_wred_d:'Ardışık herhangi iki haftada en az bir dinlenme normal (45 sa) olmalıdır — madde 8(6)',
+ allow_wdead_t:'Haftalık dinlenmenin başlama süresi', allow_wdead_d:'En geç altıncı 24 saatlik dönemin sonuna kadar — madde 8(6)',
+ allow_12d:'12 gün kuralı etkin — süre 12 döneme uzatılır',
+ used:'kullanıldı', left:'kaldı', of:'/',
+ no_comp:'Şu anda telafi borcu yok.', no_data:'Henüz kayıtlı gün yok.',
+ ok_status:'Uygun', viol_count:'ihlal', exempt_badge:'muaf',
+ unit_days:'gün', unit_hours:'sa', unit_km:'km', unit_min:'dk', comp_deadline:'son tarih',
+ gauge_week:'Bu hafta', gauge_pair:'İki haftalık dönem',
+ rest_labels:{none:'dinlenme yok',regular11:'normal günlük',reduced9:'kısaltılmış günlük',split:'bölünmüş',mm9:'çoklu sürücü',
+  'weekly-regular':'normal haftalık','weekly-reduced':'kısaltılmış haftalık'},
+ v_driving_abs:'Günlük sürüş aşıldı: izin verilen {lim} saate karşı {x} sa',
+ v_driving_ext:'{wk} haftasında 9 saatin üzerinde üçüncü veya sonraki uzatma — ikisine izin verilir',
+ v_break_missing:'Yetersiz mola: {x} saat sürüş için en az 45 dk gerekir ({y} dk kayıtlı)',
+ v_short_rest:'Günlük dinlenme 11 saatin altında — {x} sa',
+ v_shift_over15:'İş günü aşıldı: {x} sa. En fazla 15 saattir — kısaltılmış 9 saatlik dinlenme bile önceki dinlenmeden sonraki 24 saatlik döneme artık sığmıyor.',
+ v_shift_over13_reg:'Normal dinlenmeli (≥ 11 sa) {x} saatlik iş günü — bu durumda en fazla 13 saattir. 13 saati aşınca kısaltılmış dinlenme (9–11 sa) gerekir ve bu, iki haftalık dinlenme arasında izin verilen üçten birine sayılır.',
+ n_shift_15:'İş günü {x} sa — 15 saate kadar izin verilir, ancak yalnızca kısaltılmış günlük dinlenme ile. Bu, iki haftalık dinlenme arasında izin verilen 3 kısaltılmış dinlenmeden {n}. olanıdır.',
+ v_worktime_break:'Çalışma süresine göre yetersiz mola: {x} saat çalışma için en az {req} dk gerekir ({y} dk kayıtlı)',
+ v_reduced_short:'Kısaltılmış günlük dinlenme 9 saatin altında — {x} sa',
+ v_reduced_too_many:'İki haftalık dinlenme arasında dördüncü veya sonraki kısaltılmış günlük dinlenme ({x})',
+ v_split_short:'Bölünmüş günlük dinlenme toplamda 12 saatin altında',
+ v_mm_short:'Çoklu sürücü dinlenmesi 9 saatin altında — {x} sa',
+ v_wreg_short:'Normal haftalık dinlenme olarak işaretlendi, ancak 45 saatin altında',
+ v_wk_under24:'Haftalık dinlenme 24 saatlik asgari sürenin altında',
+ v_week_late:'Haftalık dinlenme gecikti — izin verilen {lim} döneme karşı {x} dönem geçti',
+ v_two_reduced:'Ardışık iki kısaltılmış haftalık dinlenme — iki haftalık dönemde en az biri ≥ 45 sa olmalıdır',
+ v_comp_overdue:'{d} tarihinden gecikmiş telafi — {x} sa borç (son tarih {dl})',
+ v_week_over56:'Haftalık sürüş aşıldı: 56 saatlik sınıra karşı {x} sa ({wk})',
+ n_long_workday:'Uzun iş günü — iki dinlenme arasında {x} sa. 561/2006 uyarınca ihlal değil, ancak yorgunluğa dikkat etmekte fayda var.',
+ v_pair_over90:'İki haftalık sınır aşıldı: 90 saatlik sınıra karşı {x} sa',
+ v_ferry_count:'Dinlenme feribot/tren nedeniyle {x} kez kesildi — en fazla 2 kez izin verilir',
+ v_ferry_mins:'Toplam kesinti {x} dk — en fazla 60 dk izin verilir',
+ v_ferry_couch:'Yatak veya kuşet bulunduğu kaydedilmemiş — madde 9(1) koşulu',
+ v_a12_over:'Madde 12 kapsamındaki aşım {x} dk, izin verilen {lim} dk',
+ v_a12_note:'Madde 12 gerekçesi çıktı üzerine yazılmamış — elle kayıt gereklidir',
+ v_a12_comp:'Eve dönüş için madde 12 sapması, üçüncü izleyen haftanın sonundan önce toplu olarak alınacak telafi dinlenmesi gerektirir',
+ n_exempt:'Gün 561/2006 kapsamı dışındadır — haftalık ve iki haftalık sınırlara sayılmaz',
+ n_ferry_ok:'Feribot/tren kesintisi izin verilen sınırlar içinde — dinlenme normal olarak kalır',
+ n_mm:'Çoklu sürücü: günlük dinlenme 30 saat içinde ≥ 9 saattir; ilk saatte ikinci sürücünün bulunması zorunlu değildir',
+ n_a12:'Madde 12 uygulandı — {x} dk sapma. Gerekçenin çıktı üzerine elle yazılması zorunludur',
+ n_12d:'Madde 8(6a) kapsamındaki 12 gün kuralı etkin — hizmetin ardından iki normal haftalık dinlenme ya da bir normal ve bir kısaltılmış dinlenme gelmelidir',
+ n_aetr:'Taşıma AETR kapsamında kaydedilir — gün 561/2006 sınırlarına sayılmaz',
+ dash_disc:'Takograf diski — son iş günü',
+ det_disc:'Güne ait takograf diski',
+ disc_drv:'sürüş', disc_brk:'molalar', disc_oth:'diğer iş', disc_rest:'dinlenme',
+ disc_approx:'Kadran üzerindeki dağılım yaklaşıktır — gün toplamlarına dayanır.',
+ rest_auto:'{d} sonrası günlük dinlenme: {x} sa — önceki güne otomatik işlenecek',
+ rest_auto_type:'önerilen tür',
+ po_show:'Takograf çıktısı olarak göster', po_hide:'Çıktıyı gizle',
+ po_head:'KONTROL ÇIKTISI · 24 sa', po_veh:'Araç', po_odo:'Kilometre',
+ po_counters:'Sayaçlar', po_places:'Yer', po_sum:'GÜN ÖZETİ', po_rest_after:'Gün sonrası dinlenme',
+ po_exc:'İSTİSNALAR', po_viol_h:'İHLALLER', po_none:'yok', po_bal:'DURUM',
+ po_foot:'TAXO 561 tarafından oluşturuldu · resmi olmayan belge',
+ install_title:'Cihaza kurulum',
+ install_intro:'Uygulama çevrimdışı çalışır ve ana ekrana ya da uygulama menüsüne simge olarak eklenebilir.',
+ btn_install:'Uygulamayı kur',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Sayfayı Safari ile aç → Paylaş düğmesi → „Ana Ekrana Ekle" → „Ekle".',
+ ins_and:'Android (Chrome)', ins_and_s:'Chrome ile aç → sağ üstteki ⋮ menüsü → „Uygulamayı yükle".',
+ ins_lap:'Dizüstü (Chrome / Edge)', ins_lap_s:'Sayfayı aç → adres çubuğundaki kurulum simgesi → „Yükle".',
+ ins_file:'Çevrimdışı dosya', ins_file_s:'HTML dosyasını indir ve çift tıklayarak aç — her cihazda internetsiz çalışır.',
+ data_title:'Veri yedeği', data_note:'Veriler bu cihazda saklanır. Telefon değiştirmeden veya tarayıcıyı temizlemeden önce yedek al.',
+ btn_export:'Yedeği indir (JSON)', btn_import:'Dosyadan geri yükle',
+ import_ok:'Veriler başarıyla geri yüklendi.', import_err:'Dosya okunamadı.',
+ disclaimer:'Bu araç bilgilendirme amaçlıdır. (AT) 561/2006 sayılı Tüzüğün kurallarını, madde 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 ve 14 kapsamındaki istisnalarla birlikte ve AETR kapsamındaki taşımaları kapsar. Madde 13 uyarınca ulusal muafiyetler ülkeden ülkeye ve zamanla değişir — uygulama bunları kaydetmek için bir çerçeve sunar, ancak her ülke için eksiksiz bir liste içermez. Yürürlükteki ulusal kuralları kontrol et ve denetimde yalnızca bu araca güvenme. Hukuki tavsiye değildir.'
+},
+
+hu:{
+ hero_onduty:'Úton · {act}',
+ hero_left_drive:'vezetésre maradt',
+ hero_driven_today:'Ma vezetve {x} óra.',
+ hero_limit_today:'Napi határ {lim} óra.',
+ hero_resting:'Pihensz',
+ hero_until_start:'indulásig',
+ hero_can_start:'<b>{time}</b>-kor indulhatsz, {date}.',
+ hero_ready:'Indulásra kész',
+ hero_since:'legkorábban',
+ hero_rest_done:'A szükséges pihenőidő letelt.',
+ hero_nodata:'Nincs rögzített nap',
+ hero_nodata_say:'Kezdd az „Aktív nap"-nál — add meg a kilométerórát, és indítsd az első tevékenységet.',
+ hero_exempt:'Mentes nap',
+ dash_disc_on:'Tachográfkorong · {d}',
+ gs_scale:'Skála', gs_seg:'Szegmensek',
+ th_group_light:'Világos',
+ th_group_dark:'Sötét',
+ th_day:'Nappal',
+ th_mist:'Köd',
+ th_paper:'Papír',
+ th_ocean:'Óceán',
+ th_sun:'Napfény',
+ th_ink:'Tinta',
+ th_night:'Éjszaka',
+ th_carbon:'Karbon',
+ th_dusk:'Alkonyat',
+ th_halogen:'Halogén',
+ th_beacon:'Jelzőfény',
+ th_auto:'Automatikus',
+ app_name:'TAXO 561',
+ subtitle:'Napló és ellenőrzés az 561/2006 rendelet szerint',
+ tab_dash:'Áttekintés', tab_add:'Nap rögzítése', tab_active:'Aktív nap', tab_veh:'Járművek', tab_month:'Jelentések', tab_log:'Napló', tab_viol:'Jogsértések', tab_install:'Beállítások',
+ vb_cap:'Jelenlegi jármű', vb_change:'Csere', vb_none:'nincs megadva', vb_prompt:'Rendszám:',
+ dash_next:'Legkorábbi következő indulás',
+ dash_worktime:'Heti munkaidő (2002/15/EK irányelv)',
+ ns_exempt:'A nap mentesül az 561/2006 alól — ez a becslés nem vonatkozik rá.',
+ ns_note_weekly:'Heti pihenőidő szükséges (legalább {h} óra csökkentett — kompenzáció jár érte).',
+ ns_note_reduced:'Csökkentett napi pihenőidő alapján (legalább {h} óra).',
+ ns_note_regular:'A ciklus csökkentett pihenőidői elfogytak — rendes pihenőidő szükséges (legalább {h} óra).',
+ wt_week:'Ezen a héten', wt_avg:'Átlag (rögzített hetek)',
+ wt_hint:'Munkaidő = vezetés + egyéb munka, szünetek és rendelkezésre állás nélkül. A heti 60 órás abszolút határ a 4(b) cikk; a 48 órás átlagot hivatalosan 4 (legfeljebb 6) hónapos referencia-időszakra számítják — az itt látható érték csak tájékoztató.',
+ l_poa:'Rendelkezésre állás / POA (2002/15/EK irányelv, 3(b) cikk)',
+ poa_hint:'Az az idő, amikor nem vagy a munkaállomáson, de rendelkezésre kell állnod (pl. várakozás rakodásnál, komppal való átkelés). Nem számít munkaidőnek, de pihenőidőnek sem.',
+ disc_poa:'rendelkezésre állás',
+ po_driver:'Gépjárművezető', po_worktime:'Munkaidő (2002/15/EK)',
+ v_worktime_over60:'Heti munkaidő {x} óra a 60 órás abszolút határhoz képest ({wk}. hét)',
+ veh_title:'Járművek', veh_note:'Járműnyilvántartás — az aktívat új napnál automatikusan felajánlja.',
+ btn_add_veh:'+ Jármű hozzáadása', veh_empty:'Még nincs hozzáadott jármű.',
+ veh_active_badge:'aktív', veh_make_active:'Legyen aktív', veh_confirm_del:'Törlöd ezt a járművet a nyilvántartásból?',
+ veh_dup:'Ilyen rendszámú jármű már létezik.',
+ per_week:'Hét', per_pair:'Két hét', per_month:'Hónap', per_custom:'Időszak',
+ l_from:'Ettől', l_to:'Eddig', btn_csv:'CSV exportálás', btn_print:'Nyomtatás / PDF',
+ lv_cards:'Kártyák', lv_table:'Táblázat', lt_time:'Időpontok', lt_drv:'Vezetés', lt_status:'Állapot',
+ driver_title:'A vezető adatai', l_driver_name:'A vezető neve',
+ active_title:'Aktív nap időmérővel', active_note:'Itt kezdődik a munkanap: add meg a kilométerórát, és indítsd el az első tevékenységet. Ha másikat választasz, az aktuális automatikusan lezárul. A végén nyomd meg a „Nap lezárása és mentése" gombot — az összegek átkerülnek a napi bejegyzésbe.',
+ active_empty:'Nincs futó tevékenység.', act_stop:'Leállítás', act_now:'MOST',
+ active_log_title:'Mai tevékenységek', active_log_empty:'Még nincs rögzített tevékenység.',
+ act_confirm_del:'Törlöd ezt a tevékenységet?',
+ active_none_yet:'Indíts el legalább egy tevékenységet a nap lezárása előtt.',
+ btn_finish_day:'Nap lezárása és mentése',
+ l_active_odo:'A nap kezdő kilométerórája',
+ active_odo_hint:'Add meg egyszer a műszak elején — lezáráskor automatikusan bekerül a napi bejegyzésbe.',
+ sync_title:'Szinkronizálás eszközök között',
+ sync_note:'Jelentkezz be Google-fiókkal, hogy a napok szinkronban legyenek a telefon és a számítógép között. Az adatok a saját Firebase-projektedben tárolódnak, és csak a te fiókodból érhetők el. Bejelentkezés nélkül az alkalmazás rendesen működik, csak helyben.',
+ sync_config_label:'Firebase-konfiguráció (a saját projektedből)',
+ sync_config_hint:'Innen másolható: Firebase Console → Project settings → Your apps → SDK setup and configuration.',
+ btn_sync_connect:'Csatlakozás',
+ l_email:'E-mail', l_password:'Jelszó',
+ btn_sync_google:'Bejelentkezés Google-fiókkal', sync_or:'vagy e-maillel és jelszóval:',
+ btn_sync_login:'Bejelentkezés', btn_sync_register:'Regisztráció',
+ btn_sync_now:'Szinkronizálás most', btn_sync_logout:'Kijelentkezés',
+ sync_confirm_pull:'A felhőben másik eszközről származó adatok vannak, amelyek eltérnek az itt tároltaktól. Betöltsem most? (a helyi adatok felülíródnak)',
+ sync_logged_as:'Szinkronizálva mint: {email}', sync_not_logged:'Nincs bejelentkezve — az adatok csak ezen az eszközön maradnak.',
+ sync_cfg_empty:'Illeszd be a Firebase-konfigurációt.', sync_cfg_bad:'A konfigurációt nem sikerült beolvasni, vagy a kapcsolódás nem sikerült.',
+ sync_login_err:'Hiba: {msg}', sync_done:'Szinkronizálva.',
+ sync_not_ready:'A kapcsolat még épül — próbáld újra néhány másodperc múlva.',
+ sync_email_only:'A kezdőképernyőre telepített alkalmazásban az iOS nem tud visszatérni a Google oldaláról, ezért itt e-maillel és jelszóval jelentkezz be (azokkal, amelyeket egyszer regisztrálsz):',
+ l_new_password:'Új jelszó ehhez a fiókhoz',
+ btn_sync_setpw:'Jelszó beállítása ehhez a fiókhoz',
+ sync_setpw_hint:'Ha Google-fiókkal jelentkeztél be, itt állíts be jelszót ugyanahhoz a fiókhoz. Utána a telefonon ugyanazzal az e-maillel és ezzel a jelszóval jelentkezz be — az adatok ugyanazok maradnak.',
+ sync_pw_set:'Kész. Mostantól a következővel is bejelentkezhetsz: {email} és ez a jelszó.',
+ sync_pw_short:'A jelszónak legalább 6 karakternek kell lennie.',
+ sync_email_taken:'Ezt az e-mailt már egy másik bejelentkezési mód használja (pl. Google). Jelentkezz be Google-fiókkal böngészőben, és állíts be jelszót ugyanahhoz a fiókhoz — utána jelszóval is be tudsz jelentkezni.',
+ dash_current:'Vezetés — hét / kéthetes időszak',
+ dash_allow:'Felhasznált és fennmaradó kedvezmények',
+ dash_rest:'Heti ciklus és pihenőidők',
+ dash_comp:'Járó kompenzáció',
+ dash_strip:'Az elmúlt 14 nap — vezetés',
+ add_title:'Munkanap lezárása', edit_title:'Munkanap szerkesztése',
+ add_note:'A rendszámot automatikusan megjegyzi. Csak akkor adod meg, ha kamiont váltasz.',
+ l_date:'Dátum', l_start:'A munkanap kezdete', l_end:'A munkanap vége',
+ sh_places:'A kezdés és a befejezés helye',
+ l_startPlace:'A kezdés helye', l_startCountry:'Ország',
+ l_endPlace:'A befejezés helye', l_endCountry:'Ország',
+ places_hint:'A 165/2014 rendelet 34. cikke szerint kötelező bejegyzés — közúti ellenőrzéskor a tachográf kézi bejegyzéseivel vetik össze.',
+ sh_veh:'Tachográf-adatok', sh_rest:'Pihenőidő a nap vége után',
+ seg_title:'Jármű', seg_plate:'Rendszám',
+ seg_odo_start:'Kilométeróra — kezdet', seg_odo_end:'Kilométeróra — vég',
+ seg_drv_start:'Vezetési számláló — kezdet (óó:pp)', seg_drv_end:'Vezetési számláló — vég (óó:pp)',
+ seg_rest_start:'Szünetszámláló — kezdet (óó:pp)', seg_rest_end:'Szünetszámláló — vég (óó:pp)',
+ seg_hint:'A kettőspont automatikusan kerül be — csak a számjegyeket írd (pl. 145 → 1:45). Ha a tachográf nem mutat összesített számlálót, hagyd üresen a „kezdet" mezőt, és a nap összegét írd a „vég" mezőbe.',
+ calc_prefix:'Számított:', calc_drv:'vezetés', calc_other:'egyéb munka', calc_poa:'rendelkezésre állás', calc_rest:'szünetek', calc_km:'km',
+ step1_title:'A műszak vége', step1_sub:'Mikor és hol ér véget a munkanap.',
+ step2_title:'Tachográf-bejegyzés', step2_sub:'A tachográf végső összesített értékei. A kezdethez képesti különbséget automatikusan számolja.',
+ seg_other_start:'Egyéb munka — kezdet (óó:pp)', seg_other_end:'Egyéb munka — vég (óó:pp)',
+ seg_poa_start:'Rendelkezésre állás — kezdet (óó:pp)', seg_poa_end:'Rendelkezésre állás — vég (óó:pp)',
+ l_reading_source:'Az adatok forrása', opt_source_display:'Kijelző', opt_source_printout:'Nyomtatvány', opt_source_manual:'Kézi bevitel',
+ l_card_state:'A kártya állapota', opt_card_inserted:'Kártya behelyezve', opt_card_withdrawn:'Kártya kivéve',
+ po_source:'Forrás', po_card:'Kártya',
+ btn_day_pdf:'PDF / Nyomtatás',
+ pd_subtitle:'Munkanapi jelentés · 561/2006/EK rendelet',
+ pd_sign_driver:'A vezető aláírása', pd_sign_control:'Az ellenőr aláírása',
+ pd_generated:'Készült: {d}',
+ pd_disclaimer:'Segéddokumentum. Nem helyettesíti a tachográf nyomtatványát, és ellenőrzéskor nem hivatalos okirat.',
+ btn_add_vehicle:'+ Jármű hozzáadása (kamionváltás)',
+ l_resttype:'A nap utáni pihenőidő típusa',
+ rt_none:'Még nincs pihenőidő / folytatódik',
+ rt_reg11:'Rendes napi pihenőidő (≥ 11 óra)',
+ rt_red9:'Csökkentett napi pihenőidő (9–11 óra)',
+ rt_split:'Megosztott napi pihenőidő (3 óra + 9 óra)',
+ rt_mm9:'Többfős személyzet pihenőideje (30 órán belül ≥ 9 óra)',
+ rt_wreg:'Rendes heti pihenőidő (≥ 45 óra)',
+ rt_wred:'Csökkentett heti pihenőidő (24–45 óra)',
+ l_resthours:'A pihenőidő hossza (óra)',
+ l_apply_comp:'Ez a pihenőidő tartalmazza egy korábbi csökkentett heti pihenőidő kompenzációját',
+ l_comp_hours:'Beszámított kompenzációs órák',
+ sh_exceptions:'Kivételek és eltérések',
+ exc_note:'Csak azt jelöld be, ami valóban vonatkozik a napra. Minden kivétel megváltoztatja, milyen szabályok szerint ellenőrizzük a napot.',
+ exc_ferry_t:'Komp vagy vonat — 9(1) cikk',
+ exc_ferry_d:'A pihenőidőt kompra vagy vonatra való fel- vagy leszállás szakította meg.',
+ exc_ferry_kind:'Megszakított pihenőidő', exc_ferry_kind_daily:'Rendes napi pihenőidő', exc_ferry_kind_weekly:'Heti pihenőidő (utazás ≥ 8 óra)',
+ exc_ferry_count:'A megszakítások száma', exc_ferry_mins:'A megszakítás teljes ideje (perc)',
+ exc_ferry_couch:'Fekvőhely vagy hálóhely állt rendelkezésre',
+ exc_mm_t:'Többfős személyzet — 4(o) és 8(5) cikk',
+ exc_mm_d:'Két vagy több vezető a járművön a vezetési idő alatt. A napi pihenőidő 30 órán belül ≥ 9 órára módosul.',
+ exc_mm_co:'Második vezető (név vagy kártyaszám)', exc_mm_from:'Közös személyzet ettől az időponttól',
+ exc_a12_t:'Rendkívüli körülmények — 12. cikk',
+ exc_a12_d:'Eltérés a szabályoktól, hogy megfelelő megállóhelyet, illetve a telephelyet vagy az otthont érd el a heti pihenőidőhöz.',
+ exc_a12_type:'Az eltérés típusa', exc_a12_type_stop:'Megfelelő megállóhely elérése (biztonság)',
+ exc_a12_type_home:'A telephely vagy az otthon elérése heti pihenőidőhöz',
+ exc_a12_extra:'A vezetési idő túllépése (perc)', exc_a12_reason:'Az indok (kézzel kell ráírni a nyomtatványra)',
+ exc_a12_break30:'Közvetlenül előtte 30 perces szünet volt (2 óráig engedélyez)',
+ exc_a12_noted:'Az indok fel van jegyezve a tachográf-nyomtatvány hátoldalára',
+ exc_12d_t:'12 napos szabály — 8(6a) cikk',
+ exc_12d_d:'Egyszeri, különjárati nemzetközi személyszállítás. A heti pihenőidő legfeljebb 12 egymást követő 24 órás időszakra halasztható.',
+ exc_12d_since:'A szolgáltatás kezdete (dátum)', exc_12d_conf:'A 8(6a) cikk feltételei teljesülnek (≥ 24 óra másik országban, tachográf, dokumentáció)',
+ exc_nat_t:'Nemzeti eltérés — 13. / 14. cikk',
+ exc_nat_d:'Mentesség annak az országnak a nemzeti joga szerint, ahol a fuvarozás történik.',
+ exc_nat_country:'Az eltérés országa', exc_nat_cat:'Jogalap', exc_nat_desc:'Leírás / engedélyszám',
+ exc_nat_full:'A nap teljes egészében mentesül az 561/2006 rendelet alól',
+ exc_oos_t:'Hatályon kívül — 3. cikk',
+ exc_oos_d:'A jármű vagy a fuvarozás nem tartozik a hatály alá (pl. 3,5 tonnáig; 7,5 tonnáig 100 km-en belül saját anyaggal; nem kereskedelmi használat stb.).',
+ exc_oos_reason:'Jogalap',
+ exc_aetr_t:'AETR — fuvarozás az EU/EGT-n kívül',
+ exc_aetr_d:'Vezetés olyan EU-n kívüli országban, ahol az AETR-megállapodás érvényes. A szabályok egyenértékűek, de a napot külön rögzítjük.',
+ nat_cats:{
+  '':'— válassz —',
+  utility:'Közművek (víz, villany, gáz, csatorna)',
+  agri:'Mezőgazdaság, erdészet, halászat (100 km-en belül)',
+  post:'Egyetemes postai szolgáltatás',
+  milk:'Tejbegyűjtés gazdaságokból',
+  market:'Mozgóboltok helyi piacokon',
+  circus:'Cirkuszok és vidámparkok',
+  vet:'Állatorvosi tevékenység',
+  rescue:'Sürgősségi szolgálatok és mentési műveletek',
+  medical:'Orvosi eszközök és anyagok',
+  driving_school:'Vezetőképzés és vizsgák',
+  waste:'Hulladékgyűjtés, útfenntartás',
+  animals:'Élő állat gazdaságból piacra (100 km-en belül)',
+  museum:'Történelmi értékű járművek',
+  other:'Egyéb jogalap (add meg alább)'
+ },
+ l_notes:'Megjegyzések (nem kötelező)', btn_save:'Nap kiszámítása és mentése', btn_update:'Változtatások mentése', btn_cancel:'Szerkesztés elvetése',
+ result_title:'Eredmény erre a napra:',
+ r_workday:'A munkanap hossza', r_driving:'Vezetés ezen a napon',
+ r_breaks:'Szünetek a nap folyamán', r_km:'Megtett táv', r_vehicles:'Járművek',
+ r_route:'Útvonal', r_limit:'Alkalmazott napi határ',
+ r_rem_week:'Hátralévő ezen a héten', r_rem_pair:'Hátralévő a kéthetes időszakra',
+ r_ext_left:'Hátralévő meghosszabbított napok (10 óra)', r_reduced_left:'Hátralévő csökkentett napi pihenőidők',
+ r_days_left:'Időszakok a kötelező heti pihenőidőig', r_next_week:'Rendelkezésre álló a jövő hétre',
+ r_viol:'A nap jogsértései', r_exc:'Alkalmazott kivételek',
+ month_title:'Havi összesítő', l_month:'Hónap',
+ m_km:'kilométer', m_drv:'vezetési óra', m_rest:'szünet órában',
+ m_days:'munkanap', m_avg:'átlagos vezetés/nap', m_viol:'jogsértés',
+ m_empty:'A kiválasztott hónapra nincs rögzített nap.',
+ m_weeks:'A hónap hetei', m_plates:'Használt járművek', m_countries:'Érintett országok', m_exc:'Alkalmazott kivételek',
+ log_title:'Munkanapok naplója', log_hint:'Érintsd meg a napot a teljes részletezésért.',
+ log_empty:'Még nincs rögzített munkanap.',
+ det_times:'Időpontok', det_veh:'Járművek és számlálók', det_rest:'Pihenőidő', det_bal:'Egyenleg eddig a napig',
+ det_exc:'Kivételek', det_viol:'Jogsértések és megjegyzések', det_notes:'Megjegyzések',
+ det_edit:'Szerkesztés', det_del:'Törlés', det_confirm:'Törlöd ezt a napot?',
+ det_noviol:'Erre a napra nem állapítottunk meg jogsértést.',
+ det_start:'Kezdet', det_end:'Vég', det_workday:'Munkanap',
+ det_weekdrv:'Vezetés a héten', det_pairdrv:'Vezetés a kéthetes időszakban',
+ viol_title:'Megállapított jogsértések', viol_empty:'Nincs megállapított jogsértés.',
+ rest_days:'24 órás időszakok az utolsó heti pihenőidő óta',
+ rest_left:'Hátralévő időszakok a heti pihenőidőig',
+ allow_ext_t:'Meghosszabbított vezetési napok 10 óráig', allow_ext_d:'Naptári hetenként legfeljebb kétszer — 6(1) cikk',
+ allow_red_t:'Csökkentett napi pihenőidők (9–11 óra)', allow_red_d:'Két heti pihenőidő között legfeljebb háromszor — 8(4) cikk',
+ allow_wred_t:'Csökkentett heti pihenőidő a kéthetes időszakban', allow_wred_d:'Bármely két egymást követő héten legalább egy pihenőidőnek rendesnek (45 óra) kell lennie — 8(6) cikk',
+ allow_wdead_t:'A heti pihenőidő megkezdésének határideje', allow_wdead_d:'Legkésőbb a hatodik 24 órás időszak végéig — 8(6) cikk',
+ allow_12d:'A 12 napos szabály aktív — a határidő 12 időszakra hosszabbodik',
+ used:'felhasznált', left:'maradt', of:'/',
+ no_comp:'Jelenleg nem jár kompenzáció.', no_data:'Még nincs rögzített nap.',
+ ok_status:'Rendben', viol_count:'jogs.', exempt_badge:'mentes',
+ unit_days:'nap', unit_hours:'ó', unit_km:'km', unit_min:'perc', comp_deadline:'határidő',
+ gauge_week:'Ezen a héten', gauge_pair:'Kéthetes időszak',
+ rest_labels:{none:'nincs pihenőidő',regular11:'rendes napi',reduced9:'csökkentett napi',split:'megosztott',mm9:'többfős személyzet',
+  'weekly-regular':'rendes heti','weekly-reduced':'csökkentett heti'},
+ v_driving_abs:'Napi vezetési idő túllépve: {x} óra a megengedett {lim} órához képest',
+ v_driving_ext:'Harmadik vagy további 9 óra feletti meghosszabbítás a(z) {wk}. héten — kettő megengedett',
+ v_break_missing:'Elégtelen szünet: {x} óra vezetéshez legalább 45 perc szükséges ({y} perc rögzítve)',
+ v_short_rest:'Napi pihenőidő 11 óra alatt — {x} óra',
+ v_shift_over15:'Munkanap túllépve: {x} óra. A maximum 15 óra — még a csökkentett 9 órás pihenőidő sem fér bele az előző pihenőidő utáni 24 órás időszakba.',
+ v_shift_over13_reg:'{x} órás munkanap rendes pihenőidővel (≥ 11 óra) — ebben az esetben a maximum 13 óra. 13 óra fölött csökkentett pihenőidő (9–11 óra) szükséges, amely beleszámít a két heti pihenőidő között engedélyezett háromba.',
+ n_shift_15:'Munkanap {x} óra — 15 óráig megengedett, de csak csökkentett napi pihenőidővel. Ez a két heti pihenőidő között engedélyezett 3 csökkentett pihenőidő közül a(z) {n}.',
+ v_worktime_break:'Elégtelen szünet a munkaidőhöz képest: {x} óra munkához legalább {req} perc szükséges ({y} perc rögzítve)',
+ v_reduced_short:'Csökkentett napi pihenőidő 9 óra alatt — {x} óra',
+ v_reduced_too_many:'Negyedik vagy további csökkentett napi pihenőidő két heti pihenőidő között ({x})',
+ v_split_short:'A megosztott napi pihenőidő összesen 12 óra alatt van',
+ v_mm_short:'Többfős személyzet pihenőideje 9 óra alatt — {x} óra',
+ v_wreg_short:'Rendes heti pihenőidőként megjelölve, de 45 óra alatt',
+ v_wk_under24:'A heti pihenőidő a 24 órás minimum alatt van',
+ v_week_late:'A heti pihenőidő késik — {x} időszak telt el a megengedett {lim} helyett',
+ v_two_reduced:'Két egymást követő csökkentett heti pihenőidő — a kéthetes időszakban legalább egynek ≥ 45 órának kell lennie',
+ v_comp_overdue:'Lejárt kompenzáció {d} óta — {x} óra jár (határidő {dl})',
+ v_week_over56:'Heti vezetési idő túllépve: {x} óra az 56 órás határhoz képest ({wk})',
+ n_long_workday:'Hosszú munkanap — {x} óra két pihenőidő között. Az 561/2006 szerint nem jogsértés, de érdemes figyelni a fáradtságra.',
+ v_pair_over90:'Kéthetes határ túllépve: {x} óra a 90 órás határhoz képest',
+ v_ferry_count:'A pihenőidőt {x} alkalommal szakította meg a komp/vonat — legfeljebb 2 megengedett',
+ v_ferry_mins:'A teljes megszakítás {x} perc — legfeljebb 60 perc megengedett',
+ v_ferry_couch:'Nincs rögzítve, hogy fekvőhely vagy hálóhely rendelkezésre állt — a 9(1) cikk feltétele',
+ v_a12_over:'A 12. cikk szerinti túllépés {x} perc a megengedett {lim} perchez képest',
+ v_a12_note:'A 12. cikk szerinti indok nincs feljegyezve a nyomtatványon — kézi bejegyzés szükséges',
+ v_a12_comp:'A hazatérés miatti 12. cikk szerinti eltérés egy tömbben kivett kompenzációs pihenőidőt igényel a harmadik következő hét vége előtt',
+ n_exempt:'A nap mentesül az 561/2006 alól — nem számít bele a heti és kéthetes határokba',
+ n_ferry_ok:'A komp/vonat miatti megszakítás a megengedett kereten belül — a pihenőidő rendes marad',
+ n_mm:'Többfős személyzet: a napi pihenőidő 30 órán belül ≥ 9 óra; az első órában a második vezető jelenléte nem kötelező',
+ n_a12:'12. cikk alkalmazva — {x} perc eltérés. Az indok kézzel való feljegyzése a nyomtatványon kötelező',
+ n_12d:'A 8(6a) cikk szerinti 12 napos szabály aktív — a szolgáltatás után két rendes heti pihenőidőnek, vagy egy rendesnek és egy csökkentettnek kell következnie',
+ n_aetr:'A fuvarozás AETR szerint kerül rögzítésre — a nap nem számít bele az 561/2006 határaiba',
+ dash_disc:'Tachográfkorong — utolsó munkanap',
+ det_disc:'A nap tachográfkorongja',
+ disc_drv:'vezetés', disc_brk:'szünetek', disc_oth:'egyéb munka', disc_rest:'pihenőidő',
+ disc_approx:'A számlapon látható eloszlás közelítő — a napi összegeken alapul.',
+ rest_auto:'Napi pihenőidő {d} után: {x} óra — automatikusan bekerül az előző naphoz',
+ rest_auto_type:'javasolt típus',
+ po_show:'Megtekintés tachográf-nyomtatványként', po_hide:'Nyomtatvány elrejtése',
+ po_head:'ELLENŐRZŐ NYOMTATVÁNY · 24 óra', po_veh:'Jármű', po_odo:'Kilométeróra',
+ po_counters:'Számlálók', po_places:'Hely', po_sum:'NAPI ÖSSZESÍTŐ', po_rest_after:'Pihenőidő a nap után',
+ po_exc:'KIVÉTELEK', po_viol_h:'JOGSÉRTÉSEK', po_none:'nincs', po_bal:'EGYENLEG',
+ po_foot:'A TAXO 561 készítette · nem hivatalos dokumentum',
+ install_title:'Telepítés az eszközre',
+ install_intro:'Az alkalmazás offline is működik, és ikonként hozzáadható a kezdőképernyőhöz vagy az alkalmazásmenühöz.',
+ btn_install:'Alkalmazás telepítése',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Nyisd meg az oldalt Safariban → Megosztás gomb → „Hozzáadás a kezdőképernyőhöz" → „Hozzáadás".',
+ ins_and:'Android (Chrome)', ins_and_s:'Nyisd meg Chrome-ban → ⋮ menü jobbra fent → „Alkalmazás telepítése".',
+ ins_lap:'Laptop (Chrome / Edge)', ins_lap_s:'Nyisd meg az oldalt → telepítés ikon a címsorban → „Telepítés".',
+ ins_file:'Offline fájl', ins_file_s:'Töltsd le a HTML-fájlt, és nyisd meg dupla kattintással — internet nélkül is működik bármely eszközön.',
+ data_title:'Adatmentés', data_note:'Az adatok ezen az eszközön tárolódnak. Készíts mentést telefoncsere vagy a böngésző törlése előtt.',
+ btn_export:'Mentés letöltése (JSON)', btn_import:'Visszaállítás fájlból',
+ import_ok:'Az adatok sikeresen visszaálltak.', import_err:'A fájlt nem sikerült beolvasni.',
+ disclaimer:'Ez az eszköz tájékoztató jellegű. Lefedi az 561/2006/EK rendelet szabályait a 3., 4(o), 8(5), 8(6a), 9(1), 12., 13. és 14. cikk szerinti kivételekkel együtt, valamint az AETR szerinti fuvarozásokat. A 13. cikk szerinti nemzeti eltérések országonként különböznek és idővel változnak — az alkalmazás keretet ad a rögzítésükhöz, de nem tartalmaz teljes listát minden országra. Ellenőrizd a hatályos nemzeti szabályokat, és ellenőrzéskor ne csak erre az eszközre hagyatkozz. Nem jogi tanácsadás.'
+},
+
+ru:{
+ hero_onduty:'В рейсе · {act}',
+ hero_left_drive:'осталось на управление',
+ hero_driven_today:'Проехано сегодня {x} ч.',
+ hero_limit_today:'Дневной предел {lim} ч.',
+ hero_resting:'Отдыхаешь',
+ hero_until_start:'до выезда',
+ hero_can_start:'Можешь выехать в <b>{time}</b>, {date}.',
+ hero_ready:'Готов к выезду',
+ hero_since:'не раньше',
+ hero_rest_done:'Требуемый отдых выполнен.',
+ hero_nodata:'Нет записанных дней',
+ hero_nodata_say:'Начни с «Активного дня» — введи пробег и запусти первое действие.',
+ hero_exempt:'Освобождённый день',
+ dash_disc_on:'Тахошайба · {d}',
+ gs_scale:'Шкала', gs_seg:'Сегменты',
+ th_group_light:'Светлые',
+ th_group_dark:'Тёмные',
+ th_day:'День',
+ th_mist:'Туман',
+ th_paper:'Бумага',
+ th_ocean:'Океан',
+ th_sun:'Солнце',
+ th_ink:'Чернила',
+ th_night:'Ночь',
+ th_carbon:'Уголь',
+ th_dusk:'Сумерки',
+ th_halogen:'Галоген',
+ th_beacon:'Маяк',
+ th_auto:'Автоматически',
+ app_name:'TAXO 561',
+ subtitle:'Журнал и контроль по Регламенту 561/2006',
+ tab_dash:'Панель', tab_add:'Записать день', tab_active:'Активный день', tab_veh:'Транспорт', tab_month:'Отчёты', tab_log:'Журнал', tab_viol:'Нарушения', tab_install:'Настройки',
+ vb_cap:'Текущее транспортное средство', vb_change:'Сменить', vb_none:'не задано', vb_prompt:'Регистрационный номер:',
+ dash_next:'Самое раннее следующее начало',
+ dash_worktime:'Недельное рабочее время (Директива 2002/15/ЕС)',
+ ns_exempt:'День освобождён от 561/2006 — эта оценка к нему не относится.',
+ ns_note_weekly:'Требуется еженедельный отдых (мин. {h} ч сокращённый — возникает обязанность компенсации).',
+ ns_note_reduced:'На основе сокращённого ежедневного отдыха (мин. {h} ч).',
+ ns_note_regular:'Сокращённые отдыхи в этом цикле исчерпаны — требуется обычный (мин. {h} ч).',
+ wt_week:'На этой неделе', wt_avg:'Среднее (записанные недели)',
+ wt_hint:'Рабочее время = управление + другая работа, без перерывов и готовности. Жёсткий предел 60 ч в неделю — ст. 4(b); среднее в 48 ч официально считается за отчётный период 4 (до 6) месяцев — значение здесь только ориентировочное.',
+ l_poa:'Готовность / POA (Директива 2002/15/ЕС, ст. 3(b))',
+ poa_hint:'Время, когда вы не на рабочем месте, но должны оставаться доступным (например, ожидание при погрузке, переправа на пароме). Не считается рабочим временем, но и не является отдыхом.',
+ disc_poa:'готовность',
+ po_driver:'Водитель', po_worktime:'Рабочее время (2002/15/ЕС)',
+ v_worktime_over60:'Недельное рабочее время {x} ч против жёсткого предела 60 ч (неделя {wk})',
+ veh_title:'Транспортные средства', veh_note:'Реестр машин — активная предлагается автоматически при новом дне.',
+ btn_add_veh:'+ Добавить машину', veh_empty:'Машины ещё не добавлены.',
+ veh_active_badge:'активная', veh_make_active:'Сделать активной', veh_confirm_del:'Удалить эту машину из реестра?',
+ veh_dup:'Машина с таким номером уже есть.',
+ per_week:'Неделя', per_pair:'Две недели', per_month:'Месяц', per_custom:'Период',
+ l_from:'С', l_to:'По', btn_csv:'Экспорт CSV', btn_print:'Печать / PDF',
+ lv_cards:'Карточки', lv_table:'Таблица', lt_time:'Время', lt_drv:'Управление', lt_status:'Статус',
+ driver_title:'Данные водителя', l_driver_name:'Имя водителя',
+ active_title:'Активный день с таймером', active_note:'Здесь начинается рабочий день: введите пробег и запустите первое действие. Выбор другого автоматически завершает текущее. В конце нажмите «Завершить и сохранить день» — итоги перейдут в запись дня.',
+ active_empty:'Нет запущенного действия.', act_stop:'Остановить', act_now:'СЕЙЧАС',
+ active_log_title:'Действия за сегодня', active_log_empty:'Действия ещё не записаны.',
+ act_confirm_del:'Удалить это действие?',
+ active_none_yet:'Запустите хотя бы одно действие перед завершением дня.',
+ btn_finish_day:'Завершить и сохранить день',
+ l_active_odo:'Начальный пробег за день',
+ active_odo_hint:'Введите один раз в начале смены — при завершении он автоматически попадёт в запись дня.',
+ sync_title:'Синхронизация между устройствами',
+ sync_note:'Войдите через Google, чтобы дни синхронизировались между телефоном и компьютером. Данные хранятся в вашем собственном проекте Firebase и доступны только вашей учётной записи. Без входа приложение работает как обычно, но только локально.',
+ sync_config_label:'Конфигурация Firebase (из вашего проекта)',
+ sync_config_hint:'Копируется из Firebase Console → Project settings → Your apps → SDK setup and configuration.',
+ btn_sync_connect:'Подключить',
+ l_email:'Эл. почта', l_password:'Пароль',
+ btn_sync_google:'Вход через Google', sync_or:'или по почте и паролю:',
+ btn_sync_login:'Вход', btn_sync_register:'Регистрация',
+ btn_sync_now:'Синхронизировать сейчас', btn_sync_logout:'Выход',
+ sync_confirm_pull:'В облаке есть данные с другого устройства, отличные от здешних. Загрузить их сейчас? (локальные данные будут заменены)',
+ sync_logged_as:'Синхронизировано как: {email}', sync_not_logged:'Вход не выполнен — данные остаются только на этом устройстве.',
+ sync_cfg_empty:'Вставьте конфигурацию из Firebase.', sync_cfg_bad:'Конфигурацию не удалось прочитать или подключение не удалось.',
+ sync_login_err:'Ошибка: {msg}', sync_done:'Синхронизировано.',
+ sync_not_ready:'Соединение ещё устанавливается — попробуйте снова через несколько секунд.',
+ sync_email_only:'В приложении с домашнего экрана iOS не может вернуться со страницы Google, поэтому здесь вход выполняется по почте и паролю (тем, которые вы регистрируете один раз):',
+ l_new_password:'Новый пароль для этой учётной записи',
+ btn_sync_setpw:'Задать пароль для этой учётной записи',
+ sync_setpw_hint:'Если вы вошли через Google, задайте здесь пароль для той же учётной записи. Затем на телефоне войдите с той же почтой и этим паролем — данные останутся теми же.',
+ sync_pw_set:'Готово. Теперь можно входить и с {email} и этим паролем.',
+ sync_pw_short:'Пароль должен быть не короче 6 знаков.',
+ sync_email_taken:'Эта почта уже используется другим способом входа (например, Google). Войдите через Google в браузере и задайте пароль для той же учётной записи — тогда сможете входить и по паролю.',
+ dash_current:'Управление — неделя / двухнедельный период',
+ dash_allow:'Использованные и оставшиеся послабления',
+ dash_rest:'Недельный цикл и отдых',
+ dash_comp:'Причитающаяся компенсация',
+ dash_strip:'Последние 14 дней — управление',
+ add_title:'Завершение рабочего дня', edit_title:'Правка рабочего дня',
+ add_note:'Регистрационный номер запоминается автоматически. Вводите его только при смене грузовика.',
+ l_date:'Дата', l_start:'Начало рабочего дня', l_end:'Конец рабочего дня',
+ sh_places:'Место начала и окончания',
+ l_startPlace:'Место начала', l_startCountry:'Страна',
+ l_endPlace:'Место окончания', l_endCountry:'Страна',
+ places_hint:'Обязательная запись по ст. 34 Регламента 165/2014 — сверяется с ручными записями в тахографе при дорожной проверке.',
+ sh_veh:'Показания тахографа', sh_rest:'Отдых после окончания дня',
+ seg_title:'Транспортное средство', seg_plate:'Регистрационный номер',
+ seg_odo_start:'Пробег — начало', seg_odo_end:'Пробег — конец',
+ seg_drv_start:'Счётчик управления — начало (чч:мм)', seg_drv_end:'Счётчик управления — конец (чч:мм)',
+ seg_rest_start:'Счётчик перерывов — начало (чч:мм)', seg_rest_end:'Счётчик перерывов — конец (чч:мм)',
+ seg_hint:'Двоеточие ставится автоматически — набирайте только цифры (например, 145 → 1:45). Если тахограф не показывает накопительный счётчик, оставьте «начало» пустым и введите итог за день в «конец».',
+ calc_prefix:'Рассчитано:', calc_drv:'управление', calc_other:'другая работа', calc_poa:'готовность', calc_rest:'перерывы', calc_km:'км',
+ step1_title:'Конец смены', step1_sub:'Когда и где заканчивается рабочий день.',
+ step2_title:'Запись тахографа', step2_sub:'Итоговые накопленные значения тахографа. Разница относительно начала считается автоматически.',
+ seg_other_start:'Другая работа — начало (чч:мм)', seg_other_end:'Другая работа — конец (чч:мм)',
+ seg_poa_start:'Готовность — начало (чч:мм)', seg_poa_end:'Готовность — конец (чч:мм)',
+ l_reading_source:'Источник данных', opt_source_display:'Дисплей', opt_source_printout:'Распечатка', opt_source_manual:'Ручной ввод',
+ l_card_state:'Состояние карты', opt_card_inserted:'Карта вставлена', opt_card_withdrawn:'Карта извлечена',
+ po_source:'Источник', po_card:'Карта',
+ btn_day_pdf:'PDF / Печать',
+ pd_subtitle:'Отчёт за рабочий день · Регламент (ЕС) 561/2006',
+ pd_sign_driver:'Подпись водителя', pd_sign_control:'Подпись проверяющего',
+ pd_generated:'Создано {d}',
+ pd_disclaimer:'Вспомогательный документ. Не заменяет распечатку тахографа и не является официальным документом при проверке.',
+ btn_add_vehicle:'+ Добавить машину (смена грузовика)',
+ l_resttype:'Вид отдыха после дня',
+ rt_none:'Отдыха ещё нет / продолжается',
+ rt_reg11:'Обычный ежедневный отдых (≥ 11 ч)',
+ rt_red9:'Сокращённый ежедневный отдых (9–11 ч)',
+ rt_split:'Разделённый ежедневный отдых (3 ч + 9 ч)',
+ rt_mm9:'Отдых при экипаже из двух водителей (≥ 9 ч в течение 30 ч)',
+ rt_wreg:'Обычный еженедельный отдых (≥ 45 ч)',
+ rt_wred:'Сокращённый еженедельный отдых (24–45 ч)',
+ l_resthours:'Продолжительность отдыха (часы)',
+ l_apply_comp:'Этот отдых включает компенсацию за более ранний сокращённый еженедельный отдых',
+ l_comp_hours:'Зачтённые часы компенсации',
+ sh_exceptions:'Исключения и отступления',
+ exc_note:'Отмечайте только то, что действительно относится к дню. Каждое исключение меняет правила, по которым проверяется день.',
+ exc_ferry_t:'Паром или поезд — ст. 9(1)',
+ exc_ferry_d:'Отдых был прерван посадкой на паром или поезд либо высадкой с них.',
+ exc_ferry_kind:'Прерванный отдых', exc_ferry_kind_daily:'Обычный ежедневный отдых', exc_ferry_kind_weekly:'Еженедельный отдых (переезд ≥ 8 ч)',
+ exc_ferry_count:'Число прерываний', exc_ferry_mins:'Общее время прерывания (мин)',
+ exc_ferry_couch:'Спальное место или койка были доступны',
+ exc_mm_t:'Экипаж из нескольких водителей — ст. 4(o) и 8(5)',
+ exc_mm_d:'Два или более водителя на борту в течение периода управления. Ежедневный отдых становится ≥ 9 ч в течение 30 ч.',
+ exc_mm_co:'Второй водитель (имя или номер карты)', exc_mm_from:'Совместный экипаж с (время)',
+ exc_a12_t:'Исключительные обстоятельства — ст. 12',
+ exc_a12_d:'Отступление от правил, чтобы достичь подходящего места остановки либо операционного центра / дома для еженедельного отдыха.',
+ exc_a12_type:'Вид отступления', exc_a12_type_stop:'Достижение подходящего места остановки (безопасность)',
+ exc_a12_type_home:'Достижение операционного центра или дома для еженедельного отдыха',
+ exc_a12_extra:'Превышение времени управления на (минут)', exc_a12_reason:'Причина (пишется от руки на распечатке)',
+ exc_a12_break30:'Непосредственно перед этим был перерыв 30 минут (позволяет до 2 ч)',
+ exc_a12_noted:'Причина записана на обороте распечатки тахографа',
+ exc_12d_t:'Правило 12 дней — ст. 8(6a)',
+ exc_12d_d:'Разовая нерегулярная международная перевозка пассажиров. Еженедельный отдых можно отложить до 12 последовательных 24-часовых периодов.',
+ exc_12d_since:'Начало рейса (дата)', exc_12d_conf:'Условия ст. 8(6a) выполнены (≥ 24 ч в другой стране, тахограф, документация)',
+ exc_nat_t:'Национальное отступление — ст. 13 / ст. 14',
+ exc_nat_d:'Освобождение по национальному законодательству страны, где выполняется перевозка.',
+ exc_nat_country:'Страна отступления', exc_nat_cat:'Основание', exc_nat_desc:'Описание / номер разрешения',
+ exc_nat_full:'День полностью освобождён от Регламента 561/2006',
+ exc_oos_t:'Вне сферы применения — ст. 3',
+ exc_oos_d:'Транспортное средство или перевозка вне сферы применения (например, до 3,5 т; до 7,5 т в радиусе 100 км с собственными материалами; некоммерческое использование и т. д.).',
+ exc_oos_reason:'Основание',
+ exc_aetr_t:'ЕСТР — перевозка вне ЕС/ЕЭЗ',
+ exc_aetr_d:'Управление в стране вне ЕС, где применяется Соглашение ЕСТР. Правила равнозначны, но день записывается отдельно.',
+ nat_cats:{
+  '':'— выберите —',
+  utility:'Коммунальные службы (вода, электричество, газ, канализация)',
+  agri:'Сельское, лесное хозяйство, рыболовство (в радиусе 100 км)',
+  post:'Универсальная почтовая услуга',
+  milk:'Сбор молока с ферм',
+  market:'Передвижные лавки на местных рынках',
+  circus:'Цирки и парки аттракционов',
+  vet:'Ветеринарная деятельность',
+  rescue:'Аварийные службы и спасательные операции',
+  medical:'Медицинское оборудование и материалы',
+  driving_school:'Обучение вождению и экзамены',
+  waste:'Вывоз отходов, содержание дорог',
+  animals:'Живой скот с фермы на рынок (в радиусе 100 км)',
+  museum:'Транспорт, представляющий исторический интерес',
+  other:'Иное основание (укажите ниже)'
+ },
+ l_notes:'Примечания (необязательно)', btn_save:'Рассчитать и сохранить день', btn_update:'Сохранить изменения', btn_cancel:'Отменить правку',
+ result_title:'Результат за',
+ r_workday:'Продолжительность рабочего дня', r_driving:'Управление в этот день',
+ r_breaks:'Перерывы в течение дня', r_km:'Пройдено километров', r_vehicles:'Транспортные средства',
+ r_route:'Маршрут', r_limit:'Применённый дневной предел',
+ r_rem_week:'Осталось на этой неделе', r_rem_pair:'Осталось на двухнедельный период',
+ r_ext_left:'Осталось продлённых дней (10 ч)', r_reduced_left:'Осталось сокращённых ежедневных отдыхов',
+ r_days_left:'Периодов до обязательного еженедельного отдыха', r_next_week:'Доступно на следующую неделю',
+ r_viol:'Нарушения за день', r_exc:'Применённые исключения',
+ month_title:'Итоги за месяц', l_month:'Месяц',
+ m_km:'километров', m_drv:'часов управления', m_rest:'часов перерывов',
+ m_days:'рабочих дней', m_avg:'среднее управление/день', m_viol:'нарушений',
+ m_empty:'За выбранный месяц нет записанных дней.',
+ m_weeks:'Недели в месяце', m_plates:'Использованные машины', m_countries:'Посещённые страны', m_exc:'Применённые исключения',
+ log_title:'Журнал рабочих дней', log_hint:'Нажмите на день, чтобы увидеть полную разбивку.',
+ log_empty:'Рабочие дни ещё не записаны.',
+ det_times:'Время', det_veh:'Машины и счётчики', det_rest:'Отдых', det_bal:'Баланс на этот день',
+ det_exc:'Исключения', det_viol:'Нарушения и примечания', det_notes:'Примечания',
+ det_edit:'Править', det_del:'Удалить', det_confirm:'Удалить этот день?',
+ det_noviol:'За этот день нарушений не выявлено.',
+ det_start:'Начало', det_end:'Конец', det_workday:'Рабочий день',
+ det_weekdrv:'Управление за неделю', det_pairdrv:'Управление за двухнедельный период',
+ viol_title:'Выявленные нарушения', viol_empty:'Нарушений не выявлено.',
+ rest_days:'24-часовых периодов с последнего еженедельного отдыха',
+ rest_left:'Осталось периодов до еженедельного отдыха',
+ allow_ext_t:'Дни продлённого управления до 10 ч', allow_ext_d:'Не более двух раз в календарную неделю — ст. 6(1)',
+ allow_red_t:'Сокращённые ежедневные отдыхи (9–11 ч)', allow_red_d:'Не более трёх раз между двумя еженедельными отдыхами — ст. 8(4)',
+ allow_wred_t:'Сокращённый еженедельный отдых в двухнедельном периоде', allow_wred_d:'В любые две последовательные недели хотя бы один отдых должен быть обычным (45 ч) — ст. 8(6)',
+ allow_wdead_t:'Срок начала еженедельного отдыха', allow_wdead_d:'Не позднее конца шестого 24-часового периода — ст. 8(6)',
+ allow_12d:'Правило 12 дней активно — срок продлевается до 12 периодов',
+ used:'использовано', left:'осталось', of:'из',
+ no_comp:'Компенсация в данный момент не причитается.', no_data:'Дни ещё не записаны.',
+ ok_status:'В норме', viol_count:'наруш.', exempt_badge:'освобождён',
+ unit_days:'дней', unit_hours:'ч', unit_km:'км', unit_min:'мин', comp_deadline:'срок',
+ gauge_week:'На этой неделе', gauge_pair:'Двухнедельный период',
+ rest_labels:{none:'без отдыха',regular11:'обычный ежедневный',reduced9:'сокращённый ежедневный',split:'разделённый',mm9:'экипаж из двух водителей',
+  'weekly-regular':'обычный еженедельный','weekly-reduced':'сокращённый еженедельный'},
+ v_driving_abs:'Превышено дневное управление: {x} ч при допустимых {lim} ч',
+ v_driving_ext:'Третье или последующее продление свыше 9 ч на неделе {wk} — допускаются два',
+ v_break_missing:'Недостаточный перерыв: при {x} ч управления требуется не менее 45 мин (записано {y} мин)',
+ v_short_rest:'Ежедневный отдых менее 11 ч — {x} ч',
+ v_shift_over15:'Превышен рабочий день: {x} ч. Максимум — 15 ч, поскольку даже сокращённый отдых в 9 ч уже не помещается в 24-часовой период после предыдущего отдыха.',
+ v_shift_over13_reg:'Рабочий день {x} ч с обычным отдыхом (≥ 11 ч) — в этом случае максимум 13 ч. Свыше 13 ч требуется сокращённый отдых (9–11 ч), и он засчитывается в три допустимых между двумя еженедельными отдыхами.',
+ n_shift_15:'Рабочий день {x} ч — допускается до 15 ч, но только с сокращённым ежедневным отдыхом. Это сокращённый отдых № {n} из 3 допустимых между двумя еженедельными отдыхами.',
+ v_worktime_break:'Недостаточный перерыв относительно рабочего времени: при {x} ч работы требуется не менее {req} мин (записано {y} мин)',
+ v_reduced_short:'Сокращённый ежедневный отдых менее 9 ч — {x} ч',
+ v_reduced_too_many:'Четвёртый или последующий сокращённый ежедневный отдых между двумя еженедельными отдыхами ({x})',
+ v_split_short:'Разделённый ежедневный отдых менее 12 ч в сумме',
+ v_mm_short:'Отдых при экипаже из двух водителей менее 9 ч — {x} ч',
+ v_wreg_short:'Отмечен как обычный еженедельный отдых, но менее 45 ч',
+ v_wk_under24:'Еженедельный отдых менее минимума в 24 ч',
+ v_week_late:'Еженедельный отдых просрочен — прошло {x} периодов при допустимых {lim}',
+ v_two_reduced:'Два подряд сокращённых еженедельных отдыха — хотя бы один в двухнедельном периоде должен быть ≥ 45 ч',
+ v_comp_overdue:'Просроченная компенсация с {d} — причитается {x} ч (срок {dl})',
+ v_week_over56:'Превышено недельное управление: {x} ч при пределе 56 ч ({wk})',
+ n_long_workday:'Длинный рабочий день — {x} ч между двумя отдыхами. По 561/2006 это не нарушение, но стоит следить за усталостью.',
+ v_pair_over90:'Превышен двухнедельный предел: {x} ч при пределе 90 ч',
+ v_ferry_count:'Отдых прерывался {x} раз из-за парома/поезда — допускается не более 2',
+ v_ferry_mins:'Общее прерывание составляет {x} мин — допускается не более 60 мин',
+ v_ferry_couch:'Не отмечено наличие спального места или койки — условие ст. 9(1)',
+ v_a12_over:'Превышение по ст. 12 составляет {x} мин при допустимых {lim} мин',
+ v_a12_note:'Причина по ст. 12 не записана на распечатке — требуется запись от руки',
+ v_a12_comp:'Отступление по ст. 12 ради возвращения домой требует компенсирующего отдыха, взятого целиком до конца третьей следующей недели',
+ n_exempt:'День освобождён от 561/2006 — он не засчитывается в недельные и двухнедельные пределы',
+ n_ferry_ok:'Прерывание из-за парома/поезда в допустимых пределах — отдых остаётся обычным',
+ n_mm:'Экипаж из двух водителей: ежедневный отдых ≥ 9 ч в течение 30 ч; в первый час присутствие второго водителя необязательно',
+ n_a12:'Применена ст. 12 — отступление {x} мин. Запись причины от руки на распечатке обязательна',
+ n_12d:'Правило 12 дней по ст. 8(6a) активно — после рейса должны следовать два обычных еженедельных отдыха либо один обычный и один сокращённый',
+ n_aetr:'Перевозка записывается по ЕСТР — день не засчитывается в пределы 561/2006',
+ dash_disc:'Тахошайба — последний рабочий день',
+ det_disc:'Тахошайба за день',
+ disc_drv:'управление', disc_brk:'перерывы', disc_oth:'другая работа', disc_rest:'отдых',
+ disc_approx:'Распределение по циферблату приблизительное — по итогам за день.',
+ rest_auto:'Ежедневный отдых после {d}: {x} ч — будет автоматически записан к предыдущему дню',
+ rest_auto_type:'предлагаемый вид',
+ po_show:'Показать как распечатку тахографа', po_hide:'Скрыть распечатку',
+ po_head:'КОНТРОЛЬНАЯ РАСПЕЧАТКА · 24 ч', po_veh:'Транспортное средство', po_odo:'Пробег',
+ po_counters:'Счётчики', po_places:'Место', po_sum:'ИТОГИ ЗА ДЕНЬ', po_rest_after:'Отдых после дня',
+ po_exc:'ИСКЛЮЧЕНИЯ', po_viol_h:'НАРУШЕНИЯ', po_none:'нет', po_bal:'БАЛАНС',
+ po_foot:'Создано в TAXO 561 · неофициальный документ',
+ install_title:'Установка на устройство',
+ install_intro:'Приложение работает без интернета и может быть добавлено значком на домашний экран или в меню приложений.',
+ btn_install:'Установить приложение',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Откройте страницу в Safari → кнопка «Поделиться» → «На экран «Домой»» → «Добавить».',
+ ins_and:'Android (Chrome)', ins_and_s:'Откройте в Chrome → меню ⋮ вверху справа → «Установить приложение».',
+ ins_lap:'Ноутбук (Chrome / Edge)', ins_lap_s:'Откройте страницу → значок установки в адресной строке → «Установить».',
+ ins_file:'Офлайн-файл', ins_file_s:'Скачайте HTML-файл и откройте его двойным щелчком — работает без интернета на любом устройстве.',
+ data_title:'Резервная копия данных', data_note:'Данные хранятся на этом устройстве. Сделайте копию перед сменой телефона или очисткой браузера.',
+ btn_export:'Скачать резервную копию (JSON)', btn_import:'Восстановить из файла',
+ import_ok:'Данные успешно восстановлены.', import_err:'Файл не удалось прочитать.',
+ disclaimer:'Этот инструмент носит информационный характер. Он охватывает правила Регламента (ЕС) 561/2006 вместе с исключениями по ст. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 и 14, а также перевозки по ЕСТР. Национальные отступления по ст. 13 различаются по странам и со временем меняются — приложение даёт рамку для их записи, но не содержит исчерпывающего перечня для каждой страны. Проверяйте действующие национальные правила и не полагайтесь только на этот инструмент при проверке. Не является юридической консультацией.'
+},
+
+pl:{
+ hero_onduty:'W trasie · {act}',
+ hero_left_drive:'pozostało na prowadzenie',
+ hero_driven_today:'Przejechane dziś {x} h.',
+ hero_limit_today:'Limit dzienny {lim} h.',
+ hero_resting:'Odpoczywasz',
+ hero_until_start:'do wyjazdu',
+ hero_can_start:'Możesz ruszyć o <b>{time}</b>, {date}.',
+ hero_ready:'Gotowy do wyjazdu',
+ hero_since:'najwcześniej od',
+ hero_rest_done:'Wymagany odpoczynek został odebrany.',
+ hero_nodata:'Brak zapisanych dni',
+ hero_nodata_say:'Zacznij od „Aktywny dzień" — wpisz przebieg i uruchom pierwszą czynność.',
+ hero_exempt:'Dzień wyłączony',
+ dash_disc_on:'Tarcza tachografu · {d}',
+ gs_scale:'Skala', gs_seg:'Segmenty',
+ th_group_light:'Jasne',
+ th_group_dark:'Ciemne',
+ th_day:'Dzień',
+ th_mist:'Mgła',
+ th_paper:'Papier',
+ th_ocean:'Ocean',
+ th_sun:'Światło dnia',
+ th_ink:'Atrament',
+ th_night:'Noc',
+ th_carbon:'Karbon',
+ th_dusk:'Zmierzch',
+ th_halogen:'Halogen',
+ th_beacon:'Latarnia',
+ th_auto:'Automatycznie',
+ app_name:'TAXO 561',
+ subtitle:'Dziennik i kontrola według rozporządzenia 561/2006',
+ tab_dash:'Pulpit', tab_add:'Zapisz dzień', tab_active:'Aktywny dzień', tab_veh:'Pojazdy', tab_month:'Raporty', tab_log:'Dziennik', tab_viol:'Naruszenia', tab_install:'Ustawienia',
+ vb_cap:'Bieżący pojazd', vb_change:'Zmień', vb_none:'nie ustawiono', vb_prompt:'Numer rejestracyjny:',
+ dash_next:'Najwcześniejszy następny start',
+ dash_worktime:'Tygodniowy czas pracy (dyrektywa 2002/15/WE)',
+ ns_exempt:'Dzień jest wyłączony spod 561/2006 — to oszacowanie go nie dotyczy.',
+ ns_note_weekly:'Wymagany jest odpoczynek tygodniowy (min. {h} h skrócony — należy się rekompensata).',
+ ns_note_reduced:'Na podstawie skróconego odpoczynku dziennego (min. {h} h).',
+ ns_note_regular:'Skrócone odpoczynki w tym cyklu zostały wykorzystane — wymagany jest regularny (min. {h} h).',
+ wt_week:'W tym tygodniu', wt_avg:'Średnia (zapisane tygodnie)',
+ wt_hint:'Czas pracy = prowadzenie + inna praca, bez przerw i dyspozycyjności. Sztywny limit 60 h tygodniowo wynika z art. 4(b); średnia 48 h jest oficjalnie liczona w okresie rozliczeniowym 4 (do 6) miesięcy — wartość tutaj jest tylko orientacyjna.',
+ l_poa:'Dyspozycyjność / POA (dyrektywa 2002/15/WE, art. 3(b))',
+ poa_hint:'Czas, gdy nie jesteś na stanowisku pracy, ale musisz pozostać dostępny (np. oczekiwanie przy załadunku, przeprawa promem). Nie liczy się jako czas pracy, ale też nie jest odpoczynkiem.',
+ disc_poa:'dyspozycyjność',
+ po_driver:'Kierowca', po_worktime:'Czas pracy (2002/15/WE)',
+ v_worktime_over60:'Tygodniowy czas pracy {x} h wobec sztywnego limitu 60 h (tydzień {wk})',
+ veh_title:'Pojazdy', veh_note:'Rejestr pojazdów — aktywny jest proponowany automatycznie przy nowym dniu.',
+ btn_add_veh:'+ Dodaj pojazd', veh_empty:'Nie dodano jeszcze pojazdów.',
+ veh_active_badge:'aktywny', veh_make_active:'Ustaw jako aktywny', veh_confirm_del:'Usunąć ten pojazd z rejestru?',
+ veh_dup:'Pojazd o tym numerze już istnieje.',
+ per_week:'Tydzień', per_pair:'Dwa tygodnie', per_month:'Miesiąc', per_custom:'Okres',
+ l_from:'Od', l_to:'Do', btn_csv:'Eksport CSV', btn_print:'Drukuj / PDF',
+ lv_cards:'Karty', lv_table:'Tabela', lt_time:'Godziny', lt_drv:'Prowadzenie', lt_status:'Status',
+ driver_title:'Dane kierowcy', l_driver_name:'Imię i nazwisko kierowcy',
+ active_title:'Aktywny dzień ze stoperem', active_note:'Tutaj zaczyna się dzień pracy: wpisz przebieg i uruchom pierwszą czynność. Wybór innej automatycznie kończy bieżącą. Na koniec naciśnij „Zakończ i zapisz dzień" — sumy przejdą do wpisu dnia.',
+ active_empty:'Brak uruchomionej czynności.', act_stop:'Zatrzymaj', act_now:'TERAZ',
+ active_log_title:'Dzisiejsze czynności', active_log_empty:'Nie zapisano jeszcze czynności.',
+ act_confirm_del:'Usunąć tę czynność?',
+ active_none_yet:'Uruchom co najmniej jedną czynność przed zakończeniem dnia.',
+ btn_finish_day:'Zakończ i zapisz dzień',
+ l_active_odo:'Początkowy przebieg dnia',
+ active_odo_hint:'Wpisz go raz na początku zmiany — przy zakończeniu trafi automatycznie do wpisu dnia.',
+ sync_title:'Synchronizacja między urządzeniami',
+ sync_note:'Zaloguj się przez Google, aby dni były zsynchronizowane między telefonem a komputerem. Dane są przechowywane we własnym projekcie Firebase i dostępne tylko z twojego konta. Bez logowania aplikacja działa normalnie, ale tylko lokalnie.',
+ sync_config_label:'Konfiguracja Firebase (z twojego projektu)',
+ sync_config_hint:'Kopiuje się z Firebase Console → Project settings → Your apps → SDK setup and configuration.',
+ btn_sync_connect:'Połącz',
+ l_email:'E-mail', l_password:'Hasło',
+ btn_sync_google:'Zaloguj przez Google', sync_or:'lub e-mailem i hasłem:',
+ btn_sync_login:'Zaloguj', btn_sync_register:'Zarejestruj',
+ btn_sync_now:'Synchronizuj teraz', btn_sync_logout:'Wyloguj',
+ sync_confirm_pull:'W chmurze są dane z innego urządzenia, różne od tych tutaj. Wczytać je teraz? (dane lokalne zostaną zastąpione)',
+ sync_logged_as:'Zsynchronizowano jako: {email}', sync_not_logged:'Nie zalogowano — dane pozostają tylko na tym urządzeniu.',
+ sync_cfg_empty:'Wklej konfigurację z Firebase.', sync_cfg_bad:'Nie udało się odczytać konfiguracji lub połączenie się nie powiodło.',
+ sync_login_err:'Błąd: {msg}', sync_done:'Zsynchronizowano.',
+ sync_not_ready:'Połączenie jeszcze się nawiązuje — spróbuj ponownie za kilka sekund.',
+ sync_email_only:'W aplikacji z ekranu głównego iOS nie potrafi wrócić ze strony Google, dlatego tutaj logujesz się e-mailem i hasłem (tymi, które raz zarejestrujesz):',
+ l_new_password:'Nowe hasło do tego konta',
+ btn_sync_setpw:'Ustaw hasło do tego konta',
+ sync_setpw_hint:'Jeśli logowałeś się przez Google, ustaw tutaj hasło do tego samego konta. Potem na telefonie zaloguj się tym samym e-mailem i tym hasłem — dane pozostaną te same.',
+ sync_pw_set:'Gotowe. Teraz możesz logować się także przez {email} i to hasło.',
+ sync_pw_short:'Hasło musi mieć co najmniej 6 znaków.',
+ sync_email_taken:'Ten e-mail jest już używany przez inną metodę logowania (np. Google). Zaloguj się przez Google w przeglądarce i ustaw hasło do tego samego konta — wtedy będziesz mógł logować się też hasłem.',
+ dash_current:'Prowadzenie — tydzień / okres dwutygodniowy',
+ dash_allow:'Wykorzystane i pozostałe odstępstwa',
+ dash_rest:'Cykl tygodniowy i odpoczynki',
+ dash_comp:'Należna rekompensata',
+ dash_strip:'Ostatnie 14 dni — prowadzenie',
+ add_title:'Zamknięcie dnia pracy', edit_title:'Edycja dnia pracy',
+ add_note:'Numer rejestracyjny jest zapamiętywany automatycznie. Wpisujesz go tylko przy zmianie ciężarówki.',
+ l_date:'Data', l_start:'Początek dnia pracy', l_end:'Koniec dnia pracy',
+ sh_places:'Miejsce rozpoczęcia i zakończenia',
+ l_startPlace:'Miejsce rozpoczęcia', l_startCountry:'Kraj',
+ l_endPlace:'Miejsce zakończenia', l_endCountry:'Kraj',
+ places_hint:'Wpis obowiązkowy na podstawie art. 34 rozporządzenia 165/2014 — porównywany z wpisami ręcznymi w tachografie podczas kontroli drogowej.',
+ sh_veh:'Wskazania tachografu', sh_rest:'Odpoczynek po zakończeniu dnia',
+ seg_title:'Pojazd', seg_plate:'Numer rejestracyjny',
+ seg_odo_start:'Przebieg — początek', seg_odo_end:'Przebieg — koniec',
+ seg_drv_start:'Licznik prowadzenia — początek (gg:mm)', seg_drv_end:'Licznik prowadzenia — koniec (gg:mm)',
+ seg_rest_start:'Licznik przerw — początek (gg:mm)', seg_rest_end:'Licznik przerw — koniec (gg:mm)',
+ seg_hint:'Dwukropek wstawia się automatycznie — wpisuj tylko cyfry (np. 145 → 1:45). Jeśli tachograf nie pokazuje licznika sumarycznego, zostaw „początek" pusty i wpisz sumę dnia w polu „koniec".',
+ calc_prefix:'Obliczono:', calc_drv:'prowadzenie', calc_other:'inna praca', calc_poa:'dyspozycyjność', calc_rest:'przerwy', calc_km:'km',
+ step1_title:'Koniec zmiany', step1_sub:'Kiedy i gdzie kończy się dzień pracy.',
+ step2_title:'Zapis tachografu', step2_sub:'Końcowe wartości sumaryczne z tachografu. Różnica względem początku liczona jest automatycznie.',
+ seg_other_start:'Inna praca — początek (gg:mm)', seg_other_end:'Inna praca — koniec (gg:mm)',
+ seg_poa_start:'Dyspozycyjność — początek (gg:mm)', seg_poa_end:'Dyspozycyjność — koniec (gg:mm)',
+ l_reading_source:'Źródło danych', opt_source_display:'Wyświetlacz', opt_source_printout:'Wydruk', opt_source_manual:'Wpis ręczny',
+ l_card_state:'Stan karty', opt_card_inserted:'Karta włożona', opt_card_withdrawn:'Karta wyjęta',
+ po_source:'Źródło', po_card:'Karta',
+ btn_day_pdf:'PDF / Drukuj',
+ pd_subtitle:'Raport dnia pracy · rozporządzenie (WE) 561/2006',
+ pd_sign_driver:'Podpis kierowcy', pd_sign_control:'Podpis kontrolera',
+ pd_generated:'Wygenerowano {d}',
+ pd_disclaimer:'Dokument pomocniczy. Nie zastępuje wydruku z tachografu i nie jest dokumentem urzędowym podczas kontroli.',
+ btn_add_vehicle:'+ Dodaj pojazd (zmiana ciężarówki)',
+ l_resttype:'Rodzaj odpoczynku po dniu',
+ rt_none:'Jeszcze bez odpoczynku / trwa dalej',
+ rt_reg11:'Regularny odpoczynek dzienny (≥ 11 h)',
+ rt_red9:'Skrócony odpoczynek dzienny (9–11 h)',
+ rt_split:'Dzielony odpoczynek dzienny (3 h + 9 h)',
+ rt_mm9:'Odpoczynek w załodze kilkuosobowej (≥ 9 h w ciągu 30 h)',
+ rt_wreg:'Regularny odpoczynek tygodniowy (≥ 45 h)',
+ rt_wred:'Skrócony odpoczynek tygodniowy (24–45 h)',
+ l_resthours:'Długość odpoczynku (godziny)',
+ l_apply_comp:'Ten odpoczynek obejmuje rekompensatę za wcześniejszy skrócony odpoczynek tygodniowy',
+ l_comp_hours:'Zaliczone godziny rekompensaty',
+ sh_exceptions:'Wyjątki i odstępstwa',
+ exc_note:'Zaznacz tylko to, co naprawdę dotyczy dnia. Każdy wyjątek zmienia zasady, według których sprawdzany jest dzień.',
+ exc_ferry_t:'Prom lub pociąg — art. 9(1)',
+ exc_ferry_d:'Odpoczynek został przerwany wjazdem na prom lub pociąg albo zjazdem z nich.',
+ exc_ferry_kind:'Przerwany odpoczynek', exc_ferry_kind_daily:'Regularny odpoczynek dzienny', exc_ferry_kind_weekly:'Odpoczynek tygodniowy (podróż ≥ 8 h)',
+ exc_ferry_count:'Liczba przerwań', exc_ferry_mins:'Łączny czas przerwania (min)',
+ exc_ferry_couch:'Dostępna była koja lub kuszetka',
+ exc_mm_t:'Załoga kilkuosobowa — art. 4(o) i 8(5)',
+ exc_mm_d:'Dwóch lub więcej kierowców w pojeździe podczas okresu prowadzenia. Odpoczynek dzienny staje się ≥ 9 h w ciągu 30 h.',
+ exc_mm_co:'Drugi kierowca (imię lub numer karty)', exc_mm_from:'Wspólna załoga od (godzina)',
+ exc_a12_t:'Okoliczności wyjątkowe — art. 12',
+ exc_a12_d:'Odstępstwo od zasad w celu dotarcia do odpowiedniego miejsca postoju albo do bazy / domu na odpoczynek tygodniowy.',
+ exc_a12_type:'Rodzaj odstępstwa', exc_a12_type_stop:'Dotarcie do odpowiedniego miejsca postoju (bezpieczeństwo)',
+ exc_a12_type_home:'Dotarcie do bazy lub domu na odpoczynek tygodniowy',
+ exc_a12_extra:'Przekroczenie czasu prowadzenia o (minut)', exc_a12_reason:'Powód (należy wpisać odręcznie na wydruku)',
+ exc_a12_break30:'Bezpośrednio wcześniej wzięto przerwę 30 minut (pozwala do 2 h)',
+ exc_a12_noted:'Powód został zapisany na odwrocie wydruku z tachografu',
+ exc_12d_t:'Zasada 12 dni — art. 8(6a)',
+ exc_12d_d:'Pojedynczy okazjonalny międzynarodowy przewóz osób. Odpoczynek tygodniowy można odroczyć do 12 kolejnych okresów 24-godzinnych.',
+ exc_12d_since:'Początek usługi (data)', exc_12d_conf:'Warunki art. 8(6a) są spełnione (≥ 24 h w innym kraju, tachograf, dokumentacja)',
+ exc_nat_t:'Odstępstwo krajowe — art. 13 / art. 14',
+ exc_nat_d:'Zwolnienie na podstawie prawa krajowego kraju, w którym odbywa się przewóz.',
+ exc_nat_country:'Kraj odstępstwa', exc_nat_cat:'Podstawa', exc_nat_desc:'Opis / numer zezwolenia',
+ exc_nat_full:'Dzień jest całkowicie wyłączony spod rozporządzenia 561/2006',
+ exc_oos_t:'Poza zakresem — art. 3',
+ exc_oos_d:'Pojazd lub przewóz nie mieści się w zakresie (np. do 3,5 t; do 7,5 t w promieniu 100 km z własnym materiałem; użytek niekomercyjny itd.).',
+ exc_oos_reason:'Podstawa',
+ exc_aetr_t:'AETR — przewóz poza UE/EOG',
+ exc_aetr_d:'Prowadzenie w kraju spoza UE, gdzie obowiązuje umowa AETR. Zasady są równoważne, ale dzień zapisuje się osobno.',
+ nat_cats:{
+  '':'— wybierz —',
+  utility:'Media (woda, prąd, gaz, kanalizacja)',
+  agri:'Rolnictwo, leśnictwo, rybołówstwo (w promieniu 100 km)',
+  post:'Powszechna usługa pocztowa',
+  milk:'Odbiór mleka z gospodarstw',
+  market:'Sklepy obwoźne na targowiskach lokalnych',
+  circus:'Cyrki i wesołe miasteczka',
+  vet:'Działalność weterynaryjna',
+  rescue:'Służby ratunkowe i akcje ratownicze',
+  medical:'Sprzęt i materiały medyczne',
+  driving_school:'Szkolenie kierowców i egzaminy',
+  waste:'Wywóz odpadów, utrzymanie dróg',
+  animals:'Żywe zwierzęta z gospodarstwa na targ (w promieniu 100 km)',
+  museum:'Pojazdy o wartości historycznej',
+  other:'Inna podstawa (podaj poniżej)'
+ },
+ l_notes:'Uwagi (opcjonalnie)', btn_save:'Oblicz i zapisz dzień', btn_update:'Zapisz zmiany', btn_cancel:'Anuluj edycję',
+ result_title:'Wynik za',
+ r_workday:'Długość dnia pracy', r_driving:'Prowadzenie tego dnia',
+ r_breaks:'Przerwy w ciągu dnia', r_km:'Przejechane kilometry', r_vehicles:'Pojazdy',
+ r_route:'Trasa', r_limit:'Zastosowany limit dzienny',
+ r_rem_week:'Pozostało w tym tygodniu', r_rem_pair:'Pozostało na okres dwutygodniowy',
+ r_ext_left:'Pozostałe dni wydłużone (10 h)', r_reduced_left:'Pozostałe skrócone odpoczynki dzienne',
+ r_days_left:'Okresów do obowiązkowego odpoczynku tygodniowego', r_next_week:'Dostępne na przyszły tydzień',
+ r_viol:'Naruszenia za dzień', r_exc:'Zastosowane wyjątki',
+ month_title:'Podsumowanie miesiąca', l_month:'Miesiąc',
+ m_km:'kilometrów', m_drv:'godzin prowadzenia', m_rest:'godzin przerw',
+ m_days:'dni pracy', m_avg:'średnie prowadzenie/dzień', m_viol:'naruszeń',
+ m_empty:'Brak zapisanych dni dla wybranego miesiąca.',
+ m_weeks:'Tygodnie w miesiącu', m_plates:'Użyte pojazdy', m_countries:'Odwiedzone kraje', m_exc:'Zastosowane wyjątki',
+ log_title:'Dziennik dni pracy', log_hint:'Dotknij dnia, aby zobaczyć pełne rozbicie.',
+ log_empty:'Nie zapisano jeszcze dni pracy.',
+ det_times:'Godziny', det_veh:'Pojazdy i liczniki', det_rest:'Odpoczynek', det_bal:'Bilans na ten dzień',
+ det_exc:'Wyjątki', det_viol:'Naruszenia i uwagi', det_notes:'Uwagi',
+ det_edit:'Edytuj', det_del:'Usuń', det_confirm:'Usunąć ten dzień?',
+ det_noviol:'Nie stwierdzono naruszeń dla tego dnia.',
+ det_start:'Początek', det_end:'Koniec', det_workday:'Dzień pracy',
+ det_weekdrv:'Prowadzenie w tygodniu', det_pairdrv:'Prowadzenie w okresie dwutygodniowym',
+ viol_title:'Stwierdzone naruszenia', viol_empty:'Nie stwierdzono naruszeń.',
+ rest_days:'Okresów 24-godzinnych od ostatniego odpoczynku tygodniowego',
+ rest_left:'Pozostałych okresów do odpoczynku tygodniowego',
+ allow_ext_t:'Dni wydłużonego prowadzenia do 10 h', allow_ext_d:'Najwyżej dwa razy w tygodniu kalendarzowym — art. 6(1)',
+ allow_red_t:'Skrócone odpoczynki dzienne (9–11 h)', allow_red_d:'Najwyżej trzy razy między dwoma odpoczynkami tygodniowymi — art. 8(4)',
+ allow_wred_t:'Skrócony odpoczynek tygodniowy w okresie dwutygodniowym', allow_wred_d:'W dowolnych dwóch kolejnych tygodniach co najmniej jeden odpoczynek musi być regularny (45 h) — art. 8(6)',
+ allow_wdead_t:'Termin rozpoczęcia odpoczynku tygodniowego', allow_wdead_d:'Najpóźniej do końca szóstego okresu 24-godzinnego — art. 8(6)',
+ allow_12d:'Zasada 12 dni aktywna — termin wydłuża się do 12 okresów',
+ used:'wykorzystane', left:'pozostało', of:'z',
+ no_comp:'Obecnie nie należy się rekompensata.', no_data:'Nie zapisano jeszcze dni.',
+ ok_status:'W normie', viol_count:'narusz.', exempt_badge:'wyłączony',
+ unit_days:'dni', unit_hours:'h', unit_km:'km', unit_min:'min', comp_deadline:'termin',
+ gauge_week:'W tym tygodniu', gauge_pair:'Okres dwutygodniowy',
+ rest_labels:{none:'brak odpoczynku',regular11:'regularny dzienny',reduced9:'skrócony dzienny',split:'dzielony',mm9:'załoga kilkuosobowa',
+  'weekly-regular':'regularny tygodniowy','weekly-reduced':'skrócony tygodniowy'},
+ v_driving_abs:'Przekroczone prowadzenie dzienne: {x} h wobec dozwolonych {lim} h',
+ v_driving_ext:'Trzecie lub kolejne wydłużenie ponad 9 h w tygodniu {wk} — dozwolone są dwa',
+ v_break_missing:'Niewystarczająca przerwa: przy {x} h prowadzenia wymagane jest co najmniej 45 min (zapisano {y} min)',
+ v_short_rest:'Odpoczynek dzienny poniżej 11 h — {x} h',
+ v_shift_over15:'Przekroczony dzień pracy: {x} h. Maksimum to 15 h — nawet skrócony odpoczynek 9 h nie mieści się już w okresie 24 h po poprzednim odpoczynku.',
+ v_shift_over13_reg:'Dzień pracy {x} h z regularnym odpoczynkiem (≥ 11 h) — maksimum wynosi wtedy 13 h. Powyżej 13 h wymagany jest skrócony odpoczynek (9–11 h), który liczy się do trzech dozwolonych między dwoma odpoczynkami tygodniowymi.',
+ n_shift_15:'Dzień pracy {x} h — dopuszczalne jest do 15 h, ale tylko ze skróconym odpoczynkiem dziennym. To skrócony odpoczynek nr {n} z 3 dozwolonych między dwoma odpoczynkami tygodniowymi.',
+ v_worktime_break:'Niewystarczająca przerwa wobec czasu pracy: przy {x} h pracy wymagane jest co najmniej {req} min (zapisano {y} min)',
+ v_reduced_short:'Skrócony odpoczynek dzienny poniżej 9 h — {x} h',
+ v_reduced_too_many:'Czwarty lub kolejny skrócony odpoczynek dzienny między dwoma odpoczynkami tygodniowymi ({x})',
+ v_split_short:'Dzielony odpoczynek dzienny poniżej 12 h łącznie',
+ v_mm_short:'Odpoczynek w załodze kilkuosobowej poniżej 9 h — {x} h',
+ v_wreg_short:'Oznaczony jako regularny odpoczynek tygodniowy, ale poniżej 45 h',
+ v_wk_under24:'Odpoczynek tygodniowy poniżej minimum 24 h',
+ v_week_late:'Odpoczynek tygodniowy spóźniony — minęło {x} okresów wobec dozwolonych {lim}',
+ v_two_reduced:'Dwa kolejne skrócone odpoczynki tygodniowe — co najmniej jeden w okresie dwutygodniowym musi wynosić ≥ 45 h',
+ v_comp_overdue:'Zaległa rekompensata od {d} — należy się {x} h (termin {dl})',
+ v_week_over56:'Przekroczone prowadzenie tygodniowe: {x} h wobec limitu 56 h ({wk})',
+ n_long_workday:'Długi dzień pracy — {x} h między dwoma odpoczynkami. Według 561/2006 to nie naruszenie, ale warto uważać na zmęczenie.',
+ v_pair_over90:'Przekroczony limit dwutygodniowy: {x} h wobec limitu 90 h',
+ v_ferry_count:'Odpoczynek przerwano {x} razy z powodu promu/pociągu — dozwolone są najwyżej 2',
+ v_ferry_mins:'Łączne przerwanie wynosi {x} min — dozwolone jest najwyżej 60 min',
+ v_ferry_couch:'Nie odnotowano dostępności koi ani kuszetki — warunek art. 9(1)',
+ v_a12_over:'Przekroczenie według art. 12 wynosi {x} min wobec dozwolonych {lim} min',
+ v_a12_note:'Powód według art. 12 nie został zapisany na wydruku — wymagany jest wpis ręczny',
+ v_a12_comp:'Odstępstwo według art. 12 dla powrotu do domu wymaga odpoczynku wyrównawczego wykorzystanego jednorazowo przed końcem trzeciego następnego tygodnia',
+ n_exempt:'Dzień jest wyłączony spod 561/2006 — nie liczy się do limitów tygodniowych i dwutygodniowych',
+ n_ferry_ok:'Przerwanie z powodu promu/pociągu w dozwolonych granicach — odpoczynek pozostaje regularny',
+ n_mm:'Załoga kilkuosobowa: odpoczynek dzienny wynosi ≥ 9 h w ciągu 30 h; w pierwszej godzinie obecność drugiego kierowcy nie jest obowiązkowa',
+ n_a12:'Zastosowano art. 12 — odstępstwo {x} min. Ręczny wpis powodu na wydruku jest obowiązkowy',
+ n_12d:'Zasada 12 dni według art. 8(6a) aktywna — po usłudze muszą nastąpić dwa regularne odpoczynki tygodniowe albo jeden regularny i jeden skrócony',
+ n_aetr:'Przewóz zapisuje się według AETR — dzień nie liczy się do limitów 561/2006',
+ dash_disc:'Tarcza tachografu — ostatni dzień pracy',
+ det_disc:'Tarcza tachografu za dzień',
+ disc_drv:'prowadzenie', disc_brk:'przerwy', disc_oth:'inna praca', disc_rest:'odpoczynek',
+ disc_approx:'Rozkład na tarczy jest przybliżony — na podstawie sum dnia.',
+ rest_auto:'Odpoczynek dzienny po {d}: {x} h — zostanie automatycznie zapisany przy poprzednim dniu',
+ rest_auto_type:'proponowany rodzaj',
+ po_show:'Pokaż jako wydruk z tachografu', po_hide:'Ukryj wydruk',
+ po_head:'WYDRUK KONTROLNY · 24 h', po_veh:'Pojazd', po_odo:'Przebieg',
+ po_counters:'Liczniki', po_places:'Miejsce', po_sum:'PODSUMOWANIE DNIA', po_rest_after:'Odpoczynek po dniu',
+ po_exc:'WYJĄTKI', po_viol_h:'NARUSZENIA', po_none:'brak', po_bal:'BILANS',
+ po_foot:'Wygenerowano w TAXO 561 · dokument nieurzędowy',
+ install_title:'Instalacja na urządzeniu',
+ install_intro:'Aplikacja działa offline i można ją dodać jako ikonę na ekranie głównym lub w menu aplikacji.',
+ btn_install:'Zainstaluj aplikację',
+ ins_ios:'iPhone / iPad (Safari)', ins_ios_s:'Otwórz stronę w Safari → przycisk Udostępnij → „Do ekranu początkowego" → „Dodaj".',
+ ins_and:'Android (Chrome)', ins_and_s:'Otwórz w Chrome → menu ⋮ u góry po prawej → „Zainstaluj aplikację".',
+ ins_lap:'Laptop (Chrome / Edge)', ins_lap_s:'Otwórz stronę → ikona instalacji w pasku adresu → „Zainstaluj".',
+ ins_file:'Plik offline', ins_file_s:'Pobierz plik HTML i otwórz go podwójnym kliknięciem — działa bez internetu na każdym urządzeniu.',
+ data_title:'Kopia zapasowa danych', data_note:'Dane są przechowywane na tym urządzeniu. Zrób kopię przed zmianą telefonu lub wyczyszczeniem przeglądarki.',
+ btn_export:'Pobierz kopię zapasową (JSON)', btn_import:'Przywróć z pliku',
+ import_ok:'Dane zostały pomyślnie przywrócone.', import_err:'Nie udało się odczytać pliku.',
+ disclaimer:'To narzędzie ma charakter informacyjny. Obejmuje zasady rozporządzenia (WE) 561/2006 wraz z wyjątkami z art. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 i 14, a także przewozy według AETR. Odstępstwa krajowe z art. 13 różnią się między krajami i zmieniają się w czasie — aplikacja daje ramy do ich zapisania, ale nie zawiera wyczerpującej listy dla każdego kraju. Sprawdzaj obowiązujące przepisy krajowe i podczas kontroli nie polegaj wyłącznie na tym narzędziu. To nie jest porada prawna.'
+},
+
+de:{
+ hero_onduty:'Im Dienst · {act}',
+ hero_left_drive:'Lenkzeit übrig',
+ hero_driven_today:'Heute gefahren {x} h.',
+ hero_limit_today:'Tageslimit {lim} h.',
+ hero_resting:'Ruhezeit',
+ hero_until_start:'bis zur Abfahrt',
+ hero_can_start:'Du kannst um <b>{time}</b> losfahren, {date}.',
+ hero_ready:'Bereit zur Abfahrt',
+ hero_since:'frühestens ab',
+ hero_rest_done:'Die erforderliche Ruhezeit ist erfüllt.',
+ hero_nodata:'Keine Tage erfasst',
+ hero_nodata_say:'Beginne bei „Aktiver Tag“ — Kilometerstand eintragen und die erste Tätigkeit starten.',
+ hero_exempt:'Befreiter Tag',
+ dash_disc_on:'Fahrtenschreiber-Scheibe · {d}',
+ gs_scale:'Skala', gs_seg:'Segmente',
+ app_name:'TAXO 561',
+ th_group_light:'Hell',
+ th_group_dark:'Dunkel',
+ th_day:'Tag',
+ th_mist:'Nebel',
+ th_paper:'Papier',
+ th_ocean:'Ozean',
+ th_sun:'Sonnenlicht',
+ th_ink:'Tinte',
+ th_night:'Nacht',
+ th_carbon:'Karbon',
+ th_dusk:'Dämmerung',
+ th_halogen:'Halogen',
+ th_beacon:'Leuchtfeuer',
+ th_auto:'Automatisch',
  subtitle:'Fahrtenbuch & Kontrolle nach VO 561/2006',
  tab_dash:'Übersicht', tab_add:'Tag erfassen', tab_active:'Aktiver Tag', tab_veh:'Fahrzeuge', tab_month:'Berichte', tab_log:'Fahrtenbuch', tab_viol:'Verstöße', tab_install:'Einstellungen',
  vb_cap:'Aktuelles Fahrzeug', vb_change:'Wechseln', vb_none:'nicht gesetzt', vb_prompt:'Kennzeichen:',
@@ -1355,13 +3111,86 @@ function resolveTheme(){
   const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   return (h>=20||h<7||dark)?'night':'day';
 }
-const THEME_BAR_COLOR={night:'#12161d',day:'#f4f5f7',paper:'#f3f1ec',ocean:'#eef7f9',dusk:'#16121f',sun:'#ffffff',mist:'#eef0f4',carbon:'#141414'};
+const THEME_BAR_COLOR={night:'#12161d',day:'#f4f5f7',paper:'#f3f1ec',ocean:'#eef7f9',dusk:'#16121f',sun:'#ffffff',mist:'#eef0f4',carbon:'#141414',halogen:'#000000',ink:'#ffffff',beacon:'#000000'};
+
+/* ============ Theme & language dropdown pickers ============ */
+const THEME_ICON={
+ day:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ mist:'<path d="M3 8h13M18.5 8H21M3 12h5M10.5 12H21M3 16h11M16.5 16H21"/>',
+ paper:'<path d="M6 2.5h8l5 5v14H6z"/><path d="M14 2.5v5h5M9 12h6M9 15.5h6M9 18.5h4"/>',
+ ocean:'<path d="M2 16c1.5-1.6 3-1.6 4.5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4.5 0M2 20c1.5-1.6 3-1.6 4.5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4.5 0M12 3v9"/>',
+ sun:'<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18z" fill="currentColor" stroke="none"/>',
+ ink:'<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M8 8.5h8M8 12h8M8 15.5h5"/>',
+ night:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',
+ carbon:'<path d="M12 2.6l8.2 4.7v9.4L12 21.4 3.8 16.7V7.3z"/>',
+ dusk:'<path d="M12 4v3M5 11l1.6 1.6M19 11l-1.6 1.6M2.5 18h19M6.5 18a5.5 5.5 0 0111 0"/>',
+ halogen:'<circle cx="9" cy="12" r="4.5" fill="currentColor" stroke="none"/><path d="M16 8h4M16 12h5M16 16h4"/>',
+ beacon:'<circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/>',
+ auto:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 010 18z" fill="currentColor" stroke="none"/>'
+};
+const THEMES_LIGHT=['day','mist','paper','ocean','sun','ink'];
+const THEMES_DARK=['night','carbon','dusk','halogen','beacon'];
+// language names stay in their own language — that is what a speaker looks for in a list
+const LANGS=[['bg','Български'],['en','English'],['de','Deutsch'],['pl','Polski'],['ro','Română'],
+             ['ru','Русский'],['sr','Srpski'],['tr','Türkçe'],['hu','Magyar']];
+
+function svgIco(paths,cls){
+  return '<svg class="'+(cls||'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+paths+'</svg>';
+}
+const CHEV='<svg class="pb-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>';
+
+function themeName(k){ return t('th_'+k); }
+function renderThemePicker(){
+  const btn=document.getElementById('themeBtn'), menu=document.getElementById('themeMenu');
+  if(!btn||!menu) return;
+  btn.innerHTML=svgIco(THEME_ICON[THEME]||THEME_ICON.auto,'pb-ico')+'<span>'+themeName(THEME)+'</span>'+CHEV;
+  const item=k=>'<button data-theme="'+k+'" class="'+(k===THEME?'active':'')+'" role="option">'+
+    svgIco(THEME_ICON[k])+'<span>'+themeName(k)+'</span></button>';
+  menu.innerHTML=
+    '<div class="picker-group">'+t('th_group_light')+'</div>'+THEMES_LIGHT.map(item).join('')+
+    '<div class="picker-group">'+t('th_group_dark')+'</div>'+THEMES_DARK.map(item).join('')+
+    '<div class="picker-sep"></div>'+item('auto');
+  menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    THEME=b.dataset.theme;
+    try{ localStorage.setItem('t561-theme',THEME); }catch(e){}
+    applyTheme(); closePickers();
+  }));
+}
+function renderLangPicker(){
+  const btn=document.getElementById('langBtn'), menu=document.getElementById('langMenu');
+  if(!btn||!menu) return;
+  const cur=LANGS.find(l=>l[0]===LANG)||LANGS[0];
+  btn.innerHTML='<span class="pm-code">'+cur[0].toUpperCase()+'</span><span>'+cur[1]+'</span>'+CHEV;
+  menu.innerHTML=LANGS.map(([code,name])=>
+    '<button data-lang="'+code+'" class="'+(code===LANG?'active':'')+'" role="option">'+
+    '<span class="pm-code">'+code.toUpperCase()+'</span><span>'+name+'</span></button>').join('');
+  menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    LANG=b.dataset.lang;
+    try{ localStorage.setItem('t561-lang',LANG); }catch(e){}
+    applyLang(); closePickers();
+  }));
+}
+function closePickers(){
+  document.querySelectorAll('.picker-menu').forEach(m=>m.classList.remove('open'));
+  document.querySelectorAll('.picker-btn').forEach(b=>b.setAttribute('aria-expanded','false'));
+}
+function togglePicker(menuId, btnId){
+  const menu=document.getElementById(menuId), btn=document.getElementById(btnId);
+  const wasOpen=menu.classList.contains('open');
+  closePickers();
+  if(!wasOpen){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+}
+document.getElementById('themeBtn').addEventListener('click',ev=>{ ev.stopPropagation(); togglePicker('themeMenu','themeBtn'); });
+document.getElementById('langBtn').addEventListener('click',ev=>{ ev.stopPropagation(); togglePicker('langMenu','langBtn'); });
+document.addEventListener('click',ev=>{ if(!ev.target.closest('.picker')) closePickers(); });
+document.addEventListener('keydown',ev=>{ if(ev.key==='Escape') closePickers(); });
+
 function applyTheme(){
   const eff=resolveTheme();
   document.documentElement.setAttribute('data-theme',eff);
   const mt=document.querySelector('meta[name=theme-color]');
   if(mt) mt.setAttribute('content', THEME_BAR_COLOR[eff]||'#f4f5f7');
-  document.querySelectorAll('#themepick button').forEach(b=>b.classList.toggle('active', b.dataset.theme===THEME));
+  renderThemePicker();
 }
 setInterval(()=>{ if(THEME==='auto') applyTheme(); },60000);
 
@@ -1446,8 +3275,10 @@ function normalizeHM(v){
 }
 function minToHM(m){
   if(m===null||m===undefined||isNaN(m)) return '—';
-  const sg=m<0?'-':''; m=Math.abs(m);
-  return sg+Math.floor(m/60)+':'+String(Math.round(m%60)).padStart(2,'0');
+  const sg=m<0?'-':'';
+  // round to whole minutes up front: rounding the remainder on its own turns 419.7 into "6:60"
+  const total=Math.round(Math.abs(m));
+  return sg+Math.floor(total/60)+':'+String(total%60).padStart(2,'0');
 }
 
 /* ============ Derived per-segment values ============ */
@@ -1874,16 +3705,65 @@ window.togglePO=togglePO;
 /* ============ Gauge ============ */
 function polar(cx,cy,r,d){ const a=(d-90)*Math.PI/180; return {x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}; }
 function arcPath(cx,cy,r,s,e){ const a=polar(cx,cy,r,e),b=polar(cx,cy,r,s); return `M ${a.x} ${a.y} A ${r} ${r} 0 ${e-s<=180?0:1} 0 ${b.x} ${b.y}`; }
-function gauge(label,val,max,unit){
-  const s=-120,e=120,fill=s+Math.min(val/max,1)*(e-s),r=val/max;
-  const col=r>=1?'var(--bad)':(r>=0.85?'var(--warn)':'var(--ok)');
-  return `<svg viewBox="0 0 150 110">
-   <path d="${arcPath(75,80,60,s,e)}" fill="none" stroke="var(--border)" stroke-width="10" stroke-linecap="round"/>
-   <path d="${arcPath(75,80,60,s,fill)}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round"/>
-   <text x="75" y="72" text-anchor="middle" font-family="JetBrains Mono" font-size="20" font-weight="700" fill="var(--text)">${val.toFixed(1)}</text>
-   <text x="75" y="90" text-anchor="middle" font-family="Inter" font-size="9" fill="var(--text-dim)">/ ${max} ${unit}</text>
-  </svg><div class="gauge-label">${label}</div>`;
+// Two linear gauge styles, both deliberately non-circular: the tacho disc below already
+// owns the round shape, and repeating it here made the dashboard read as two dials.
+let GAUGE_STYLE='scale';
+try{ const g=localStorage.getItem('t561-gauge'); if(g==='scale'||g==='seg') GAUGE_STYLE=g; }catch(e){}
+
+function gaugeColor(r){ return r>=1?'var(--bad)':(r>=0.85?'var(--warn)':'var(--accent)'); }
+
+// A — instrument scale: ticks and numbers give the value a position, not just a length
+function gaugeScale(label,val,max,unit){
+  const r=Math.min(val/max,1), pct=(r*100).toFixed(1);
+  const col=gaugeColor(val/max);
+  const marks=[0,.25,.5,.75,1];
+  const ticks=[0,.125,.25,.375,.5,.625,.75,.875,1].map(p=>
+    `<i class="${marks.indexOf(p)>=0?'maj':''}" style="left:${p*100}%"></i>`).join('');
+  const nums=marks.map(p=>
+    `<b style="left:${p*100}%">${Math.round(max*p)}</b>`).join('');
+  return `<div class="lg">
+    <div class="lg-h"><span class="lg-lab">${label}</span>
+      <span class="lg-val">${val.toFixed(1)} <i>/ ${max} ${unit}</i></span></div>
+    <div class="lg-scale">
+      <div class="lg-track"><div class="lg-fill" style="width:${pct}%;background:${col}"></div></div>
+      <div class="lg-cursor" style="left:${pct}%"></div>
+      <div class="lg-ticks">${ticks}</div>
+      <div class="lg-nums">${nums}</div>
+    </div></div>`;
 }
+
+// B — segmented bar, like the fuel strip on a dash: each block is a countable chunk of hours
+function gaugeSeg(label,val,max,unit){
+  const SEGS=28, on=Math.round(Math.min(val/max,1)*SEGS);
+  let cells='';
+  for(let i=0;i<SEGS;i++){
+    const frac=(i+1)/SEGS;
+    const lit=i<on;
+    const cls=lit ? (frac>0.999?'on bad':(frac>0.85?'on warn':'on')) : '';
+    cells+=`<i class="${cls}"></i>`;
+  }
+  return `<div class="lg">
+    <div class="lg-h"><span class="lg-lab">${label}</span>
+      <span class="lg-val">${val.toFixed(1)} <i>/ ${max} ${unit}</i></span></div>
+    <div class="lg-seg">${cells}</div></div>`;
+}
+
+function gauge(label,val,max,unit){
+  return GAUGE_STYLE==='seg' ? gaugeSeg(label,val,max,unit) : gaugeScale(label,val,max,unit);
+}
+function gaugeToggleHTML(){
+  const b=(k,ico)=>`<button class="gt-btn ${GAUGE_STYLE===k?'active':''}" data-gauge="${k}" title="${t('gs_'+k)}" aria-label="${t('gs_'+k)}">${ico}</button>`;
+  const icoScale='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9h20M4 13v3M9 13v4M14 13v3M19 13v4"/></svg>';
+  const icoSeg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="3.4" height="7" rx="1"/><rect x="7.2" y="9" width="3.4" height="7" rx="1"/><rect x="12.4" y="9" width="3.4" height="7" rx="1"/><rect x="17.6" y="9" width="3.4" height="7" rx="1"/></svg>';
+  return `<div class="gauge-toggle">${b('scale',icoScale)}${b('seg',icoSeg)}</div>`;
+}
+document.addEventListener('click',ev=>{
+  const b=ev.target.closest && ev.target.closest('[data-gauge]');
+  if(!b) return;
+  GAUGE_STYLE=b.dataset.gauge;
+  try{ localStorage.setItem('t561-gauge',GAUGE_STYLE); }catch(e){}
+  render();
+});
 function tokens(used,total){
   let h='<div class="tokens">';
   for(let i=0;i<total;i++) h+=`<div class="tok ${i<used?'used':'free'}"></div>`;
@@ -2083,31 +3963,59 @@ function render(){
   const S=R.state;
 
   document.getElementById('gaugeRow').innerHTML=
-    `<div class="gauge-box">${gauge(t('gauge_week'),p.thisSum,56,t('unit_hours'))}</div>
-     <div class="gauge-box">${gauge(t('gauge_pair'),p.pairSum,90,t('unit_hours'))}</div>`;
+    gauge(t('gauge_week'),p.thisSum,56,t('unit_hours'))+
+    gauge(t('gauge_pair'),p.pairSum,90,t('unit_hours'))+
+    gaugeToggleHTML();
 
   // tacho disc for the latest day
   const lastE=R.entries[R.entries.length-1];
 
-  // ---- next earliest legal start (23-hour rest-window heuristic per Art. 8) ----
-  const nsEl=document.getElementById('nextStartCard');
-  if(nsEl){
-    if(!lastE || !lastE.end){
-      nsEl.innerHTML=`<div class="section-note">${t('no_data')}</div>`;
+  // ---- hero: the one answer the dashboard opens with ----
+  const heroEl=document.getElementById('heroCard');
+  if(heroEl){
+    const hero=(state,eyebrow,big,unit,say,why)=>{
+      heroEl.className='hero st-'+state;
+      heroEl.innerHTML=`<div class="hero-eyebrow"><i></i>${eyebrow}</div>`+
+        (big?`<div class="hero-big">${big}${unit?`<small>${unit}</small>`:''}</div>`:'')+
+        (say?`<div class="hero-say">${say}</div>`:'')+
+        (why?`<div class="hero-why">${why}</div>`:'');
+    };
+    const now=new Date();
+    const runningSeg=getActiveSeg();
+
+    if(runningSeg){
+      // a shift is under way: what matters is how much driving is still allowed today
+      const segs=DATA.activeDay.segments;
+      const drvH=segs.filter(x=>x.type==='driving').reduce((a,x)=>a+segMinutes(x),0)/60;
+      const limit=(S.extUsed<2)?10:9;
+      const leftH=Math.max(0,limit-drvH);
+      hero(leftH<=0?'warn':'go', t('hero_onduty',{act:actLabel(runningSeg.type)}),
+        minToHM(leftH*60), t('hero_left_drive'),
+        t('hero_driven_today',{x:drvH.toFixed(1)}),
+        t('hero_limit_today',{lim:limit.toFixed(0)}));
+    } else if(!lastE || !lastE.end){
+      hero('none', t('hero_nodata'), '', '', t('hero_nodata_say'), '');
     } else {
       const lastEv=R.evals[lastE.id];
       if(lastEv.exempt){
-        nsEl.innerHTML=`<div class="section-note">${t('ns_exempt')}</div>`;
+        hero('none', t('hero_exempt'), '', '', t('ns_exempt'), '');
       } else {
-        let minH, noteKey;
-        if(lastEv.periodsSinceWeekly>=lastEv.weeklyDeadline){ minH=24; noteKey='ns_note_weekly'; }
-        else if(lastEv.reducedUsed<3){ minH=9; noteKey='ns_note_reduced'; }
-        else { minH=11; noteKey='ns_note_regular'; }
+        let minH, whyKey;
+        if(lastEv.periodsSinceWeekly>=lastEv.weeklyDeadline){ minH=24; whyKey='ns_note_weekly'; }
+        else if(lastEv.reducedUsed<3){ minH=9; whyKey='ns_note_reduced'; }
+        else { minH=11; whyKey='ns_note_regular'; }
         const startDt=new Date(lastE.date+'T'+lastE.end+':00');
         startDt.setMinutes(startDt.getMinutes()+minH*60);
         const hh=String(startDt.getHours()).padStart(2,'0'), mm=String(startDt.getMinutes()).padStart(2,'0');
-        nsEl.innerHTML=`<div><div class="ns-time">${hh}:${mm}</div><div class="ns-date">${fmt(startDt)}</div></div>
-          <div class="ns-note">${t(noteKey,{h:minH})}</div>`;
+        const leftMin=(startDt-now)/60000;
+        if(leftMin>0){
+          hero('ok', t('hero_resting'), minToHM(leftMin), t('hero_until_start'),
+            t('hero_can_start',{time:hh+':'+mm, date:fmt(startDt)}),
+            t(whyKey,{h:minH}));
+        } else {
+          hero('go', t('hero_ready'), hh+':'+mm, t('hero_since'),
+            t('hero_rest_done'), t(whyKey,{h:minH}));
+        }
       }
     }
   }
@@ -2125,8 +4033,8 @@ function render(){
 
   const discEl=document.getElementById('discCard');
   if(discEl) discEl.innerHTML = lastE
-    ? discSVG(lastE,R.evals[lastE.id])+discLegend()
-    : `<div class="section-note">${t('no_data')}</div>`;
+    ? `<div class="disc-date">${t('dash_disc_on',{d:lastE.date})}</div>`+discSVG(lastE,R.evals[lastE.id])+discLegend()
+    : `<div class="disc-date">${t('dash_disc')}</div><div class="section-note">${t('no_data')}</div>`;
 
   // allowances
   const extLeft=Math.max(0,2-S.extUsed), redLeft=Math.max(0,3-S.reducedUsed);
@@ -2560,7 +4468,7 @@ window.deleteEntry=deleteEntry;
 function applyLang(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-t]').forEach(el=>{ el.textContent=t(el.dataset.t); });
-  document.querySelectorAll('#langpick button').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
+  renderThemePicker(); renderLangPicker();
   fillCountrySelects();
   renderSegments(); renderExceptions(); renderInstallSteps();
   const editing=document.getElementById('f_editId').value;
@@ -2907,6 +4815,7 @@ function switchTab(tabName){
   if(tabName==='veh') renderVehicles();
   if(tabName==='month') renderPeriodReport();
   if(tabName==='active') renderActiveDay();
+  if(tabName==='dash') render();   // the hero counts down, so it must not be shown stale
   window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
 }
 document.querySelectorAll('.nav-item').forEach(b=>{
@@ -2935,14 +4844,6 @@ menuBtnEl.addEventListener('click', openDrawer);
 menuBtnEl.addEventListener('touchend', ev=>{ ev.preventDefault(); openDrawer(); }, {passive:false});
 document.getElementById('drawerClose').addEventListener('click', closeDrawer);
 document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
-document.querySelectorAll('#langpick button').forEach(b=>{
-  b.addEventListener('click',()=>{ LANG=b.dataset.lang;
-    try{ localStorage.setItem('t561-lang',LANG); }catch(e){} applyLang(); });
-});
-document.querySelectorAll('#themepick button').forEach(b=>{
-  b.addEventListener('click',()=>{ THEME=b.dataset.theme;
-    try{ localStorage.setItem('t561-theme',THEME); }catch(e){} applyTheme(); });
-});
 
 /* ============ Cross-device sync (Firebase) ============ */
 // Built-in project config. A Firebase web apiKey is not a secret — it identifies the project,
