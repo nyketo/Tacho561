@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Tacho 561</title>
+<title>TAXO 561</title>
 <meta name="theme-color" content="#12161d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Tacho 561">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%2312161d'/%3E%3Ccircle cx='90' cy='90' r='58' fill='none' stroke='%23f2994a' stroke-width='10'/%3E%3Cpath d='M90 52v40l26 16' fill='none' stroke='%23f2994a' stroke-width='11' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-title" content="TAXO 561">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%2312161d'/%3E%3Ccircle cx='90' cy='90' r='58' fill='none' stroke='%233fb6ea' stroke-width='10'/%3E%3Cpath d='M90 52v40l26 16' fill='none' stroke='%233fb6ea' stroke-width='11' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -18,46 +18,73 @@ html[data-theme="night"]{
   --bg:#12161d;--bg-grad:#171d27;--bg-panel:#1a2029;--bg-panel-2:#212836;--bg-raised:#252d3b;
   --border:#2c3444;--border-soft:#232a37;
   --text:#eef1f6;--text-dim:#93a0b3;--text-faint:#5c6a80;
-  --accent:#f2994a;--accent-ink:#20140a;--accent-dim:#8a5a2c;
+  --accent:#3fb6ea;--accent-ink:#06131c;--accent-dim:#2b7fa6;
   --ok:#4cb37f;--ok-bg:#173325;--warn:#e0a83e;--warn-bg:#332a12;--bad:#e15b5b;--bad-bg:#3a1a1a;
-  --info:#5b8def;--info-bg:#16233d;
+  --info:#9b8cf7;--info-bg:#221f3d;
   --shadow:none;--picker-filter:invert(0.7);
 }
 html[data-theme="day"]{
   --bg:#f4f5f7;--bg-grad:#ffffff;--bg-panel:#ffffff;--bg-panel-2:#f7f8fa;--bg-raised:#eceef2;
   --border:#d8dce3;--border-soft:#e6e9ee;
   --text:#1b2029;--text-dim:#5d6878;--text-faint:#8d97a6;
-  --accent:#c26a19;--accent-ink:#ffffff;--accent-dim:#e0a06a;
+  --accent:#4353c9;--accent-ink:#ffffff;--accent-dim:#95a0e4;
   --ok:#1e7d52;--ok-bg:#e2f3ea;--warn:#9a6c07;--warn-bg:#fbf0d5;--bad:#b52a2a;--bad-bg:#fbe4e4;
-  --info:#2d5fb8;--info-bg:#e5edfb;
+  --info:#0e7d88;--info-bg:#dff2f4;
   --shadow:0 1px 3px rgba(20,26,40,.06);--picker-filter:none;
 }
 html[data-theme="paper"]{
-  --bg:#f6efdd;--bg-grad:#fffcf3;--bg-panel:#fffcf3;--bg-panel-2:#f1e6cc;--bg-raised:#e9dab5;
-  --border:#d8c295;--border-soft:#e7d7ae;
-  --text:#241a0c;--text-dim:#5c4a2c;--text-faint:#8a7550;
-  --accent:#a2540f;--accent-ink:#fffaf0;--accent-dim:#cf8f4b;
-  --ok:#256b41;--ok-bg:#dcefdf;--warn:#8a5f06;--warn-bg:#f6e8bf;--bad:#9c2a24;--bad-bg:#f4dcd6;
-  --info:#254f8f;--info-bg:#dde6f6;
-  --shadow:0 1px 4px rgba(60,40,10,.12);--picker-filter:none;
+  --bg:#f3f1ec;--bg-grad:#fbfaf7;--bg-panel:#fbfaf7;--bg-panel-2:#eeebe4;--bg-raised:#e5e1d8;
+  --border:#d0ccc2;--border-soft:#e1ddd3;
+  --text:#20232a;--text-dim:#565a63;--text-faint:#888c95;
+  --accent:#9d3d63;--accent-ink:#ffffff;--accent-dim:#c78aa3;
+  --ok:#1e7d52;--ok-bg:#e0f0e7;--warn:#8a6407;--warn-bg:#f6ecd2;--bad:#c33c2e;--bad-bg:#f8e2df;
+  --info:#2d5fb8;--info-bg:#e3eaf8;
+  --shadow:0 1px 4px rgba(40,44,52,.08);--picker-filter:none;
 }
 html[data-theme="ocean"]{
   --bg:#eef7f9;--bg-grad:#ffffff;--bg-panel:#ffffff;--bg-panel-2:#e3f2f5;--bg-raised:#d3ecef;
   --border:#b8dde3;--border-soft:#cfe9ed;
   --text:#0d2b31;--text-dim:#3f6a72;--text-faint:#7a9ea4;
-  --accent:#0e7c86;--accent-ink:#ffffff;--accent-dim:#6bb3ba;
-  --ok:#1e7d52;--ok-bg:#e2f3ea;--warn:#9a6c07;--warn-bg:#fbf0d5;--bad:#b52a2a;--bad-bg:#fbe4e4;
-  --info:#2d5fb8;--info-bg:#e5edfb;
+  --accent:#0b6f8f;--accent-ink:#ffffff;--accent-dim:#6ba9bd;
+  --ok:#2f8f4e;--ok-bg:#e2f3e6;--warn:#9a6c07;--warn-bg:#fbf0d5;--bad:#b52a2a;--bad-bg:#fbe4e4;
+  --info:#6b4fc7;--info-bg:#ebe6f8;
   --shadow:0 1px 3px rgba(10,40,45,.06);--picker-filter:none;
 }
 html[data-theme="dusk"]{
-  --bg:#1c130d;--bg-grad:#241a11;--bg-panel:#2a1e14;--bg-panel-2:#33251a;--bg-raised:#3d2c1e;
-  --border:#4d3a26;--border-soft:#3a2c1e;
-  --text:#f6e9d8;--text-dim:#c2a583;--text-faint:#8a6f52;
-  --accent:#e6883a;--accent-ink:#1c1108;--accent-dim:#9c6a37;
-  --ok:#7fb37f;--ok-bg:#26301f;--warn:#e0b158;--warn-bg:#35280f;--bad:#e0776b;--bad-bg:#3a1d17;
-  --info:#87a6e6;--info-bg:#1e2436;
-  --shadow:none;--picker-filter:invert(0.75) sepia(0.3);
+  --bg:#16121f;--bg-grad:#1d1829;--bg-panel:#221c30;--bg-panel-2:#2a2239;--bg-raised:#332a45;
+  --border:#3f3554;--border-soft:#2e2740;
+  --text:#f1ecf7;--text-dim:#a99cc0;--text-faint:#736787;
+  --accent:#f08099;--accent-ink:#22101a;--accent-dim:#a35668;
+  --ok:#5fbb8e;--ok-bg:#1c3329;--warn:#e0b158;--warn-bg:#332a14;--bad:#e8646e;--bad-bg:#3a1a20;
+  --info:#8fa8ee;--info-bg:#1f2440;
+  --shadow:none;--picker-filter:invert(0.75);
+}
+html[data-theme="mist"]{
+  --bg:#eef0f4;--bg-grad:#fafbfd;--bg-panel:#fafbfd;--bg-panel-2:#e7eaf0;--bg-raised:#dde1e9;
+  --border:#c6ccd8;--border-soft:#dbe0e8;
+  --text:#1c2029;--text-dim:#565d6b;--text-faint:#8a919e;
+  --accent:#6d3f9e;--accent-ink:#ffffff;--accent-dim:#a98cc9;
+  --ok:#1e7d52;--ok-bg:#e1f2e9;--warn:#8a6407;--warn-bg:#f7edd3;--bad:#b52a2a;--bad-bg:#fae1e1;
+  --info:#0e7d88;--info-bg:#ddf1f3;
+  --shadow:0 1px 3px rgba(28,32,41,.07);--picker-filter:none;
+}
+html[data-theme="carbon"]{
+  --bg:#141414;--bg-grad:#1b1b1b;--bg-panel:#1f1f1f;--bg-panel-2:#272727;--bg-raised:#303030;
+  --border:#3b3b3b;--border-soft:#2c2c2c;
+  --text:#f0f0f0;--text-dim:#a0a0a0;--text-faint:#6b6b6b;
+  --accent:#5eead4;--accent-ink:#08201c;--accent-dim:#3a8f82;
+  --ok:#4cb37f;--ok-bg:#16301f;--warn:#e0a83e;--warn-bg:#332a12;--bad:#e15b5b;--bad-bg:#3a1a1a;
+  --info:#a78bfa;--info-bg:#241f3a;
+  --shadow:none;--picker-filter:invert(0.75);
+}
+html[data-theme="sun"]{
+  --bg:#ffffff;--bg-grad:#ffffff;--bg-panel:#ffffff;--bg-panel-2:#f1f1f1;--bg-raised:#e4e4e4;
+  --border:#8b8b8b;--border-soft:#bcbcbc;
+  --text:#000000;--text-dim:#2e2e2e;--text-faint:#585858;
+  --accent:#0033cc;--accent-ink:#ffffff;--accent-dim:#7391e6;
+  --ok:#006b2f;--ok-bg:#d4efdf;--warn:#8a5a00;--warn-bg:#fbeccb;--bad:#c00000;--bad-bg:#fadada;
+  --info:#7a1fa2;--info-bg:#f0e2f7;
+  --shadow:none;--picker-filter:none;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
@@ -71,7 +98,7 @@ body{background:radial-gradient(ellipse at top,var(--bg-grad) 0%,var(--bg) 55%);
 .brand h1{font-family:var(--display);font-weight:600;font-size:19px;margin:0;letter-spacing:.3px;}
 .brand p{margin:0;font-size:11.5px;color:var(--text-faint);letter-spacing:.4px;text-transform:uppercase;}
 .ctrls{display:flex;gap:6px;align-items:center;}
-.seg-switch{display:flex;gap:2px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:8px;padding:3px;box-shadow:var(--shadow);}
+.seg-switch{display:flex;flex-wrap:wrap;gap:2px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:8px;padding:3px;box-shadow:var(--shadow);}
 .seg-switch button{background:transparent;border:none;color:var(--text-dim);font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 7px;border-radius:6px;cursor:pointer;line-height:1;}
 .seg-switch button.active{background:var(--bg-raised);color:var(--accent);}
 .seg-switch button svg{width:13px;height:13px;display:block;}
@@ -207,7 +234,7 @@ button.secondary:hover{border-color:var(--accent);color:var(--text);border-style
 .disc-note{font-size:10.5px;color:var(--text-faint);text-align:center;line-height:1.4;}
 .po-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-dim);padding:9px;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;margin-top:10px;}
 .po-btn:hover{border-color:var(--accent);color:var(--text);}
-.printout{display:none;background:#fbfaf3;color:#15150f;font-family:var(--mono);font-size:12px;line-height:1.55;border-radius:4px;padding:16px 14px;margin-top:10px;white-space:pre-wrap;word-break:break-word;box-shadow:0 2px 10px rgba(0,0,0,.25);border-top:6px solid #e8e5d4;border-bottom:6px solid #e8e5d4;}
+.printout{display:none;background:#fbfaf8;color:#16171a;font-family:var(--mono);font-size:12px;line-height:1.55;border-radius:4px;padding:16px 14px;margin-top:10px;white-space:pre-wrap;word-break:break-word;box-shadow:0 2px 10px rgba(0,0,0,.25);border-top:6px solid #e6e5e1;border-bottom:6px solid #e6e5e1;}
 .printout.open{display:block;}
 
 /* ---- nav drawer ---- */
@@ -301,7 +328,7 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
 .act-btn.running{border-color:var(--ok);background:var(--ok-bg);}
 .act-btn .ab-l{display:flex;align-items:center;gap:10px;}
 .act-btn .ab-ico{width:38px;height:38px;border-radius:10px;background:var(--bg-raised);display:flex;align-items:center;justify-content:center;flex:none;}
-.act-btn .ab-ico svg{width:19px;height:19px;color:var(--text-dim);}
+.act-btn .ab-ico svg{width:21px;height:21px;color:var(--text-dim);stroke-width:1.7;}
 .act-btn.running .ab-ico svg{color:var(--ok);}
 .act-btn b{font-size:14.5px;}
 .act-btn .ab-r{font-size:12px;font-weight:700;color:var(--text-faint);}
@@ -328,8 +355,8 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
   <nav class="drawer" id="navDrawer">
     <div class="drawer-head"><b data-t="app_name"></b><button class="drawer-close" id="drawerClose">✕</button></div>
     <button class="nav-item active" data-tab="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><span data-t="tab_dash"></span></button>
-    <button class="nav-item" data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M12 13v5M9.5 15.5h5"/></svg><span data-t="tab_add"></span></button>
     <button class="nav-item" data-tab="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-t="tab_active"></span></button>
+    <button class="nav-item" data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M12 13v5M9.5 15.5h5"/></svg><span data-t="tab_add"></span></button>
     <button class="nav-item" data-tab="veh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16V8h11l4 4h3v4h-2M3 16h2M3 16h13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><span data-t="tab_veh"></span></button>
     <button class="nav-item" data-tab="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 12h8M8 15.5h8M8 8.5h4"/></svg><span data-t="tab_log"></span></button>
     <button class="nav-item" data-tab="month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M7 14h3M13 14h4M7 17h3"/></svg><span data-t="tab_month"></span></button>
@@ -339,8 +366,8 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
 
   <div class="bottombar" id="bottomBar">
     <button data-tab="dash" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><span data-t="tab_dash"></span></button>
-    <button data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M12 13v5M9.5 15.5h5"/></svg><span data-t="tab_add"></span></button>
     <button data-tab="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-t="tab_active"></span></button>
+    <button data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M12 13v5M9.5 15.5h5"/></svg><span data-t="tab_add"></span></button>
     <button data-tab="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 12h8M8 15.5h8M8 8.5h4"/></svg><span data-t="tab_log"></span></button>
     <button data-tab="veh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16V8h11l4 4h3v4h-2M3 16h2M3 16h13"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><span data-t="tab_veh"></span></button>
   </div>
@@ -349,7 +376,7 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
     <div class="brand">
       <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
       <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 6v6l4 2"/></svg></div>
-      <div><h1>Tacho 561</h1><p data-t="subtitle"></p></div>
+      <div><h1>TAXO 561</h1><p data-t="subtitle"></p></div>
     </div>
     <div class="ctrls">
       <div class="seg-switch" id="themepick">
@@ -358,6 +385,9 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
         <button data-theme="paper" title="Paper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2.5h8l5 5v14H6z"/><path d="M14 2.5v5h5M9 12h6M9 15.5h6M9 18.5h4"/></svg></button>
         <button data-theme="ocean" title="Ocean"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16c1.5-1.6 3-1.6 4.5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4.5 0M2 20c1.5-1.6 3-1.6 4.5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4.5 0M12 3v9"/></svg></button>
         <button data-theme="dusk" title="Dusk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v3M5 11l1.6 1.6M19 11l-1.6 1.6M2.5 18h19M6.5 18a5.5 5.5 0 0111 0"/></svg></button>
+        <button data-theme="mist" title="Mist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h13M18.5 8H21M3 12h5M10.5 12H21M3 16h11M16.5 16H21"/></svg></button>
+        <button data-theme="carbon" title="Carbon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.6l8.2 4.7v9.4L12 21.4 3.8 16.7V7.3z"/></svg></button>
+        <button data-theme="sun" title="Sunlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18z" fill="currentColor" stroke="none"/></svg></button>
         <button data-theme="auto" title="Auto">A</button>
       </div>
       <div class="seg-switch" id="langpick">
@@ -387,6 +417,7 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
     <div class="card">
       <h2 id="formTitle" data-t="add_title"></h2>
       <div class="section-note" data-t="add_note"></div>
+      <datalist id="placeList"></datalist>
       <form id="dayForm">
         <input type="hidden" id="f_editId" value="">
         <div class="step-head"><span class="step-num">1</span><div><b data-t="step1_title"></b><div class="step-sub" data-t="step1_sub"></div></div></div>
@@ -400,11 +431,11 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
 
         <div class="subhead" data-t="sh_places"></div>
         <div class="field-row3">
-          <div><label data-t="l_startPlace"></label><input type="text" id="f_startPlace" placeholder="—"></div>
+          <div><label data-t="l_startPlace"></label><input type="text" id="f_startPlace" placeholder="—" list="placeList" autocomplete="off"></div>
           <div><label data-t="l_startCountry"></label><select id="f_startCountry"></select></div>
         </div>
         <div class="field-row3">
-          <div><label data-t="l_endPlace"></label><input type="text" id="f_endPlace" placeholder="—"></div>
+          <div><label data-t="l_endPlace"></label><input type="text" id="f_endPlace" placeholder="—" list="placeList" autocomplete="off"></div>
           <div><label data-t="l_endCountry"></label><select id="f_endCountry"></select></div>
         </div>
         <div class="hint" data-t="places_hint"></div>
@@ -467,6 +498,9 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
     <div class="card">
       <h2 data-t="active_title"></h2>
       <div class="section-note" data-t="active_note"></div>
+      <label data-t="l_active_odo"></label>
+      <input type="number" id="f_activeOdo" inputmode="numeric" placeholder="0">
+      <div class="hint" data-t="active_odo_hint"></div>
       <div class="timer-hero" id="timerHero"></div>
       <div id="actButtons"></div>
       <button type="button" class="primary" id="finishDayBtn" data-t="btn_finish_day" style="margin-top:6px;"></button>
@@ -582,9 +616,9 @@ table.log-table tr:hover td{background:var(--bg-raised);cursor:pointer;}
 /* ============ i18n ============ */
 const T = {
 bg:{
- app_name:'Tacho 561',
+ app_name:'TAXO 561',
  subtitle:'Дневник и контрол по Регламент 561/2006',
- tab_dash:'Табло', tab_add:'Нов ден', tab_active:'Активен ден', tab_veh:'Превозни средства', tab_month:'Отчети', tab_log:'Дневник', tab_viol:'Нарушения', tab_install:'Настройки',
+ tab_dash:'Табло', tab_add:'Запиши ден', tab_active:'Активен ден', tab_veh:'Превозни средства', tab_month:'Отчети', tab_log:'Дневник', tab_viol:'Нарушения', tab_install:'Настройки',
  vb_cap:'Текущо превозно средство', vb_change:'Смени', vb_none:'не е зададено', vb_prompt:'Регистрационен номер:',
  dash_next:'Най-ранно следващо начало',
  dash_worktime:'Седмично работно време (Директива 2002/15/ЕО)',
@@ -607,12 +641,14 @@ bg:{
  l_from:'От', l_to:'До', btn_csv:'Износ CSV', btn_print:'Печат / PDF',
  lv_cards:'Карти', lv_table:'Таблица', lt_time:'Часове', lt_drv:'Управление', lt_status:'Статус',
  driver_title:'Данни за водача', l_driver_name:'Име на водача',
- active_title:'Активен ден с таймер', active_note:'Натисни дейност, за да я стартираш. Изборът на друга автоматично приключва текущата.',
+ active_title:'Активен ден с таймер', active_note:'Тук започва работният ден: впиши километража и стартирай първата дейност. Изборът на друга автоматично приключва текущата. В края натисни „Приключи и запази деня“ — сумите се прехвърлят в записа за деня.',
  active_empty:'Няма стартирана дейност.', act_stop:'Спри', act_now:'СЕГА',
  active_log_title:'Дейности за деня', active_log_empty:'Все още няма записани дейности.',
  act_confirm_del:'Да се изтрие ли тази дейност?',
  active_none_yet:'Стартирай поне една дейност, преди да приключиш деня.',
  btn_finish_day:'Приключи и запази деня',
+ l_active_odo:'Начален километраж за деня',
+ active_odo_hint:'Впиши го веднъж в началото на смяната — при приключване се попълва автоматично в записа за деня.',
  sync_title:'Синхронизация между устройства',
  sync_note:'Влез с Google, за да се синхронизират дните между телефона и компютъра. Данните се пазят в твоя Firebase проект и са достъпни само за твоя акаунт. Без вход приложението работи нормално, но само локално.',
  sync_config_label:'Firebase конфигурация (от твоя проект)',
@@ -802,7 +838,7 @@ bg:{
  po_head:'КОНТРОЛНА РАЗПЕЧАТКА · 24 ч', po_veh:'Превозно средство', po_odo:'Километраж',
  po_counters:'Броячи', po_places:'Място', po_sum:'ОБОБЩЕНИЕ ЗА ДЕНЯ', po_rest_after:'Почивка след деня',
  po_exc:'ИЗКЛЮЧЕНИЯ', po_viol_h:'НАРУШЕНИЯ', po_none:'няма', po_bal:'БАЛАНС',
- po_foot:'Генерирано от Tacho 561 · неофициален документ',
+ po_foot:'Генерирано от TAXO 561 · неофициален документ',
  install_title:'Инсталиране на устройство',
  install_intro:'Приложението работи офлайн и може да се добави като икона на началния екран или в менюто с програми.',
  btn_install:'Инсталирай приложението',
@@ -816,9 +852,9 @@ bg:{
  disclaimer:'Инструментът е помощен и информативен. Обхваща правилата на Регламент (ЕО) 561/2006 заедно с изключенията по чл. 3, 4(о), 8(5), 8(6а), 9(1), 12, 13 и 14, както и превозите по AETR. Националните дерогации по чл. 13 се различават по държави и се променят — приложението предлага рамка за вписването им, но не съдържа изчерпателен списък за всяка държава. Проверявай актуалните национални правила и не разчитай само на този инструмент при проверка. Не представлява правен съвет.'
 },
 en:{
- app_name:'Tacho 561',
+ app_name:'TAXO 561',
  subtitle:'Logbook & compliance for Regulation 561/2006',
- tab_dash:'Dashboard', tab_add:'New day', tab_active:'Active day', tab_veh:'Vehicles', tab_month:'Reports', tab_log:'Logbook', tab_viol:'Violations', tab_install:'Settings',
+ tab_dash:'Dashboard', tab_add:'Record day', tab_active:'Active day', tab_veh:'Vehicles', tab_month:'Reports', tab_log:'Logbook', tab_viol:'Violations', tab_install:'Settings',
  vb_cap:'Current vehicle', vb_change:'Change', vb_none:'not set', vb_prompt:'Number plate:',
  dash_next:'Next earliest start',
  dash_worktime:'Weekly working time (Directive 2002/15/EC)',
@@ -841,12 +877,14 @@ en:{
  l_from:'From', l_to:'To', btn_csv:'Export CSV', btn_print:'Print / PDF',
  lv_cards:'Cards', lv_table:'Table', lt_time:'Times', lt_drv:'Driving', lt_status:'Status',
  driver_title:'Driver details', l_driver_name:'Driver name',
- active_title:'Active day timer', active_note:'Tap an activity to start it. Picking another one automatically ends the current one.',
+ active_title:'Active day timer', active_note:'The working day starts here: enter the odometer and start the first activity. Picking another one automatically ends the current one. At the end press “Finish & save the day” — the totals are carried into the day record.',
  active_empty:'No activity running.', act_stop:'Stop', act_now:'NOW',
  active_log_title:'Activities today', active_log_empty:'No activities recorded yet.',
  act_confirm_del:'Delete this activity?',
  active_none_yet:'Start at least one activity before finishing the day.',
  btn_finish_day:'Finish & save the day',
+ l_active_odo:'Starting odometer for the day',
+ active_odo_hint:'Enter it once at the start of the shift — it is filled into the day record automatically when you finish.',
  sync_title:'Cross-device sync',
  sync_note:'Sign in with Google to keep days in sync between your phone and computer. Data is stored in your own Firebase project and is only reachable by your account. Without signing in the app works normally, just locally.',
  sync_config_label:'Firebase configuration (from your project)',
@@ -1036,7 +1074,7 @@ en:{
  po_head:'CONTROL PRINTOUT · 24 h', po_veh:'Vehicle', po_odo:'Odometer',
  po_counters:'Counters', po_places:'Place', po_sum:'DAY SUMMARY', po_rest_after:'Rest after the day',
  po_exc:'EXCEPTIONS', po_viol_h:'VIOLATIONS', po_none:'none', po_bal:'BALANCE',
- po_foot:'Generated by Tacho 561 · unofficial document',
+ po_foot:'Generated by TAXO 561 · unofficial document',
  install_title:'Install on your device',
  install_intro:'The app works offline and can be added as an icon on your home screen or app menu.',
  btn_install:'Install the app',
@@ -1050,9 +1088,9 @@ en:{
  disclaimer:'This tool is informational. It covers the rules of Regulation (EC) 561/2006 together with the exceptions under Art. 3, 4(o), 8(5), 8(6a), 9(1), 12, 13 and 14, as well as transport under AETR. National derogations under Art. 13 differ between countries and change over time — the app provides a framework for recording them but does not hold an exhaustive list for every country. Check the current national rules and do not rely on this tool alone during an inspection. Not legal advice.'
 },
 de:{
- app_name:'Tacho 561',
+ app_name:'TAXO 561',
  subtitle:'Fahrtenbuch & Kontrolle nach VO 561/2006',
- tab_dash:'Übersicht', tab_add:'Neuer Tag', tab_active:'Aktiver Tag', tab_veh:'Fahrzeuge', tab_month:'Berichte', tab_log:'Fahrtenbuch', tab_viol:'Verstöße', tab_install:'Einstellungen',
+ tab_dash:'Übersicht', tab_add:'Tag erfassen', tab_active:'Aktiver Tag', tab_veh:'Fahrzeuge', tab_month:'Berichte', tab_log:'Fahrtenbuch', tab_viol:'Verstöße', tab_install:'Einstellungen',
  vb_cap:'Aktuelles Fahrzeug', vb_change:'Wechseln', vb_none:'nicht gesetzt', vb_prompt:'Kennzeichen:',
  dash_next:'Frühestmöglicher nächster Start',
  dash_worktime:'Wöchentliche Arbeitszeit (Richtlinie 2002/15/EG)',
@@ -1075,12 +1113,14 @@ de:{
  l_from:'Von', l_to:'Bis', btn_csv:'CSV exportieren', btn_print:'Drucken / PDF',
  lv_cards:'Karten', lv_table:'Tabelle', lt_time:'Zeiten', lt_drv:'Lenkzeit', lt_status:'Status',
  driver_title:'Fahrerdaten', l_driver_name:'Name des Fahrers',
- active_title:'Aktiver Tag mit Timer', active_note:'Tippe auf eine Tätigkeit, um sie zu starten. Die Wahl einer anderen beendet automatisch die aktuelle.',
+ active_title:'Aktiver Tag mit Timer', active_note:'Hier beginnt der Arbeitstag: Kilometerstand eintragen und die erste Tätigkeit starten. Die Wahl einer anderen beendet automatisch die aktuelle. Am Ende „Tag abschließen & speichern“ drücken — die Summen werden in den Tageseintrag übernommen.',
  active_empty:'Keine Tätigkeit läuft.', act_stop:'Stopp', act_now:'JETZT',
  active_log_title:'Tätigkeiten heute', active_log_empty:'Noch keine Tätigkeiten erfasst.',
  act_confirm_del:'Diese Tätigkeit löschen?',
  active_none_yet:'Starte mindestens eine Tätigkeit, bevor du den Tag abschließt.',
  btn_finish_day:'Tag abschließen & speichern',
+ l_active_odo:'Anfangskilometerstand des Tages',
+ active_odo_hint:'Einmal zu Schichtbeginn eintragen — beim Abschließen wird er automatisch in den Tageseintrag übernommen.',
  sync_title:'Geräteübergreifende Synchronisierung',
  sync_note:'Melde dich mit Google an, damit die Tage zwischen Handy und Computer synchron bleiben. Die Daten liegen in deinem eigenen Firebase-Projekt und sind nur für dein Konto erreichbar. Ohne Anmeldung funktioniert die App normal, nur lokal.',
  sync_config_label:'Firebase-Konfiguration (aus deinem Projekt)',
@@ -1270,7 +1310,7 @@ de:{
  po_head:'KONTROLLAUSDRUCK · 24 h', po_veh:'Fahrzeug', po_odo:'Kilometerstand',
  po_counters:'Zähler', po_places:'Ort', po_sum:'TAGESÜBERSICHT', po_rest_after:'Ruhezeit nach dem Tag',
  po_exc:'AUSNAHMEN', po_viol_h:'VERSTÖSSE', po_none:'keine', po_bal:'BILANZ',
- po_foot:'Erstellt mit Tacho 561 · kein amtliches Dokument',
+ po_foot:'Erstellt mit TAXO 561 · kein amtliches Dokument',
  install_title:'Auf dem Gerät installieren',
  install_intro:'Die App funktioniert offline und kann als Symbol auf dem Startbildschirm oder im Programmmenü abgelegt werden.',
  btn_install:'App installieren',
@@ -1315,7 +1355,7 @@ function resolveTheme(){
   const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   return (h>=20||h<7||dark)?'night':'day';
 }
-const THEME_BAR_COLOR={night:'#12161d',day:'#f4f5f7',paper:'#f6efdd',ocean:'#eef7f9',dusk:'#1c130d'};
+const THEME_BAR_COLOR={night:'#12161d',day:'#f4f5f7',paper:'#f3f1ec',ocean:'#eef7f9',dusk:'#16121f',sun:'#ffffff',mist:'#eef0f4',carbon:'#141414'};
 function applyTheme(){
   const eff=resolveTheme();
   document.documentElement.setAttribute('data-theme',eff);
@@ -1345,6 +1385,7 @@ async function loadData(){
   DATA.currentPlate=DATA.currentPlate||''; DATA.lastCountry=DATA.lastCountry||'';
   DATA.vehicles=DATA.vehicles||[]; DATA.driverName=DATA.driverName||'';
   DATA.activeDay=DATA.activeDay||null;
+  DATA.places=DATA.places||[];
   // migrate: seed the registry from the legacy single-plate field, and from any plate
   // already used in past day entries, so nothing existing gets silently dropped.
   const known=new Set(DATA.vehicles.map(v=>v.plate));
@@ -2035,6 +2076,7 @@ function renderSegments(){
 let openDetails={};
 
 function render(){
+  refreshPlaceLists();
   const R=computeAll();
   const ref=R.entries.length? R.entries[R.entries.length-1].date : fmt(new Date());
   const p=pairFor(R.weekSums,ref);
@@ -2205,6 +2247,23 @@ function openLogRow(id){
 }
 window.openLogRow=openLogRow;
 
+/* ============ Remembered places ============ */
+function refreshPlaceLists(){
+  const dl=document.getElementById('placeList'); if(!dl) return;
+  const seen=new Set(), out=[];
+  const add=v=>{ v=(v||'').trim(); if(v && !seen.has(v.toLowerCase())){ seen.add(v.toLowerCase()); out.push(v); } };
+  (DATA.places||[]).forEach(add);                       // explicitly remembered, newest first
+  [...DATA.entries].reverse().forEach(e=>{ add(e.endPlace); add(e.startPlace); });
+  dl.innerHTML=out.slice(0,60).map(p=>`<option value="${p.replace(/"/g,'&quot;')}"></option>`).join('');
+}
+function rememberPlace(v){
+  v=(v||'').trim(); if(!v) return;
+  DATA.places=DATA.places||[];
+  DATA.places=DATA.places.filter(x=>x.toLowerCase()!==v.toLowerCase());
+  DATA.places.unshift(v);
+  if(DATA.places.length>60) DATA.places.length=60;
+}
+
 /* ============ Single-day printable report / PDF ============ */
 function printDayReport(id){
   const R=computeAll();
@@ -2228,7 +2287,7 @@ function printDayReport(id){
 
   document.getElementById('printDay').innerHTML=`
     <div class="pd-head">
-      <div><div class="pd-title">Tacho 561</div><div class="pd-sub">${t('pd_subtitle')}</div></div>
+      <div><div class="pd-title">TAXO 561</div><div class="pd-sub">${t('pd_subtitle')}</div></div>
       <div><div class="pd-date">${e.date}</div><div class="pd-sub">${DATA.driverName||''}</div></div>
     </div>
     <div class="pd-grid">
@@ -2517,11 +2576,17 @@ function renderInstallSteps(){
 
 /* ============ Active Day live timer ============ */
 const ACT_TYPES=['driving','other','poa','rest'];
+// The four tachograph activity symbols, drawn to match what's printed on the DTCO itself.
 const ACT_ICON={
-  driving:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.5"/>',
-  other:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/>',
-  poa:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
-  rest:'<path d="M6 4v16M6 12h12a4 4 0 010 8H8"/>'
+  // steering wheel: rim, hub and three spokes
+  driving:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.6"/><path d="M3 12h6.4M14.6 12H21M12 14.6V21"/>',
+  // crossed hammers (⚒) — two identical hammers mirrored about the centre
+  other:'<g transform="rotate(-45 12 12)"><path d="M12 8.2v11.6"/><rect x="8.6" y="4.2" width="6.8" height="4" rx="1"/></g>'+
+        '<g transform="rotate(45 12 12)"><path d="M12 8.2v11.6"/><rect x="8.6" y="4.2" width="6.8" height="4" rx="1"/></g>',
+  // availability: square crossed by a diagonal
+  poa:'<rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M5.6 18.4L18.4 5.6"/>',
+  // rest: bed with pillow
+  rest:'<path d="M3 20V10"/><path d="M3 14.2h12.6a4.4 4.4 0 014.4 4.4V20"/><path d="M3 20h18"/><circle cx="7.5" cy="10.6" r="2"/>'
 };
 function actLabel(type){ return t({driving:'disc_drv',other:'disc_oth',poa:'disc_poa',rest:'disc_brk'}[type]); }
 function getActiveSeg(){
@@ -2530,7 +2595,12 @@ function getActiveSeg(){
 }
 function segMinutes(s){ const end=s.end?new Date(s.end):new Date(); return Math.max(0,(end-new Date(s.start))/60000); }
 async function startActivity(type){
-  if(!DATA.activeDay) DATA.activeDay={date:fmt(new Date()),segments:[]};
+  if(!DATA.activeDay){
+    // seed the shift with whatever odometer reading is already typed in, so starting the
+    // first activity doesn't discard it
+    const odoEl=document.getElementById('f_activeOdo');
+    DATA.activeDay={date:fmt(new Date()),segments:[],odoStart:(odoEl&&odoEl.value.trim())||''};
+  }
   const cur=getActiveSeg();
   if(cur){ if(cur.type===type) return; cur.end=new Date().toISOString(); }
   DATA.activeDay.segments.push({type,start:new Date().toISOString(),end:null});
@@ -2552,8 +2622,25 @@ async function deleteActSeg(idx){
 }
 window.deleteActSeg=deleteActSeg;
 function fmtClock(iso){ const d=new Date(iso); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+async function setActiveOdo(v){
+  if(!DATA.activeDay) DATA.activeDay={date:fmt(new Date()),segments:[],odoStart:''};
+  DATA.activeDay.odoStart=v;
+  await saveData();
+}
+document.getElementById('f_activeOdo').addEventListener('change',ev=>setActiveOdo(ev.target.value.trim()));
 function renderActiveDay(){
   const hero=document.getElementById('timerHero'); if(!hero) return;
+  const odoEl=document.getElementById('f_activeOdo');
+  if(odoEl && document.activeElement!==odoEl){
+    if(DATA.activeDay && DATA.activeDay.odoStart!=null && DATA.activeDay.odoStart!==''){
+      odoEl.value=DATA.activeDay.odoStart;
+    } else if(!odoEl.value){
+      // no reading yet: offer the last odometer recorded for the active truck as a starting point
+      const av=activeVehicle();
+      const last=av? lastKmForPlate(av.plate) : null;
+      odoEl.placeholder = last!=null ? String(last) : '0';
+    }
+  }
   const cur=getActiveSeg();
   if(cur){
     hero.innerHTML=`<div class="th-label">${actLabel(cur.type)}</div><div class="th-time">${minToHM(segMinutes(cur))}</div>`;
@@ -2594,12 +2681,14 @@ document.getElementById('finishDayBtn').addEventListener('click', async ()=>{
   const poaMin=segs.filter(s=>s.type==='poa').reduce((s2,s)=>s2+segMinutes(s),0);
   const brkMin=segs.filter(s=>s.type==='rest').reduce((s2,s)=>s2+segMinutes(s),0);
   const dayDate=DATA.activeDay.date;
+  const odoStart=DATA.activeDay.odoStart||'';
   const startHHMM=fmtClock(segs[0].start), endHHMM=fmtClock(segs[segs.length-1].end||new Date().toISOString());
 
   resetForm();
   document.getElementById('f_date').value=dayDate;
   document.getElementById('f_start').value=startHHMM;
   document.getElementById('f_end').value=endHHMM;
+  if(odoStart!=='') currentSegments[0].odoStart=odoStart;
   currentSegments[0].drvStart='0:00'; currentSegments[0].drvEnd=minToHM(drvMin);
   currentSegments[0].otherStart='0:00'; currentSegments[0].otherEnd=minToHM(othMin);
   currentSegments[0].poaStart='0:00'; currentSegments[0].poaEnd=minToHM(poaMin);
@@ -2720,6 +2809,7 @@ document.getElementById('dayForm').addEventListener('submit', async ev=>{
   const lastPlate=segs.map(s=>s.plate).filter(Boolean).pop();
   if(lastPlate) DATA.currentPlate=lastPlate;
   if(entry.endCountry) DATA.lastCountry=entry.endCountry;
+  rememberPlace(entry.startPlace); rememberPlace(entry.endPlace);
 
   // auto-record the elapsed daily rest on the previous day
   const prev=prevEntryBefore(entry.date, entry.id);
@@ -2797,8 +2887,8 @@ document.getElementById('installBtn').addEventListener('click',async()=>{
   document.getElementById('installBtn').style.display='none';
 });
 (function injectManifest(){
-  const icon="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%2312161d'/%3E%3Ccircle cx='256' cy='256' r='165' fill='none' stroke='%23f2994a' stroke-width='28'/%3E%3Cpath d='M256 148v114l74 46' fill='none' stroke='%23f2994a' stroke-width='32' stroke-linecap='round'/%3E%3C/svg%3E";
-  const m={name:'Tacho 561',short_name:'Tacho 561',start_url:'.',scope:'.',display:'standalone',
+  const icon="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%2312161d'/%3E%3Ccircle cx='256' cy='256' r='165' fill='none' stroke='%233fb6ea' stroke-width='28'/%3E%3Cpath d='M256 148v114l74 46' fill='none' stroke='%233fb6ea' stroke-width='32' stroke-linecap='round'/%3E%3C/svg%3E";
+  const m={name:'TAXO 561',short_name:'TAXO 561',start_url:'.',scope:'.',display:'standalone',
     background_color:'#12161d',theme_color:'#12161d',orientation:'portrait-primary',
     icons:[{src:icon,sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
   try{
@@ -2895,7 +2985,11 @@ async function initFirebase(cfg){
 }
 async function pushToCloud(){
   if(!syncUser||!fbDb) return;
-  try{ await fbDb.collection('t561users').doc(syncUser.uid).set({payload:JSON.stringify(DATA),updatedAt:DATA.updatedAt||Date.now()}); }
+  try{
+    // activeDay is deliberately left out: it's the timer running on this specific device.
+    const payload=Object.assign({},DATA); delete payload.activeDay;
+    await fbDb.collection('t561users').doc(syncUser.uid).set({payload:JSON.stringify(payload),updatedAt:DATA.updatedAt||Date.now()});
+  }
   catch(e){ /* offline or blocked — local data is unaffected, will retry on next save */ }
 }
 async function pullOrPushOnLogin(){
@@ -2907,11 +3001,17 @@ async function pullOrPushOnLogin(){
     if(cloudTime>localTime){
       const hasLocal=DATA.entries&&DATA.entries.length>0;
       if(!hasLocal || confirm(t('sync_confirm_pull'))){
+        // A running timer belongs to the device physically in the truck, so it is never
+        // taken from the cloud — otherwise opening the app on the laptop would silently
+        // stop the shift that is still running on the phone.
+        const localActiveDay=DATA.activeDay;
         const cloudData=JSON.parse(cloud.payload);
         DATA=cloudData; DATA.entries=DATA.entries||[]; DATA.compensations=DATA.compensations||[];
-        DATA.vehicles=DATA.vehicles||[]; DATA.driverName=DATA.driverName||''; DATA.activeDay=DATA.activeDay||null;
+        DATA.vehicles=DATA.vehicles||[]; DATA.driverName=DATA.driverName||'';
+        DATA.activeDay=localActiveDay||null;
+        DATA.places=DATA.places||[];
         await store.set(KEY, JSON.stringify(DATA));
-        resetForm(); render();
+        resetForm(); render(); renderActiveDay(); refreshPlaceLists();
       }
     } else if(localTime>cloudTime){ await pushToCloud(); }
   }catch(e){ /* stays fully usable offline/locally regardless */ }
